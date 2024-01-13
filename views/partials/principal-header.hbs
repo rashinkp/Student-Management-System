@@ -1,0 +1,42 @@
+ <style>
+    .profile-circle {
+    cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-circle img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}  
+  </style>
+<header>
+   
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
+    <a class="navbar-brand ms-2" href="/principal"><h3>iSchool Principal</h3></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+         <li class="nav-item"><a class="nav-link" href="/principal">Home</a></li>
+         <li class="nav-item"><a class="nav-link" href="/principal/list-students">Students</a></li>
+        <li class="nav-item"><a class="nav-link" href="/principal/list-teachers">Staff</a></li>
+        <li class="nav-item"><a class="nav-link" href="/principal/classes">Classes</a></li>
+        <li class="nav-item"><a class="nav-link" href="/principal/announcements">Announcements</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Notification</a></li>
+      </ul>
+      <div class="profile-circle">
+    <img src="https://cdn-icons-png.flaticon.com/512/2919/2919906.png" alt="Demo Photo">
+  </div>
+    </div>
+  </nav>
+
+</header>

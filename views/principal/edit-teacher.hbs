@@ -1,0 +1,152 @@
+
+    <style>
+       
+        .form-box {
+            max-width: 600px;
+            margin: auto;
+            margin-top: 60px;
+            padding: 20px;
+            box-shadow: 0 4px 8px
+            rgba(0, 0, 0, 0.1); transition: transform 0.3s ease-in-out; 
+            border-radius: 8px;
+            background-color: #ffffff;
+            animation: fadeIn 0.5s ease-in-out;
+            margin-bottom: 60px;
+            cursor: pointer;
+        }
+        .form-box:hover{
+            transform: scale(1.05); 
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        form {
+            display: grid;
+            gap: 16px;
+
+        }
+
+          .name-section {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+        }
+
+        .name-section input {
+            margin-bottom: 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+
+
+   <section>
+    <div class="container ">
+         <div class="form-box">
+            <div class="row">
+                <h2 class="text-center text-primary my-3">Add Teacher</h2>
+            </div>
+        <form id="teacherForm" method="POST" action="/principal/edit-teacher/{{teacher._id}}">
+           <div class="name-section">
+               <div class="row">
+                <div class="col-md-6 col-sm-12">
+                     <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" value="{{teacher.firstName}}" required>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label for="lastName">Last Name:</label>
+                <input value="{{teacher.secondName}}" type="text" id="lastName" name="secondName" placeholder="Enter your last name" required>
+                </div>
+               </div>
+           </div>
+            <label for="age">Age:</label>
+            <input value="{{teacher.age}}" type="number" id="age" name="age" placeholder="Enter your age" required>
+
+            <label for="sex">Sex:</label>
+            <select  id="sex" name="sex" required>
+                <option value="" disabled selected>Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="qualification">Education Qualification:</label>
+            <input value="{{teacher.qualification}}" type="text" id="qualification" name="qualification" placeholder="Enter your qualification" required>
+
+            <label for="place">Place:</label>
+            <input value="{{teacher.place}}" type="text" id="place" name="place" placeholder="Enter your place" required>
+
+            <label for="state">State:</label>
+            <select id="state" name="state" required>
+                <option value="" disabled selected>Select state</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+            </select>
+
+            <label for="state">Specified Section:</label>
+            <select id="state" name="section" required>
+                <option value="" disabled selected>Select section</option>
+                <option value="LP">LP</option>
+                <option value="UP">UP</option>
+                <option value="HS">HS</option>
+            </select>
+
+            <label for="state">Specified Subject:</label>
+            <select id="state" name="subject" required>
+                <option value="" disabled selected>Select your subject</option>
+                <option value="Maths">Maths</option>
+                <option value="Computer">Computer</option>
+                <option value="English">English</option>
+            </select>
+
+            <div>
+                <img src="/images/teacher/{{teacher._id}}.jpg" alt="not supported">
+            </div>
+
+            <label for="email">Mobile Number:</label>
+            <input value="{{teacher.mobile}}" type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" required>
+
+            <label for="email">Email Address:</label>
+            <input value="{{teacher.email}}" type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="New Password" required>
+
+            <button type="submit">Update</button>
+        </form>
+    </div>
+    </div>
+   </section>
+

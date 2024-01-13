@@ -1,0 +1,50 @@
+<style>
+
+  table { width: 80%; margin: 20px 0; border-collapse: collapse; box-shadow: 0
+  4px 8px rgba(0, 0, 0, 0.1); } th, td { padding: 12px; text-align: left;
+  border-bottom: 1px solid #ddd; } th { background-color: #f2f2f2; }
+  .details-box { width: 100%; max-width: 600px; padding: 20px; background-color:
+  #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out; } .details-box:hover { transform:
+  scale(1.05); } .details-box h2 { color: #333; } .details-box p { color: #666;
+  }
+</style>
+
+<section>
+  <div class="container mt-5">
+    <div class="row mb-5">
+      <div class="col-12">
+        <a href="/principal/add-teacher" class="btn btn-success">Add Teacher</a>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Sl No.</th>
+          <th>Profile</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each teachers}}
+          <tr>
+            <td>{{counter}}</td>
+            <td><img
+                src="/images/teacher/{{this._id}}.jpg"
+                alt="Profile Image"
+                style="width: 50px; height: 50px; border-radius: 50%;"
+              /></td>
+            <td>{{this.firstName}} {{this.secondName}}</td>
+            <td>{{this.age}}</td>
+            <td><a href="/principal/teacher-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
+          </tr>
+        {{/each}}
+
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+  </div>
+
+</section>

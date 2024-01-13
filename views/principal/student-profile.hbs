@@ -1,0 +1,49 @@
+{{!-- <title>{{student.firstName}} {{student.secondName}} Profile</title> --}}
+<style>
+  body { margin: 0; font-family: Arial, sans-serif; } .profile-container {
+  display: flex; flex-direction: column; align-items: center; padding: 20px; }
+  .profile-image { width: 150px; height: 150px; border-radius: 50%;
+  margin-bottom: 20px; } .profile-details { text-align: center; }
+  .profile-actions { margin-top: 20px; } button { padding: 10px 20px; margin: 0
+  10px; font-size: 16px; cursor: pointer; background-color: #4CAF50; color:
+  white; border: none; border-radius: 5px; transition: background-color 0.3s; }
+  button:hover { background-color: #45a049; }
+</style>
+
+<div class="profile-container">
+  <img
+    src="/images/student/{{student._id}}.jpg"
+    alt="Profile Image"
+    class="profile-image"
+  />
+  <div class="profile-details">
+    <h2>{{student.firstName}} {{student.secondName}}</h2>
+    <p>Age: {{student.age}}</p>
+    <p>Sex: {{student.sex}}</p>
+    <p>Class: {{student.class}}</p>
+    <p>Place: {{student.place}}, State: {{student.state}}</p>
+    <p>Mobile:{{student.mobile}}</p>
+    <p>Email: {{student.email}}</p>
+  </div>
+  <div class="profile-actions">
+    <a
+      href="/principal/edit-student/{{student._id}}"
+      class="btn btn-secondary"
+      id="editButton"
+    >Edit</a>
+    <a
+      class="btn btn-danger"
+      id="removeButton"
+      onclick="confirmRemove()"
+    >Remove</a>
+  </div>
+</div>
+
+<script>
+  function confirmRemove() {
+    var result = confirm("Are you sure you want to remove this student?");
+    if (result) {
+      window.location.href = "/principal/remove-student/{{student._id}}";
+    }
+  }
+</script>
