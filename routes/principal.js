@@ -234,4 +234,9 @@ router.get('/delete-announcement/:id', async (req, res) => {
 });
 
 
+router.get('/profile',(req,res)=>{
+  res.render('principal/profile',{principal:true});
+})
+
+
 module.exports = router;
