@@ -13,9 +13,13 @@
 <section>
   <div class="container mt-5">
     <div class="row mb-5">
-      <div class="col-12">
-        <a href="/principal/add-student" class="btn btn-success">Add Student</a>
-      </div>
+      
+        {{#if principal}}
+        <div class="col-12">
+          <a href="/principal/add-student" class="btn btn-success">Add Student</a>
+          </div>
+        {{/if}}
+      
     </div>
     <table>
       <thead>

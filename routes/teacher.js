@@ -1,14 +1,23 @@
 var express = require('express');
 var teacherHelpers = require('../helpers/teacher-helpers');
+var studentHelpers = require('../helpers/student-helpers')
 var router = express.Router();
 
-router.get('/', function (req, res) {
+const verifyLogin = (req, res, next) => {
+  if (req.session.teacher && req.session.loggedIn) {
+    next();
+  } else {
+    res.redirect('/teacher/login');
+  }
+}
+
+router.get('/',verifyLogin, function (req, res) {
   let staff = req.session.teacher
   res.render('teacher/home', { teacher: true , staff});
 });
 
 router.get('/login', function (req, res) {
-  res.render('teacher/login', { teacher: true });
+  res.render('teacher/login', );
 });
 
 router.post('/login', async function (req, res) {
@@ -24,7 +33,6 @@ router.post('/login', async function (req, res) {
         req.session.teacher = teacher;
         res.redirect('/teacher/'); // You can redirect to the teacher's dashboard or any other page
       } else {
-        // Passwords do not match, show an error message
         res.render('teacher/login', {
           teacher: true,
           loginError: 'Invalid email or password',
@@ -46,4 +54,24 @@ router.post('/login', async function (req, res) {
   }
 });
 
+router.get('/list-students',verifyLogin,(req,res)=>{
+  studentHelpers.getAllStudents().then((student) => {
+    student.forEach((student, index) => {
+      student.counter = index + 1;
+    });
+    res.render('student/list-students', { staff: true, student });
+  });
+})
+
+
+router.get('/student-profile/:id', async (req, res) => {
+  try {
+    const studentId = req.params.id;
+    const student = await studentHelpers.getStudentById(studentId);
+    res.render('principal/student-profile', { student, teacher: true });
+  } catch (error) {
+    console.error('Error in /student-profile route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 module.exports = router;

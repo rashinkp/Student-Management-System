@@ -6,8 +6,15 @@ var studentHelpers = require('../helpers/student-helpers');
 var announcementHelpers = require('../helpers/announcement-helpers')
 const fs = require('fs');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
+const verifyLogin = (req, res, next) => {
+  if (req.session.principal && req.session.loggedIn) {
+    next();
+  } else {
+    res.redirect('/principal/principal-login');
+  }
+}
+
+router.get('/',verifyLogin, function(req, res, next) {
   let princi = req.session.principal
   res.render('principal/home',{principal:true,princi });
 });
