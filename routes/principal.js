@@ -8,7 +8,8 @@ const fs = require('fs');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('principal/home',{principal:true });
+  let princi = req.session.principal
+  res.render('principal/home',{principal:true,princi });
 });
 router.get('/principal-login',(req,res)=>{
   res.render(('principal/login'));
@@ -16,10 +17,13 @@ router.get('/principal-login',(req,res)=>{
 router.post('/principal-login',(req,res)=>{
   let response = req.body
   let princi = {
+    name:'Rashin KP',
     email:'rashinkp001@gmail.com',
     password:123
   }
   if (response.email == princi.email && response.password == princi.password){
+    req.session.loggedIn = true;
+    req.session.principal = princi;
     res.redirect(('/principal/'));
   }else{
     console.log("Wrong information");
@@ -237,6 +241,8 @@ router.get('/delete-announcement/:id', async (req, res) => {
 router.get('/profile',(req,res)=>{
   res.render('principal/profile',{principal:true});
 })
+
+
 
 
 module.exports = router;

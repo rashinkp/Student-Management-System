@@ -10,6 +10,7 @@ var teacherRouter = require('./routes/teacher')
 var studentRouter = require('./routes/student')
 var db =require('./config/connection');
 const multer = require('multer');
+var session = require('express-session')
 
 var app = express();
 
@@ -43,7 +44,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(session({secret:'key',cookie:{maxAge:600000  }}))
 
 db.connect()
 
