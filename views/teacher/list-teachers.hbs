@@ -13,9 +13,11 @@
 <section>
   <div class="container mt-5">
     <div class="row mb-5">
-      <div class="col-12">
-        <a href="/principal/add-teacher" class="btn btn-success">Add Teacher</a>
-      </div>
+      {{#if principal}}
+        <div class="col-12">
+          <a href="/principal/add-teacher" class="btn btn-success">Add Teacher</a>
+        </div>
+      {{/if}}
     </div>
     <table>
       <thead>
@@ -28,6 +30,7 @@
         </tr>
       </thead>
       <tbody>
+        {{#if principal}}
         {{#each teachers}}
           <tr>
             <td>{{counter}}</td>
@@ -41,6 +44,34 @@
             <td><a href="/principal/teacher-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
           </tr>
         {{/each}}
+        {{else if teacher}}
+        {{#each teachers}}
+          <tr>
+            <td>{{counter}}</td>
+            <td><img
+                src="/images/teacher/{{this._id}}.jpg"
+                alt="Profile Image"
+                style="width: 50px; height: 50px; border-radius: 50%;"
+              /></td>
+            <td>{{this.firstName}} {{this.secondName}}</td>
+            <td>{{this.age}}</td>
+            <td><a href="/teacher/teacher-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
+          </tr>
+        {{/each}}
+        {{else}}
+        {{#each teachers}}
+          <tr>
+            <td>{{counter}}</td>
+            <td><img
+                src="/images/teacher/{{this._id}}.jpg"
+                alt="Profile Image"
+                style="width: 50px; height: 50px; border-radius: 50%;"
+              /></td>
+            <td>{{this.firstName}} {{this.secondName}}</td>
+            <td>{{this.age}}</td>
+          </tr>
+        {{/each}}
+        {{/if}}
 
         <!-- Add more rows as needed -->
       </tbody>

@@ -25,7 +25,8 @@
     <p>Mobile:{{student.mobile}}</p>
     <p>Email: {{student.email}}</p>
   </div>
-  <div class="profile-actions">
+  {{#if principal}}
+    <div class="profile-actions">
     <a
       href="/principal/edit-student/{{student._id}}"
       class="btn btn-secondary"
@@ -37,6 +38,8 @@
       onclick="confirmRemove()"
     >Remove</a>
   </div>
+  {{else}}
+  {{/if}}
 </div>
 
 <script>

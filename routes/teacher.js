@@ -59,12 +59,12 @@ router.get('/list-students',verifyLogin,(req,res)=>{
     student.forEach((student, index) => {
       student.counter = index + 1;
     });
-    res.render('student/list-students', { staff: true, student });
+    res.render('student/list-students', { teacher: true, student });
   });
 })
 
 
-router.get('/student-profile/:id', async (req, res) => {
+router.get('/student-profile/:id',verifyLogin, async (req, res) => {
   try {
     const studentId = req.params.id;
     const student = await studentHelpers.getStudentById(studentId);
@@ -74,4 +74,31 @@ router.get('/student-profile/:id', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+router.get("/list-teachers",verifyLogin,(req,res)=>{
+  teacherHelpers.getAllTeachers()
+  .then(teachers=>{
+    teachers.forEach((teacher, index) => {
+      teacher.counter = index + 1;
+    });
+    if(teachers){
+      res.render("teacher/list-teachers",{teachers, teacher:true});
+      
+      }
+      else{
+        return res.send('no teacher found')
+      }
+      })
+})
+
+router.get('/teacher-profile/:id',verifyLogin,async(req,res)=>{
+  try{
+    const teacherId = req.params.id;
+    const staff = await teacherHelpers.getTeacherById(teacherId)
+    res.render('principal/teacher-profile',{teacher:true,staff})
+  } catch(err){
+    console.log(err)
+    res.status(400).json({message:"could not find that user"})
+  }
+})
 module.exports = router;

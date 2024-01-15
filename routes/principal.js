@@ -82,8 +82,8 @@ router.post('/add-teacher', (req, res) => {
 router.get('/teacher-profile/:id', async (req, res) => {
   try {
       const teacherId = req.params.id;
-      const teacher = await teacherHelpers.getTeacherById(teacherId);
-      res.render('principal/teacher-profile', { teacher,principal:true });
+      const staff = await teacherHelpers.getTeacherById(teacherId);
+      res.render('principal/teacher-profile', { staff,principal:true });
   } catch (error) {
       console.error('Error in /teacher-profile route:', error);
       res.status(500).send('Internal Server Error');
