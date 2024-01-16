@@ -3,10 +3,12 @@ var router = express.Router();
 const path = require('path');
 var teacherHelpers = require('../helpers/teacher-helpers');
 var studentHelpers = require('../helpers/student-helpers');
-var announcementHelpers = require('../helpers/announcement-helpers')
+var announcementHelpers = require('../helpers/announcement-helpers');
+var reqHelpers = require('../helpers/req-helpers');
 const fs = require('fs');
+const { ExplainVerbosity } = require('mongodb');
 
-const verifyLogin = (req, res, next) => {
+const verifyLoginPrincipal = (req, res, next) => {
   if (req.session.principal && req.session.loggedIn) {
     next();
   } else {
@@ -14,7 +16,7 @@ const verifyLogin = (req, res, next) => {
   }
 }
 
-router.get('/',verifyLogin, function(req, res, next) {
+router.get('/',verifyLoginPrincipal, function(req, res, next) {
   let princi = req.session.principal
   res.render('principal/home',{principal:true,princi });
 });
@@ -39,7 +41,7 @@ router.post('/principal-login',(req,res)=>{
 })
 
 
-router.get("/list-teachers", (req, res) => {
+router.get("/list-teachers",verifyLoginPrincipal, (req, res) => {
   teacherHelpers.getAllTeachers().then((teachers) => {
     // Add a 'counter' property to each teacher
     teachers.forEach((teacher, index) => {
@@ -52,7 +54,7 @@ router.get("/list-teachers", (req, res) => {
 
 
 
-router.get('/add-teacher',(req,res)=>{
+router.get('/add-teacher',verifyLoginPrincipal,(req,res)=>{
   res.render('principal/add-teacher',{principal:true});
 })
 router.post('/add-teacher', (req, res) => {
@@ -79,7 +81,7 @@ router.post('/add-teacher', (req, res) => {
 });
 
 
-router.get('/teacher-profile/:id', async (req, res) => {
+router.get('/teacher-profile/:id',verifyLoginPrincipal, async (req, res) => {
   try {
       const teacherId = req.params.id;
       const staff = await teacherHelpers.getTeacherById(teacherId);
@@ -90,7 +92,7 @@ router.get('/teacher-profile/:id', async (req, res) => {
   }
 });
 
-router.get('/edit-teacher/:id',async(req,res)=>{
+router.get('/edit-teacher/:id',verifyLoginPrincipal,async(req,res)=>{
   try{
     
     const teacherId = req.params.id;
@@ -109,7 +111,7 @@ router.post('/edit-teacher/:id', async (req, res) => {
     res.redirect(`/principal/teacher-profile/${teacherId}`);
 });
 
-router.get('/remove-teacher/:id', async (req, res) => {
+router.get('/remove-teacher/:id',verifyLoginPrincipal, async (req, res) => {
   try {
     const teacherId = req.params.id;
     await teacherHelpers.removeTeacher(teacherId);
@@ -120,7 +122,7 @@ router.get('/remove-teacher/:id', async (req, res) => {
   }
 });
 
-router.get('/list-students', (req, res) => {
+router.get('/list-students',verifyLoginPrincipal, (req, res) => {
   studentHelpers.getAllStudents().then((student) => {
     student.forEach((student, index) => {
       student.counter = index + 1;
@@ -129,7 +131,7 @@ router.get('/list-students', (req, res) => {
   });
 });
 
-router.get('/add-student',(req,res)=>{
+router.get('/add-student',verifyLoginPrincipal,(req,res)=>{
   res.render('principal/add-student',{principal:true})
 })
 
@@ -160,7 +162,7 @@ router.post('/add-student', async (req, res) => {
   }
 });
 
-router.get('/student-profile/:id', async (req, res) => {
+router.get('/student-profile/:id',verifyLoginPrincipal, async (req, res) => {
   try {
     const studentId = req.params.id;
     const student = await studentHelpers.getStudentById(studentId);
@@ -171,7 +173,7 @@ router.get('/student-profile/:id', async (req, res) => {
   }
 });
 
-router.get('/edit-student/:id', async (req, res) => {
+router.get('/edit-student/:id',verifyLoginPrincipal, async (req, res) => {
   try {
     const studentId = req.params.id;
     const student = await studentHelpers.getStudentById(studentId);
@@ -189,7 +191,7 @@ router.post('/edit-student/:id', async (req, res) => {
 
 });
 
-router.get('/remove-student/:id', async (req, res) => {
+router.get('/remove-student/:id',verifyLoginPrincipal, async (req, res) => {
   try {
     const studentId = req.params.id;
     await studentHelpers.removeStudent(studentId);
@@ -201,11 +203,11 @@ router.get('/remove-student/:id', async (req, res) => {
 });
 
 
-router.get('/classes',(req,res)=>{
+router.get('/classes',verifyLoginPrincipal,(req,res)=>{
   res.render('teacher/classes',{principal:true})
 })
 
-router.get('/announcements', async (req, res) => {
+router.get('/announcements',verifyLoginPrincipal, async (req, res) => {
   try {
       // Fetch announcements from the database
       const announcements = await announcementHelpers.getAllAnnouncements();
@@ -217,7 +219,7 @@ router.get('/announcements', async (req, res) => {
 });
 
 
-router.get('/create-announcement', (req, res) => {
+router.get('/create-announcement',verifyLoginPrincipal, (req, res) => {
   res.render('principal/create-announcement', { principal: true });
 });
 
@@ -233,7 +235,7 @@ router.post('/create-announcement', async (req, res) => {
 });
 
 
-router.get('/delete-announcement/:id', async (req, res) => {
+router.get('/delete-announcement/:id',verifyLoginPrincipal, async (req, res) => {
   try {
       const announcementId = req.params.id;
       await announcementHelpers.removeAnnouncement(announcementId);
@@ -245,11 +247,49 @@ router.get('/delete-announcement/:id', async (req, res) => {
 });
 
 
-router.get('/profile',(req,res)=>{
+router.get('/profile',verifyLoginPrincipal,(req,res)=>{
   res.render('principal/profile',{principal:true});
 })
 
+router.get('/request-announcements', verifyLoginPrincipal, async (req, res) => {
+  try {
+    // Fetch requests from the req_announcement collection and sort them by date in descending order
+    const requests = await reqHelpers.getAllRequestsSortedByDate();
 
+    res.render('principal/request-announcements', { principal: true, requests });
+  } catch (error) {
+    console.error('Error in /request-announcements route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+router.get('/delete-request/:id', verifyLoginPrincipal, async (req, res) => {
+  try {
+    const requestId = req.params.id;
+
+    // Call the helper method to remove the request from the req_announcement collection
+    await reqHelpers.removeRequest(requestId);
+
+    res.redirect('/principal/request-announcements');
+  } catch (error) {
+    console.error('Error in /delete-request route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+router.get('/approve-request/:id', verifyLoginPrincipal, async (req, res) => {
+  try {
+    const requestId = req.params.id;
+    // console.log('raching here>>>> ',requestId)
+    // Call the helper method to approve the request
+    await reqHelpers.approveRequest(requestId);
+
+    res.redirect('/principal/announcements');
+  } catch (error) {
+    console.error('Error in /approve-request route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 module.exports = router;

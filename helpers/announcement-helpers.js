@@ -12,7 +12,7 @@ module.exports = {
                     description: announcementData.description,
                 };
 
-                const announcementCollection = await db.get().collection(COLLECTION.ANNOUNCEMNT_COLLECTION);
+                const announcementCollection = await db.get().collection(COLLECTION.ANNOUNCEMENT_COLLECTION);
                 const result = await announcementCollection.insertOne(announcement);
                 resolve(result.insertedId);
             } catch (error) {
@@ -23,7 +23,7 @@ module.exports = {
     getAllAnnouncements: () => {
         return new Promise(async (resolve, reject) => {
             try {
-                const announcementCollection = await db.get().collection(COLLECTION.ANNOUNCEMNT_COLLECTION);
+                const announcementCollection = await db.get().collection(COLLECTION.ANNOUNCEMENT_COLLECTION);
                 
                 // Sort the announcements based on the 'date' property in descending order
                 const announcements = await announcementCollection.find().sort({ date: -1 }).toArray();
@@ -37,7 +37,7 @@ module.exports = {
     removeAnnouncement: (announcementId) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const announcementCollection = await db.get().collection(COLLECTION.ANNOUNCEMNT_COLLECTION);
+                const announcementCollection = await db.get().collection(COLLECTION.ANNOUNCEMENT_COLLECTION);
                 await announcementCollection.deleteOne({ _id:new ObjectId(announcementId) });
                 resolve();
             } catch (error) {

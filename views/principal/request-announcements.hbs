@@ -94,58 +94,41 @@
     }
 </style>
 
+<script>
+  function confirmDelete(requestId) {
+  const isConfirmed = confirm('Are you sure you want to delete this request?');
+  if (isConfirmed) {
+    window.location.href = `/principal/delete-request/${requestId}`;
+  }
+  return false;
+}
+
+
+ function approveRequest(requestId) {
+  const isConfirmed = confirm('Are you sure you want to approve this request?');
+  if (isConfirmed) {
+    window.location.href = `/principal/approve-request/${requestId}`;
+  }
+  return false;
+}
+
+</script>
+
 <div class="container">
-    <!-- Add Announcement Button -->
-    <div class="row">
-        <div class="btn-section col-12">
-            {{#if principal}}
-                <a class="btn btn-primary" href="/principal/create-announcement">Add Announcement</a>
-                <a href="/principal/request-announcements" class="btn btn-secondary ms-5">See requests</a>
-
-            {{else if teacher}}
-                <a class="btn btn-primary" href="/teacher/request-announcement">Req for Announcement</a>
-            {{else}}
-            {{/if}}
-        </div>
-    </div>
-
-    <!-- Iterate over announcements and display each box -->
-    {{#if principal}}
-        {{#each announcements}}
+  {{#each requests}}
     <div class="box announcement">
-        <div class="box-section">
-            <h3>{{this.title}}</h3>
-            <div class="date">{{this.date}}</div>
-            <p>{{this.description}}</p>
-        </div>
-        <div class="announcement-buttons p-5">
-            <a class="btn btn-secondary edit-button" href="#">Edit</a>
-            <a class="btn btn-danger delete-button" onclick="confirmDelete('{{this._id}}')">Delete</a>
-        </div>
+      <div class="box-section">
+        <h3>{{this.title}}</h3>
+        <div class="date">{{this.date}}</div>
+        <p>{{this.description}}</p>
+      </div>
+      <div class="announcement-buttons p-5">
+        <!-- Add your buttons or actions here if needed -->
+        <a class="btn btn-secondary edit-button" href="#" onclick="approveRequest('{{this._id}}')">Approve</a>
+        <a class="btn btn-danger delete-button" onclick="confirmDelete('{{this._id}}')">Delete</a>
+      </div>
     </div>
-{{/each}}
-{{else}}
-    {{#each announcements}}
-    <div class="box announcement">
-        <div class="box-section">
-            <h3>{{this.title}}</h3>
-            <div class="date">{{this.date}}</div>
-            <p>{{this.description}}</p>
-        </div>
-    </div>
-{{/each}}
-{{/if}}
+  {{/each}}
 </div>
 
-<script>
-    function confirmDelete(announcementId) {
-        // Show a confirmation dialog
-        const isConfirmed = confirm('Are you sure you want to delete this announcement?');
-        
-        if (isConfirmed) {
-            // If confirmed, redirect to the delete route
-            window.location.href = `/principal/delete-announcement/${announcementId}`;
-        }
-    }
-</script>
 

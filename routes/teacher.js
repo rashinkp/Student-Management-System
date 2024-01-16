@@ -1,9 +1,11 @@
 var express = require('express');
 var teacherHelpers = require('../helpers/teacher-helpers');
-var studentHelpers = require('../helpers/student-helpers')
+var studentHelpers = require('../helpers/student-helpers');
+var announcementHelpers = require('../helpers/announcement-helpers')
+const reqHelpers = require('../helpers/req-helpers');
 var router = express.Router();
 
-const verifyLogin = (req, res, next) => {
+const verifyLoginTeacher = (req, res, next) => {
   if (req.session.teacher && req.session.loggedIn) {
     next();
   } else {
@@ -11,7 +13,7 @@ const verifyLogin = (req, res, next) => {
   }
 }
 
-router.get('/',verifyLogin, function (req, res) {
+router.get('/',verifyLoginTeacher, function (req, res) {
   let staff = req.session.teacher
   res.render('teacher/home', { teacher: true , staff});
 });
@@ -54,7 +56,7 @@ router.post('/login', async function (req, res) {
   }
 });
 
-router.get('/list-students',verifyLogin,(req,res)=>{
+router.get('/list-students',verifyLoginTeacher,(req,res)=>{
   studentHelpers.getAllStudents().then((student) => {
     student.forEach((student, index) => {
       student.counter = index + 1;
@@ -64,7 +66,7 @@ router.get('/list-students',verifyLogin,(req,res)=>{
 })
 
 
-router.get('/student-profile/:id',verifyLogin, async (req, res) => {
+router.get('/student-profile/:id',verifyLoginTeacher, async (req, res) => {
   try {
     const studentId = req.params.id;
     const student = await studentHelpers.getStudentById(studentId);
@@ -75,7 +77,7 @@ router.get('/student-profile/:id',verifyLogin, async (req, res) => {
   }
 });
 
-router.get("/list-teachers",verifyLogin,(req,res)=>{
+router.get("/list-teachers",verifyLoginTeacher,(req,res)=>{
   teacherHelpers.getAllTeachers()
   .then(teachers=>{
     teachers.forEach((teacher, index) => {
@@ -91,7 +93,7 @@ router.get("/list-teachers",verifyLogin,(req,res)=>{
       })
 })
 
-router.get('/teacher-profile/:id',verifyLogin,async(req,res)=>{
+router.get('/teacher-profile/:id',verifyLoginTeacher,async(req,res)=>{
   try{
     const teacherId = req.params.id;
     const staff = await teacherHelpers.getTeacherById(teacherId)
@@ -101,4 +103,43 @@ router.get('/teacher-profile/:id',verifyLogin,async(req,res)=>{
     res.status(400).json({message:"could not find that user"})
   }
 })
+
+router.get('/classes',verifyLoginTeacher,(req,res)=>{
+  res.render('teacher/classes',{teacher:true});
+})
+
+router.get('/announcements',verifyLoginTeacher,async(req,res)=>{
+  try {
+    // Fetch announcements from the database
+    const announcements = await announcementHelpers.getAllAnnouncements();
+    res.render('teacher/announcements', { teacher: true, announcements });
+} catch (error) {
+    console.error('Error in /announcements route:', error);
+    res.status(500).send('Internal Server Error');
+}
+})
+
+router.get('/request-announcement',verifyLoginTeacher,(req,res)=>{
+  res.render('teacher/request-announcement',{teacher:true})
+})
+
+router.post('/request-announcement', verifyLoginTeacher, async (req, res) => {
+  try {
+    const { title, date, description } = req.body;
+    const requestDetails = {
+      title,
+      date,
+      description,
+      approval:false
+    };
+    await reqHelpers.insertRequestAnnouncement(requestDetails);
+
+    res.redirect('/teacher/announcements');
+  } catch (error) {
+    console.error('Error in /request-announcement route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
 module.exports = router;
