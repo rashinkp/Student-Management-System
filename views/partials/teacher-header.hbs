@@ -11,8 +11,13 @@
         <li class="nav-item"><a class="nav-link" href="/teacher/announcements">Announcements</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Notification</a></li>
       </ul>
-      <a href="/principal/profile"><img src="img. " alt="Demo Photo"></a>
-    </div>
+     {{#if staff}}
+        <div class="rounded-circle overflow-hidden">
+            <a href="/principal/profile">
+                <img src="/images/teacher/{{staff._id}}.jpg" alt="Teacher Photo" class="img-fluid" style="width: 50px; height: 50px;">
+            </a>
+        </div>
+    {{/if}}
   </nav>
 
 </header>

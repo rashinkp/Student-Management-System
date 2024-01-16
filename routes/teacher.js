@@ -61,7 +61,8 @@ router.get('/list-students',verifyLoginTeacher,(req,res)=>{
     student.forEach((student, index) => {
       student.counter = index + 1;
     });
-    res.render('student/list-students', { teacher: true, student });
+    let staff = req.session.teacher
+    res.render('student/list-students', { teacher: true, student,staff });
   });
 })
 
@@ -70,7 +71,8 @@ router.get('/student-profile/:id',verifyLoginTeacher, async (req, res) => {
   try {
     const studentId = req.params.id;
     const student = await studentHelpers.getStudentById(studentId);
-    res.render('principal/student-profile', { student, teacher: true });
+    let staff = req.session.teacher
+    res.render('principal/student-profile', { student, teacher: true,staff });
   } catch (error) {
     console.error('Error in /student-profile route:', error);
     res.status(500).send('Internal Server Error');
@@ -84,7 +86,8 @@ router.get("/list-teachers",verifyLoginTeacher,(req,res)=>{
       teacher.counter = index + 1;
     });
     if(teachers){
-      res.render("teacher/list-teachers",{teachers, teacher:true});
+      let staff = req.session.teacher
+      res.render("teacher/list-teachers",{teachers, teacher:true,staff});
       
       }
       else{
@@ -105,14 +108,16 @@ router.get('/teacher-profile/:id',verifyLoginTeacher,async(req,res)=>{
 })
 
 router.get('/classes',verifyLoginTeacher,(req,res)=>{
-  res.render('teacher/classes',{teacher:true});
+  let staff = req.session.teacher
+  res.render('teacher/classes',{teacher:true,staff});
 })
 
 router.get('/announcements',verifyLoginTeacher,async(req,res)=>{
   try {
     // Fetch announcements from the database
     const announcements = await announcementHelpers.getAllAnnouncements();
-    res.render('teacher/announcements', { teacher: true, announcements });
+    let staff = req.session.teacher
+    res.render('teacher/announcements', { teacher: true, announcements,staff});
 } catch (error) {
     console.error('Error in /announcements route:', error);
     res.status(500).send('Internal Server Error');
@@ -120,7 +125,8 @@ router.get('/announcements',verifyLoginTeacher,async(req,res)=>{
 })
 
 router.get('/request-announcement',verifyLoginTeacher,(req,res)=>{
-  res.render('teacher/request-announcement',{teacher:true})
+  let staff = req.session.teacher
+  res.render('teacher/request-announcement',{teacher:true,staff})
 })
 
 router.post('/request-announcement', verifyLoginTeacher, async (req, res) => {
