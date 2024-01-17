@@ -59,5 +59,10 @@ router.get('/profile',verifyLoginStudent,(req,res)=>{
 
 })
 
+router.get('/logout',verifyLoginStudent,(req,res)=>{
+  req.session.student=null;
+  res.redirect('/student/');
+})
+
 
 module.exports = router;

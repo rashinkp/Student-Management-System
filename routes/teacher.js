@@ -56,6 +56,11 @@ router.post('/login', async function (req, res) {
   }
 });
 
+router.get('/logout',verifyLoginTeacher,(req,res)=>{
+  req.session.teacher=null;
+  res.redirect('/teacher/')
+})
+
 router.get('/list-students',verifyLoginTeacher,(req,res)=>{
   studentHelpers.getAllStudents().then((student) => {
     student.forEach((student, index) => {
