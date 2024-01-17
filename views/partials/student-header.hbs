@@ -1,17 +1,23 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
-    <a class="navbar-brand ms-2" href="/"><h3>iSchool student</h3></a>
+    <a class="navbar-brand ms-2" href="/student/"><h3>iSchool student</h3></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto"> <li class="nav-item"><a class="nav-link" href="#">Students</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Courses</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Grades</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Announcements</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+      <ul class="navbar-nav ms-auto"> <li class="nav-item"><a class="nav-link" href="#">Teachers</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Principal</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Attendance</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Marks</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Announcement</a></li>
       </ul>
-      <button class="btn btn-primary navbar-btn">Enroll Now</button>
+      {{#if student_data}}
+        <div class="rounded-circle overflow-hidden">
+            <a href="/student/profile">
+                <img src="/images/student/{{student_data._id}}.jpg" alt="Teacher Photo" class="img-fluid" style="width: 50px; height: 50px;">
+            </a>
+        </div>
+    {{/if}}
     </div>
   </nav>
 

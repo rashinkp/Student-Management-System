@@ -91,4 +91,21 @@ module.exports = {
           }
         });
       },
+      getStudentByEmail: (email) => {
+        return new Promise(async (resolve, reject) => {
+          try {
+            const student = await db
+              .get()
+              .collection(COLLECTION.STUDENTS_COLLECTION)
+              .findOne({ email: email });
+            resolve(student);
+          } catch (error) {
+            console.error('Error in getTeacherByEmail:', error);
+            reject(error);
+          }
+        });
+      },
+      comparePasswords: async (plainPassword, hashedPassword) => {
+        return await bcrypt.compare(plainPassword, hashedPassword);
+      },
 };

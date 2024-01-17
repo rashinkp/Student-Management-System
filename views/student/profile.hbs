@@ -1,0 +1,62 @@
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .profile img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .details {
+            flex-grow: 1;
+        }
+
+        .details p {
+            margin: 10px 0;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .profile img {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+  
+
+  <section>
+      <div class="container">
+        <div class="profile">
+            <img src="/images/student/{{student_data._id}}.jpg" alt="student photo not supproted">
+        </div>
+        <div class="details">
+            <p><strong>Name:</strong>{{student_data.firstName}} {{student_data.secondName}} </p>
+            <p><strong>Age:</strong> {{student_data.age}}</p>
+            <p><strong>Sex</strong> {{student_data.sex}}</p>
+            <p><strong>Class:</strong> {{student_data.class}}</p>
+            <p><strong>Email:</strong> {{student_data.email}}</p>
+            <!-- Add more details as needed -->
+        </div>
+    </div>
+  </section>
