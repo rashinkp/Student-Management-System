@@ -147,5 +147,10 @@ router.post('/request-announcement', verifyLoginTeacher, async (req, res) => {
   }
 });
 
+router.get('/profile',verifyLoginTeacher,(req,res)=>{
+  let staff = req.session.teacher
+  console.log('here is the stff>>>>> ',staff)
+  res.render('teacher/profile',{teacher:true,staff});
+})
 
 module.exports = router;
