@@ -42,6 +42,11 @@
                 margin-bottom: 20px;
             }
         }
+        .controle-section{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
   
 
@@ -51,10 +56,13 @@
             <img src="https://cdn-icons-png.flaticon.com/512/2919/2919906.png" alt="Principal Photo">
         </div>
         <div class="details">
-            <p><strong>Name:</strong> Principal Name</p>
-            <p><strong>Age:</strong> 45</p>
-            <p><strong>Email:</strong> principal@email.com</p>
+            <p><strong>Name:</strong>{{principal_data.name}}</p>
+            <p><strong>Age:</strong> {{principal_data.age}}</p>
+            <p><strong>Email:</strong> {{principal_data.email}}</p>
             <!-- Add more details as needed -->
         </div>
+    </div>
+    <div class="controle-section">
+        <a href="/principal/logout" class="btn btn-danger">Logout</a>
     </div>
   </section>

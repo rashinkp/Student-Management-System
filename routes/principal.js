@@ -27,6 +27,7 @@ router.post('/principal-login',(req,res)=>{
   let response = req.body
   let princi = {
     name:'Rashin KP',
+    age:40,
     email:'rashinkp001@gmail.com',
     password:123
   }
@@ -248,7 +249,8 @@ router.get('/delete-announcement/:id',verifyLoginPrincipal, async (req, res) => 
 
 
 router.get('/profile',verifyLoginPrincipal,(req,res)=>{
-  res.render('principal/profile',{principal:true});
+  principal_data = req.session.principal
+  res.render('principal/profile',{principal:true, principal_data});
 })
 
 router.get('/request-announcements', verifyLoginPrincipal, async (req, res) => {
@@ -290,6 +292,11 @@ router.get('/approve-request/:id', verifyLoginPrincipal, async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+router.get('/logout',verifyLoginPrincipal,(req,res)=>{
+  req.session.principal = null
+  res.redirect('/principal/')
+})
 
 
 module.exports = router;
