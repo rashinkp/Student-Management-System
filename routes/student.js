@@ -64,5 +64,50 @@ router.get('/logout',verifyLoginStudent,(req,res)=>{
   res.redirect('/student/');
 })
 
+router.get('/list-teachers',verifyLoginStudent,(req,res)=>{
+  
+  teacherHelpers.getAllTeachers()
+  .then(teachers=>{
+    teachers.forEach((teacher, index) => {
+      teacher.counter = index + 1;
+    });
+    if(teachers){
+
+      let student_data = req.session.student
+      res.render("teacher/list-teachers",{teachers, student_check:true,student_data});
+      
+      }
+      else{
+        return res.send('no teacher found')
+      }
+      })
+})
+
+router.get('/list-students',verifyLoginStudent,(req,res)=>{
+    studentHelpers.getAllStudents().then((student) => {
+      student.forEach((student, index) => {
+        student.counter = index + 1;
+      });
+      let student_data = req.session.student
+      res.render('student/list-students', { student_check: true, student_data,student});
+    });
+})
+
+router.get('/announcements',verifyLoginStudent,async(req,res)=>{
+  try {
+    const announcements = await announcementHelpers.getAllAnnouncements();
+    let student_data = req.session.student
+    res.render('teacher/announcements', { student_check: true, announcements,student_data});
+} catch (error) {
+    console.error('Error in /announcements route:', error);
+    res.status(500).send('Internal Server Error');
+}
+})
+
+router.get('/attendance',verifyLoginStudent,(req,res)=>{
+  student_data = req.session.student;
+
+  res.render('student/attendance',{student_check:true,student_data});
+})
 
 module.exports = router;

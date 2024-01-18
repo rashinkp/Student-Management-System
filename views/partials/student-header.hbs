@@ -5,11 +5,12 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto"> <li class="nav-item"><a class="nav-link" href="#">Teachers</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Principal</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Attendance</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Marks</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Announcement</a></li>
+      <ul class="navbar-nav ms-auto"> <li class="nav-item"><a class="nav-link" href="/student/list-teachers">Teachers</a></li>
+      <li class="nav-item"><a href="/student/list-students" class="nav-link">Students</a></li>
+        <li class="nav-item"><a class="nav-link" href="/student/principal">Principal</a></li>
+        <li class="nav-item"><a class="nav-link" href="/student/attendance">Attendance</a></li>
+        <li class="nav-item"><a class="nav-link" href="/student/mark">Marks</a></li>
+        <li class="nav-item"><a class="nav-link" href="/student/announcements">Announcement</a></li>
       </ul>
       {{#if student_data}}
         <div class="rounded-circle overflow-hidden">

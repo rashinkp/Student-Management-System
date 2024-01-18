@@ -21,7 +21,11 @@
         {{/if}}
       
     </div>
-    <table>
+   
+
+
+        {{#if principal}}
+          <table>
       <thead>
         <tr>
           <th>Sl No.</th>
@@ -32,10 +36,9 @@
           <th>View</th>
         </tr>
       </thead>
+      
+        
       <tbody>
-
-
-        {{#if principal}}
           {{#each student}}
           <tr>
             <td>{{counter}}</td>
@@ -49,10 +52,25 @@
             <td>{{this.class}}</td>
             <td><a href="/principal/student-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
           </tr>
+          
         {{/each}}
-        
+        </tbody>
+    </table>
         {{else if teacher}}
+         <table>
+      <thead>
+        <tr>
+          <th>Sl No.</th>
+          <th>Profile</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Class</th>
+          <th>View</th>
+        </tr>
+      </thead>
+      
            {{#each student}}
+          <tbody>
           <tr>
             <td>{{counter}}</td>
             <td><img
@@ -65,10 +83,24 @@
             <td>{{this.class}}</td>
             <td><a href="/teacher/student-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
           </tr>
+          
+        </tbody>
         {{/each}}
+    </table>
         {{else}}
-
+           <table>
+      <thead>
+        <tr>
+          <th>Sl No.</th>
+          <th>Profile</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Class</th>
+        </tr>
+      </thead>
+      <tbody>
          {{#each student}}
+        
           <tr>
             <td>{{counter}}</td>
             <td><img
@@ -80,13 +112,12 @@
             <td>{{this.age}}</td>
             <td>{{this.class}}</td>
           </tr>
+         
         {{/each}}
-        {{/if}}
-       
-
-        <!-- Add more rows as needed -->
-      </tbody>
+         </tbody>
     </table>
+        {{/if}}
+      
   </div>
 
 </section>
