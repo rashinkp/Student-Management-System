@@ -297,6 +297,16 @@ router.get('/logout',verifyLoginPrincipal,(req,res)=>{
   req.session.principal = null
   res.redirect('/principal/')
 })
+router.get('/req-admission',verifyLoginPrincipal,async(req,res)=>{
+  try {
+    const requests = await reqHelpers.getAllAdmissionRequest();
+    res.render('principal/req-admission', { principal: true, requests });
 
+} catch (error) {
+    console.error('Error in /request-announcements route:', error);
+    res.status(500).send('Internal Server Error');
+}
+  
+})
 
 module.exports = router;

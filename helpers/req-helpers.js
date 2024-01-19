@@ -76,4 +76,27 @@ module.exports = {
           throw error;
         }
       },
+      insertRequestAdmission: (requestDetails) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const reqAdmissionCollection = await db.get().collection(COLLECTION.REQ_ADMISSION);
+                const result = await reqAdmissionCollection.insertOne(requestDetails);
+                resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    },
+    getAllAdmissionRequest: async () => {
+      try {
+          const reqAdmissionCollection = await db.get().collection(COLLECTION.REQ_ADMISSION);
+
+          // Fetch requests and sort them by 'date' field in descending order
+          const requests = await reqAdmissionCollection.find().sort({ date: -1 }).toArray();
+
+          return requests;
+      } catch (error) {
+          throw error;
+      }
+  },
 };

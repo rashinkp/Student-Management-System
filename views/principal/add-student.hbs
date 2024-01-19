@@ -74,9 +74,20 @@
     <div class="container ">
          <div class="form-box">
             <div class="row">
-                <h2 class="text-center text-primary my-3">Add Student</h2>
+                {{#if user}}
+                    <h2 class="text-center text-primary my-3">Take admission</h2>
+                {{else if principal}}
+                    <h2 class="text-center text-primary my-3">Add Student</h2>
+                {{/if}}
+                
             </div>
-        <form id="teacherForm" method="POST" action="/principal/add-student" enctype="multipart/form-data">
+        <form id="teacherForm" method="POST" 
+        {{#if principal}}
+        action="/principal/add-student" 
+        {{else if user}}
+        action="/req-admission"
+        {{/if}}
+        enctype="multipart/form-data">
            <div class="name-section">
                <div class="row">
                 <div class="col-md-6 col-sm-12">
@@ -126,9 +137,15 @@
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Create teacher's password" required>
+            <input type="password" id="password" name="password" placeholder="Create your password" required>
 
-            <button type="submit">Add Student</button>
+            <button type="submit">
+                {{#if user}}
+                    Req For admission
+                {{else if principal}}
+                    Add Student
+                {{/if}}
+            </button>
         </form>
     </div>
     </div>
