@@ -171,4 +171,26 @@ router.get("/attendance", verifyLoginTeacher, (req, res) => {
   });
 });
 
+router.get('/view-class/:class', verifyLoginTeacher, async (req, res) => {
+  try {
+    // Extract the class value from the route parameter
+    const studentClass = req.params.class;
+
+    if (!studentClass) {
+      // If class value is not provided, you can handle it as per your application logic
+      return res.status(400).send('Class parameter not provided');
+    }
+
+    // Get students in the specified class
+    const students = await studentHelpers.getAllStudentsByClass(studentClass);
+
+    let staff = req.session.teacher;
+    res.render('teacher/view-class', { teacher: true, staff, students });
+  } catch (error) {
+    console.error('Error in /view-class route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
 module.exports = router;

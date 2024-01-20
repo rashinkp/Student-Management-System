@@ -150,4 +150,28 @@ module.exports = {
   comparePasswords: async (plainPassword, hashedPassword) => {
     return await bcrypt.compare(plainPassword, hashedPassword);
   },
+
+  getAllStudentsByClass: (studentClass) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let filter = {}; // Default filter to get all students
+  
+        // If a class is provided, use it as a filter
+        if (studentClass) {
+          filter = { class: studentClass };
+        }
+  
+        let students = await db
+          .get()
+          .collection(COLLECTION.STUDENTS_COLLECTION)
+          .find(filter)
+          .toArray();
+  
+        resolve(students);
+      } catch (error) {
+        console.error("Error in getAllStudents:", error);
+        reject(error);
+      }
+    });
+  },
 };

@@ -59,10 +59,12 @@
       <thead>
         <tr>
           <th>Sl No.</th>
+          <th>Admission Number</th>
           <th>Profile</th>
           <th>Name</th>
           <th>Age</th>
           <th>Class</th>
+          <th>Roll Number</th>
           <th>View</th>
         </tr>
       </thead>
@@ -70,6 +72,7 @@
         {{#each student}}
         <tr>
           <td>{{counter}}</td>
+          <td>{{this.admissionNo}}</td>
           <td><img
               src="/images/student/{{this._id}}.jpg"
               alt="Profile Image"
@@ -78,6 +81,7 @@
           <td>{{this.firstName}} {{this.secondName}}</td>
           <td>{{this.age}}</td>
           <td>{{this.class}}</td>
+          <td>{{this.rollNumber}}</td>
           <td><a href="/teacher/student-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
         </tr>
         {{/each}}
