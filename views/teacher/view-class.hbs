@@ -12,18 +12,21 @@
 
 <section>
     <div class="container">
-        
+     <div class="top-section">
+      <h2>Working Days</h2>
+      <a class="btn btn-primary" onclick="updateWorkingDays(-1)">-</a>
+      <label for="total-working-days" id="working-days-label">{{workingDays}}</label>
+      <a class="btn btn-primary" onclick="updateWorkingDays(1)">+</a>
     </div>
-</section>
-<table>
+        <table>
       <thead>
         <tr>
-          <th>Admission Number</th>
-          <th>Roll Number</th>
+          <th>Admission</th>
+          <th>Roll No</th>
           <th>Profile</th>
           <th>Name</th>
-          <th>Age</th>
-          <th>Class</th>
+          <th>Attendance</th>
+          <th>Percentage</th>
           <th>View</th>
         </tr>
       </thead>
@@ -39,10 +42,39 @@
               style="width: 50px; height: 50px; border-radius: 50%;"
             /></td>
           <td>{{this.firstName}} {{this.secondName}}</td>
-          <td>{{this.age}}</td>
-          <td>{{this.class}}</td>
+          <td>
+            <a class="btn btn-primary">-</a>
+            <label for="">20</label>
+            <a class="btn btn-primary">+</a>
+          </td>
+          <td><label for="percentage">100</label></td>
           <td><a href="/teacher/student-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
         </tr>
         {{/each}}
       </tbody>
     </table>
+    </div>
+</section>
+
+<script>
+  // Function to update the working days
+  function updateWorkingDays(change) {
+    var workingDaysLabel = document.getElementById('working-days-label');
+    var currentWorkingDays = parseInt(workingDaysLabel.textContent);
+    var newWorkingDays = currentWorkingDays + change;
+    newWorkingDays = Math.max(newWorkingDays, 0);
+    workingDaysLabel.textContent = newWorkingDays;
+
+    // Send an asynchronous request to update working days on the server
+    fetch('/teacher/update-working-days', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ workingDays: newWorkingDays }),
+    })
+      .then(response => response.json())
+      .then(data => console.log('Updated working days:', data.workingDays))
+      .catch(error => console.error('Error updating working days:', error));
+  }
+</script>

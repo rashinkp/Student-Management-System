@@ -173,24 +173,42 @@ router.get("/attendance", verifyLoginTeacher, (req, res) => {
 
 router.get('/view-class/:class', verifyLoginTeacher, async (req, res) => {
   try {
-    // Extract the class value from the route parameter
     const studentClass = req.params.class;
 
     if (!studentClass) {
-      // If class value is not provided, you can handle it as per your application logic
       return res.status(400).send('Class parameter not provided');
     }
 
+    // Get the working days from the database
+    const workingDays = await teacherHelpers.getWorkingDays();
+    
     // Get students in the specified class
     const students = await studentHelpers.getAllStudentsByClass(studentClass);
 
     let staff = req.session.teacher;
-    res.render('teacher/view-class', { teacher: true, staff, students });
+    res.render('teacher/view-class', { teacher: true, staff, students, workingDays });
   } catch (error) {
     console.error('Error in /view-class route:', error);
     res.status(500).send('Internal Server Error');
   }
 });
+
+// POST route to update working days
+router.post('/update-working-days', verifyLoginTeacher, async (req, res) => {
+  try {
+    const { workingDays } = req.body;
+
+    // Update the working days in the database
+    await teacherHelpers.updateWorkingDays(workingDays);
+
+    res.json({ success: true, workingDays });
+  } catch (error) {
+    console.error('Error updating working days:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+
 
 
 module.exports = router;

@@ -108,5 +108,31 @@ module.exports = {
   comparePasswords: async (plainPassword, hashedPassword) => {
     return await bcrypt.compare(plainPassword, hashedPassword);
   },
+
+  getWorkingDays: async () => {
+    try {
+      const workingDaysDoc = await db
+        .get()
+        .collection(COLLECTION.WORKING_DAYS)
+        .findOne();
+
+      return workingDaysDoc ? workingDaysDoc.days : 0;
+    } catch (error) {
+      console.error('Error in getWorkingDays:', error);
+      throw error;
+    }
+  },
+
+  updateWorkingDays: async (newWorkingDays) => {
+    try {
+      await db
+        .get()
+        .collection(COLLECTION.WORKING_DAYS)
+        .updateOne({}, { $set: { days: newWorkingDays } }, { upsert: true });
+    } catch (error) {
+      console.error('Error in updateWorkingDays:', error);
+      throw error;
+    }
+  },
     
 };

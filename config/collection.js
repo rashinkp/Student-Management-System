@@ -4,6 +4,7 @@ module.exports = {
     STUDENTS_COLLECTION:'students',
     ANNOUNCEMENT_COLLECTION:'announcement',
     REQ_ANNOUNCEMENT_COLLECTION:'req-announcement',
-    REQ_ADMISSION:"req-admission"
+    REQ_ADMISSION:"req-admission",
+    WORKING_DAYS:"working_days"
     
 }

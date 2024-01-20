@@ -37,6 +37,20 @@ module.exports = {
         // Assign the new roll number
         student.rollNumber = newRollNumber;
 
+        student.attendance = {
+          present: 0,
+          percentage: 0,
+        };
+
+        student.marks = {
+          english: 0,
+          secondLanguage: 0,
+          maths: 0,
+          it: 0,
+          science: 0,
+          socialScience: 0,
+        };
+
         // Hash the password
         student.password = await bcrypt.hash(student.password, 10);
 
@@ -154,9 +168,7 @@ module.exports = {
   getAllStudentsByClass: (studentClass) => {
     return new Promise(async (resolve, reject) => {
       try {
-        let filter = {}; // Default filter to get all students
-  
-        // If a class is provided, use it as a filter
+        let filter = {}; 
         if (studentClass) {
           filter = { class: studentClass };
         }
@@ -174,4 +186,5 @@ module.exports = {
       }
     });
   },
+  
 };
