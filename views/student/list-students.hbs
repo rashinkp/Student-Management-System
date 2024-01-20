@@ -13,20 +13,49 @@
 <section>
   <div class="container mt-5">
     <div class="row mb-5">
-      
-        {{#if principal}}
-        <div class="col-12">
-          <a href="/principal/add-student" class="btn btn-success">Add Student</a>
-          <a href="/principal/req-admission" class="btn btn-primary">Req for Admission</a>
-          </div>
-        {{/if}}
-      
+      {{#if principal}}
+      <div class="col-12">
+        <a href="/principal/add-student" class="btn btn-success">Add Student</a>
+        <a href="/principal/req-admission" class="btn btn-primary">Req for Admission</a>
+      </div>
+      {{/if}}
     </div>
-   
 
-
-        {{#if principal}}
-          <table>
+    {{#if principal}}
+    <table>
+      <thead>
+        <tr>
+          <th>Sl No.</th>
+          <th>Admission Number</th>
+          <th>Profile</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Class</th>
+          <th>Roll Number</th>
+          <th>View</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each student}}
+        <tr>
+          <td>{{counter}}</td>
+          <td>{{this.admissionNo}}</td>
+          <td><img
+              src="/images/student/{{this._id}}.jpg"
+              alt="Profile Image"
+              style="width: 50px; height: 50px; border-radius: 50%;"
+            /></td>
+          <td>{{this.firstName}} {{this.secondName}}</td>
+          <td>{{this.age}}</td>
+          <td>{{this.class}}</td>
+          <td>{{this.rollNumber}}</td>
+          <td><a href="/principal/student-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    {{else if teacher}}
+    <table>
       <thead>
         <tr>
           <th>Sl No.</th>
@@ -37,59 +66,25 @@
           <th>View</th>
         </tr>
       </thead>
-      
-        
       <tbody>
-          {{#each student}}
-          <tr>
-            <td>{{counter}}</td>
-            <td><img
-                src="/images/student/{{this._id}}.jpg"
-                alt="Profile Image"
-                style="width: 50px; height: 50px; border-radius: 50%;"
-              /></td>
-            <td>{{this.firstName}} {{this.secondName}}</td>
-            <td>{{this.age}}</td>
-            <td>{{this.class}}</td>
-            <td><a href="/principal/student-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
-          </tr>
-          
-        {{/each}}
-        </tbody>
-    </table>
-        {{else if teacher}}
-         <table>
-      <thead>
+        {{#each student}}
         <tr>
-          <th>Sl No.</th>
-          <th>Profile</th>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Class</th>
-          <th>View</th>
+          <td>{{counter}}</td>
+          <td><img
+              src="/images/student/{{this._id}}.jpg"
+              alt="Profile Image"
+              style="width: 50px; height: 50px; border-radius: 50%;"
+            /></td>
+          <td>{{this.firstName}} {{this.secondName}}</td>
+          <td>{{this.age}}</td>
+          <td>{{this.class}}</td>
+          <td><a href="/teacher/student-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
         </tr>
-      </thead>
-      
-           {{#each student}}
-          <tbody>
-          <tr>
-            <td>{{counter}}</td>
-            <td><img
-                src="/images/student/{{this._id}}.jpg"
-                alt="Profile Image"
-                style="width: 50px; height: 50px; border-radius: 50%;"
-              /></td>
-            <td>{{this.firstName}} {{this.secondName}}</td>
-            <td>{{this.age}}</td>
-            <td>{{this.class}}</td>
-            <td><a href="/teacher/student-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
-          </tr>
-          
-        </tbody>
         {{/each}}
+      </tbody>
     </table>
-        {{else}}
-           <table>
+    {{else}}
+    <table>
       <thead>
         <tr>
           <th>Sl No.</th>
@@ -100,25 +95,21 @@
         </tr>
       </thead>
       <tbody>
-         {{#each student}}
-        
-          <tr>
-            <td>{{counter}}</td>
-            <td><img
-                src="/images/student/{{this._id}}.jpg"
-                alt="Profile Image"
-                style="width: 50px; height: 50px; border-radius: 50%;"
-              /></td>
-            <td>{{this.firstName}} {{this.secondName}}</td>
-            <td>{{this.age}}</td>
-            <td>{{this.class}}</td>
-          </tr>
-         
+        {{#each student}}
+        <tr>
+          <td>{{counter}}</td>
+          <td><img
+              src="/images/student/{{this._id}}.jpg"
+              alt="Profile Image"
+              style="width: 50px; height: 50px; border-radius: 50%;"
+            /></td>
+          <td>{{this.firstName}} {{this.secondName}}</td>
+          <td>{{this.age}}</td>
+          <td>{{this.class}}</td>
+        </tr>
         {{/each}}
-         </tbody>
+      </tbody>
     </table>
-        {{/if}}
-      
+    {{/if}}
   </div>
-
 </section>

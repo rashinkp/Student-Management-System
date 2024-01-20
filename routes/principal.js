@@ -139,27 +139,27 @@ router.get('/add-student',verifyLoginPrincipal,(req,res)=>{
 
 router.post('/add-student', async (req, res) => {
   try {
-    if (req.file) {
-      let image = req.file;
-      const studentData = req.body;
-      await studentHelpers.addStudent(studentData, (id) => {
-        const destinationPath = path.join(__dirname, '../public/images/student', id + '.jpg');
-        fs.rename(image.path, destinationPath, (err) => {
-          if (!err) {
-            res.redirect('/principal/list-students');
-          } else {
-            console.log(err);
-            res.status(500).send('Error moving the file');
-          }
-        });
-      });
-    } else {
-      console.log('No file uploaded');
-      res.status(400).send('No file uploaded');
-    }
+      if (req.file) {
+          let image = req.file;
+          const studentData = req.body;
+          await studentHelpers.addStudent(studentData, (id, admissionNo) => {
+              const destinationPath = path.join(__dirname, '../public/images/student', id + '.jpg');
+              fs.rename(image.path, destinationPath, (err) => {
+                  if (!err) {
+                      res.redirect('/principal/list-students');
+                  } else {
+                      console.log(err);
+                      res.status(500).send('Error moving the file');
+                  }
+              });
+          });
+      } else {
+          console.log('No file uploaded');
+          res.status(400).send('No file uploaded');
+      }
   } catch (error) {
-    console.error('Error in /add-student route:', error);
-    res.status(500).send('Internal Server Error');
+      console.error('Error in /add-student route:', error);
+      res.status(500).send('Internal Server Error');
   }
 });
 
@@ -308,5 +308,48 @@ router.get('/req-admission',verifyLoginPrincipal,async(req,res)=>{
 }
   
 })
+
+router.get('/approve-admission/:id', verifyLoginPrincipal, async (req, res) => {
+  try {
+    const requestId = req.params.id;
+
+    // Call the helper method to move the request to the student collection
+    const result = await reqHelpers.moveAdmissionRequestToStudent(requestId);
+
+    if (result) {
+      res.redirect('/principal/list-students');
+    } else {
+      res.status(404).send('Request not found');
+    }
+  } catch (error) {
+    console.error('Error in /approve-admission route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+router.get('/reject-admission/:id', verifyLoginPrincipal, async (req, res) => {
+  try {
+    const requestId = req.params.id;
+
+    // Call the helper method to remove the request from the req_admission collection
+    const removedRequest = await reqHelpers.removeAdmissionRequest(requestId);
+
+    // Remove the image if the request was found
+    if (removedRequest) {
+      const imagePath = path.join(__dirname, '../public/images/student', requestId + '.jpg');
+      fs.unlink(imagePath, (err) => {
+        if (err) {
+          console.error('Error removing image:', err);
+        }
+        res.redirect('/principal/req-admission');
+      });
+    } else {
+      res.status(404).send('Request not found');
+    }
+  } catch (error) {
+    console.error('Error in /reject-admission route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 module.exports = router;

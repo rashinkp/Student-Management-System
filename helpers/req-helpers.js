@@ -99,4 +99,68 @@ module.exports = {
           throw error;
       }
   },
+  moveAdmissionRequestToStudent: async (requestId) => {
+    try {
+        const reqAdmissionCollection = await db.get().collection(COLLECTION.REQ_ADMISSION);
+        const studentCollection = await db.get().collection(COLLECTION.STUDENTS_COLLECTION);
+
+        const request = await reqAdmissionCollection.findOne({ _id: new ObjectId(requestId) });
+
+        if (request) {
+            // Generate a unique admission number for the new student
+            const lastAdmissionNumber = await studentCollection
+                .find()
+                .sort({ admissionNo: -1 })
+                .limit(1)
+                .toArray();
+
+            const lastAdmission = lastAdmissionNumber[0];
+            const lastAdmissionNo = lastAdmission ? lastAdmission.admissionNo : 999; // Default to 999 if NaN
+
+            const newAdmissionNumber = isNaN(lastAdmissionNo) ? 1000 : lastAdmissionNo + 1;
+
+            // Find the last roll number for the given class
+            const lastRollNumber = await studentCollection
+                .find({ class: request.class })
+                .sort({ rollNumber: -1 })
+                .limit(1)
+                .toArray();
+
+            const lastRoll = lastRollNumber[0];
+            const newRollNumber = lastRoll && lastRoll.rollNumber !== undefined ? lastRoll.rollNumber + 1 : 1;
+
+            // Assign the admission number and roll number to the new student
+            request.admissionNo = newAdmissionNumber;
+            request.rollNumber = newRollNumber;
+
+            // Insert the request into the student collection
+            const result = await studentCollection.insertOne(request);
+
+            // Remove the request from the req_admission collection
+            await reqAdmissionCollection.deleteOne({ _id: new ObjectId(requestId) });
+
+            return result;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        throw error;
+    }
+},
+
+  removeAdmissionRequest: async (requestId) => {
+    try {
+      const reqAdmissionCollection = await db.get().collection(COLLECTION.REQ_ADMISSION);
+
+      // Find the request in the req_admission collection
+      const request = await reqAdmissionCollection.findOne({ _id: new ObjectId(requestId) });
+
+      // Remove the request from the req_admission collection
+      await reqAdmissionCollection.deleteOne({ _id: new ObjectId(requestId) });
+
+      return request;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
