@@ -179,4 +179,61 @@ module.exports = {
       throw error;
     }
   },
+
+  insertRequestTeacher:(requestDetails) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const reqTeacher = await db.get().collection(COLLECTION.REQ_TEACHER);
+        const result = await reqTeacher.insertOne(requestDetails);
+        resolve(result);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+  getAllTeacherReq:async () => {
+    try {
+        const reqTeacherCollection = await db.get().collection(COLLECTION.REQ_TEACHER);
+
+        // Fetch requests and sort them by 'date' field in descending order
+        const requests = await reqTeacherCollection.find().sort({ date: -1 }).toArray();
+
+        return requests;
+    } catch (error) {
+        throw error;
+    }
+},
+moveTeacherRequestToTeacher:async (requestId) => {
+  try {
+    const reqTeachercollection = await db.get().collection(COLLECTION.REQ_TEACHER);
+    const teacherCollection = await db.get().collection(COLLECTION.TEACHERS_COLLECTION);
+
+    const request = await reqTeachercollection.findOne({ _id: new ObjectId(requestId) });
+
+      // Insert the request into the student collection
+      const result = await teacherCollection.insertOne(request);
+
+      // Remove the request from the req_admission collection
+      await reqTeachercollection.deleteOne({ _id: new ObjectId(requestId) });
+
+      return result;
+  } catch (error) {
+    throw error;
+  }
+},
+removeTeacherRequest: async (requestId) => {
+  try {
+    const reqTeacherCollection = await db.get().collection(COLLECTION.REQ_TEACHER);
+
+    // Find the request in the req_admission collection
+    const request = await reqTeacherCollection.findOne({ _id: new ObjectId(requestId) });
+
+    // Remove the request from the req_admission collection
+    await reqTeacherCollection.deleteOne({ _id: new ObjectId(requestId) });
+
+    return request;
+  } catch (error) {
+    throw error;
+  }
+},
 };

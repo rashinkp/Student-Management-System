@@ -16,14 +16,16 @@
       {{#if principal}}
         <div class="col-12">
           <a href="/principal/add-teacher" class="btn btn-success">Add Teacher</a>
+          <a href="/principal/req-teacher" class="btn btn-primary">See Requests from Teacher</a>
         </div>
       {{/if}}
       </div>
     
-        {{#if principal}}
-        {{#each teachers}}
+        
     <table>
       <thead>
+        {{#if principal}}
+        
         <tr>
           <th>Sl No.</th>
           <th>Profile</th>
@@ -34,7 +36,7 @@
       </thead>
       <tbody>
         
-         
+         {{#each teachers}}
           <tr>
             <td>{{counter}}</td>
             <td><img
@@ -48,13 +50,9 @@
           </tr>
 
           </tbody>
-    </table>
-  </div>
-        {{/each}}
+          {{/each}}
         {{else if teacher}}
         {{#each teachers}}
-    <table>
-      <thead>
         <tr>
           <th>Sl No.</th>
           <th>Profile</th>
@@ -76,13 +74,10 @@
             <td><a href="/teacher/teacher-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
           </tr>
            </tbody>
-    </table>
-  </div>
-        {{/each}}
+            {{/each}}
+       
         {{else}}
         {{#each teachers}}
-    <table>
-      <thead>
         <tr>
           <th>Sl No.</th>
           <th>Profile</th>
@@ -102,11 +97,11 @@
             <td>{{this.age}}</td>
           </tr>
            </tbody>
-    </table>
-  </div>
+  
         {{/each}}
         {{/if}}
 
+        </table>
         <!-- Add more rows as needed -->
      
 

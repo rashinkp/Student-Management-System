@@ -78,8 +78,9 @@ router.get("/student-profile/:id", verifyLoginTeacher, async (req, res) => {
   try {
     const studentId = req.params.id;
     const student = await studentHelpers.getStudentById(studentId);
+    const workingDays = await teacherHelpers.getWorkingDays();
     let staff = req.session.teacher;
-    res.render("principal/student-profile", { student, teacher: true, staff });
+    res.render("principal/student-profile", { student, teacher: true, staff,workingDays });
   } catch (error) {
     console.error("Error in /student-profile route:", error);
     res.status(500).send("Internal Server Error");
@@ -224,6 +225,7 @@ router.post('/update-present-days/:id', verifyLoginTeacher, async (req, res) => 
      console.error('Error updating present days:', error);
      res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
- });it
+ });
+
 
 module.exports = router;

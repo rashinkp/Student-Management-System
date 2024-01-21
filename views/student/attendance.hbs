@@ -35,45 +35,19 @@
         }
     </style>
 
-    <h1>Monthly Attendance</h1>
+    <h1>Attendance Report</h1>
 
     <table id="attendanceTable">
         <thead>
             <tr>
-                <th>Month</th>
                 <th>Total Working Days</th>
                 <th>Present Days</th>
                 <th style="text-align: center;">Percentage</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Table rows will be dynamically added here using JavaScript -->
+            <td>{{workingDays}}</td>
+            <td>{{student_data.attendance.present}}</td>
+            <td>{{student_data.attendance.percentage}}</td>
         </tbody>
     </table>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Sample data, you can replace it with data from your server or any other source
-            const monthlyData = [
-                { month: 'January', totalDays: 31, presentDays: 25 },
-                { month: 'February', totalDays: 28, presentDays: 22 },
-                // Add more months as needed
-            ];
-
-            const tableBody = document.querySelector('#attendanceTable tbody');
-
-            // Populate the table with data
-            monthlyData.forEach(month => {
-                const percentage = (month.presentDays / month.totalDays) * 100;
-                const row = `
-                    <tr>
-                        <td>${month.month}</td>
-                        <td>${month.totalDays}</td>
-                        <td>${month.presentDays}</td>
-                        <td>${percentage.toFixed(2)}%</td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
-        });
-    </script>

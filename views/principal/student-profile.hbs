@@ -57,33 +57,9 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>
-                    <a
-                      href="javascript:void(0);"
-                      class="btn btn-primary"
-                      onclick="updateValue('subtract', 'attendance', 'totalDays')"
-                    >-</a>
-                    <span id="totalDays">29</span>
-                    <a
-                      href="javascript:void(0);"
-                      class="btn btn-primary"
-                      onclick="updateValue('add', 'attendance', 'totalDays')"
-                    >+</a>
-                  </td>
-                  <td>
-                    <a
-                      href="javascript:void(0);"
-                      class="btn btn-primary"
-                      onclick="updateValue('subtract', 'attendance', 'presentDays')"
-                    >-</a>
-                    <span id="presentDays">20</span>
-                    <a
-                      href="javascript:void(0);"
-                      class="btn btn-primary"
-                      onclick="updateValue('add', 'attendance', 'presentDays')"
-                    >+</a>
-                  </td>
-                  <td id="attendancePercentage">75%</td>
+                  <td>{{workingDays}}</td>
+                  <td>{{student.attendance.present}}</td>
+                  <td id="attendancePercentage">{{student.attendance.percentage}}</td>
                 </tr>
 
               </tbody>

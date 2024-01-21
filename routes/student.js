@@ -104,10 +104,11 @@ router.get('/announcements',verifyLoginStudent,async(req,res)=>{
 }
 })
 
-router.get('/attendance',verifyLoginStudent,(req,res)=>{
+router.get('/attendance',verifyLoginStudent,async(req,res)=>{
   student_data = req.session.student;
+  const workingDays = await teacherHelpers.getWorkingDays();
 
-  res.render('student/attendance',{student_check:true,student_data});
+  res.render('student/attendance',{student_check:true,student_data,workingDays});
 })
 
 module.exports = router;

@@ -80,4 +80,37 @@ router.post('/user-signup', (req, res) => {
       res.redirect('/');
   });
 });
+
+router.get('/req-teacher',(req,res)=>{
+  res.render('principal/add-teacher',{user:true});
+})
+
+router.post('/req-teacher',async(req,res)=>{
+  try {
+    if (req.file) {
+      let image = req.file;
+      const teacherData = req.body;
+      const result = await reqHelpers.insertRequestTeacher(teacherData);
+
+      const id = result.insertedId;
+
+      const destinationPath = path.join(__dirname, '../public/images/teacher', id + '.jpg');
+      
+      fs.rename(image.path, destinationPath, (err) => {
+        if (!err) {
+          res.redirect('/');
+        } else {
+          console.log(err);
+          res.status(500).send('Error moving the file');
+        }
+      });
+    } else {
+      console.log('No file uploaded');
+      res.status(400).send('No file uploaded');
+    }
+  } catch (error) {
+    console.error('Error in /add-student route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+})
 module.exports = router;

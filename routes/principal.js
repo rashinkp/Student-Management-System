@@ -352,4 +352,53 @@ router.get('/reject-admission/:id', verifyLoginPrincipal, async (req, res) => {
   }
 });
 
+router.get('/req-teacher',verifyLoginPrincipal,async(req,res)=>{
+  const requests = await reqHelpers.getAllTeacherReq();
+  res.render('principal/req-teacher',{principal:true,requests})
+})
+//>>>>
+
+
+router.get('/approve-teacher/:id', verifyLoginPrincipal, async (req, res) => {
+  try {
+    const requestId = req.params.id;
+
+    // Call the helper method to move the request to the student collection
+    const result = await reqHelpers.moveTeacherRequestToTeacher(requestId);
+
+    if (result) {
+      res.redirect('/principal/list-teachers');
+    } else {
+      res.status(404).send('Request not found');
+    }
+  } catch (error) {
+    console.error('Error in /approve-teacher route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+router.get('/reject-teacher/:id', verifyLoginPrincipal, async (req, res) => {
+  try {
+    const requestId = req.params.id;
+
+    // Call the helper method to remove the request from the req_admission collection
+    const removedRequest = await reqHelpers.removeTeacherRequest(requestId);
+
+    // Remove the image if the request was found
+    if (removedRequest) {
+      const imagePath = path.join(__dirname, '../public/images/teacher', requestId + '.jpg');
+      fs.unlink(imagePath, (err) => {
+        if (err) {
+          console.error('Error removing image:', err);
+        }
+        res.redirect('/principal/list-teachers');
+      });
+    } else {
+      res.status(404).send('Request not found');
+    }
+  } catch (error) {
+    console.error('Error in /reject-admission route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 module.exports = router;

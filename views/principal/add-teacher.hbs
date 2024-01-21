@@ -74,9 +74,21 @@
     <div class="container ">
          <div class="form-box">
             <div class="row">
-                <h2 class="text-center text-primary my-3">Add Teacher</h2>
+                <h2 class="text-center text-primary my-3">
+                    {{#if user}}
+                    Request
+                    {{else if principal}}
+                    Add Teacher
+                    {{/if}}
+                    </h2>
             </div>
-        <form id="teacherForm" method="POST" action="/principal/add-teacher" enctype="multipart/form-data">
+        <form id="teacherForm" method="POST" 
+        {{#if principal}}
+            action="/principal/add-teacher"
+        {{else if user}}
+            action="/req-teacher"
+        {{/if}}
+         enctype="multipart/form-data">
            <div class="name-section">
                <div class="row">
                 <div class="col-md-6 col-sm-12">
@@ -106,21 +118,9 @@
             <label for="place">Place:</label>
             <input type="text" id="place" name="place" placeholder="Enter your place" required>
 
-            <label for="state">State:</label>
-            <select id="state" name="state" required>
-                <option value="" disabled selected>Select your state</option>
-                <option value="Andhra Pradesh">Andhra Pradesh</option>
-                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                <option value="Assam">Assam</option>
-            </select>
 
-            <label for="state">Specified Section:</label>
-            <select id="state" name="section" required>
-                <option value="" disabled selected>Select your section</option>
-                <option value="LP">LP</option>
-                <option value="UP">UP</option>
-                <option value="HS">HS</option>
-            </select>
+            <label for="state">Class:</label>
+            <input type="text" id="class" name="class" placeholder="Enter class which you want to teach">
 
             <label for="state">Specified Subject:</label>
             <select id="state" name="subject" required>
@@ -128,6 +128,9 @@
                 <option value="Maths">Maths</option>
                 <option value="Computer">Computer</option>
                 <option value="English">English</option>
+                <option value="SecondLanguage">Second Language</option>
+                <option value="BasicScience">Basic Science</option>
+                <option value="SocialScience">SocialScience</option>
             </select>
 
             <label for="image">Upload Image:</label>
@@ -142,7 +145,13 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" placeholder="Create teacher's password" required>
 
-            <button type="submit">Add Teacher</button>
+            <button type="submit">
+                {{#if principal}}
+                Add Teacher
+                {{else if user}}
+                Req as Teacher
+                {{/if}}
+                </button>
         </form>
     </div>
     </div>

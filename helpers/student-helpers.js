@@ -199,10 +199,7 @@ module.exports = {
   updatePresentDays: async (newPresentDays, studentId, workingDays) => {
     try {
         newPresentDays = newPresentDays || 0;
-        const attendance = {
-            present: newPresentDays,
-            percentage: calculateAttendancePercentage(newPresentDays, workingDays),
-        };
+        const percentage = calculateAttendancePercentage(newPresentDays, workingDays).toFixed(2);
 
         await db
             .get()
@@ -211,18 +208,19 @@ module.exports = {
                 { _id: new ObjectId(studentId) },
                 {
                     $set: {
-                        'attendance.present': attendance.present,
-                        'attendance.percentage': attendance.percentage,
+                        'attendance.present': newPresentDays,
+                        'attendance.percentage': parseFloat(percentage), // Convert back to a number
                     },
                 }
             );
 
-        return attendance; // Return the updated attendance object
+        return { present: newPresentDays, percentage }; // Return the updated attendance object
     } catch (error) {
         console.error('Error in updatePresentDays:', error);
         throw error;
     }
 },
+
 
   
 };
