@@ -43,11 +43,13 @@
             /></td>
           <td>{{this.firstName}} {{this.secondName}}</td>
           <td>
-            <a class="btn btn-primary">-</a>
-            <label for="">20</label>
-            <a class="btn btn-primary">+</a>
+          <a class="btn btn-primary" onclick="updatePresent('{{this._id}}', -1)">-</a>
+          <label for="present days label" id="present-days-label-{{this._id}}">
+          {{#if this.attendance}}{{this.attendance}}{{else}}0{{/if}}
+          </label>
+          <a class="btn btn-primary" onclick="updatePresent('{{this._id}}', 1)">+</a>
           </td>
-          <td><label for="percentage">100</label></td>
+          <td><label for="percentage">75</label></td>
           <td><a href="/teacher/student-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
         </tr>
         {{/each}}
@@ -77,4 +79,30 @@
       .then(data => console.log('Updated working days:', data.workingDays))
       .catch(error => console.error('Error updating working days:', error));
   }
+  function updatePresent(studentId, change) {
+  var presentDaysLabel = document.getElementById('present-days-label-' + studentId);
+  var currentPresentDays = parseInt(presentDaysLabel.textContent);
+  
+  // Assuming you have a variable storing the working days
+  var workingDays = parseInt(document.getElementById('working-days-label').textContent);
+
+  var newPresentDays = currentPresentDays + change;
+  
+  // Ensure that the new present days is within the bounds of 0 and workingDays
+  newPresentDays = Math.max(0, Math.min(newPresentDays, workingDays));
+  
+  presentDaysLabel.textContent = newPresentDays;
+
+  // Send an asynchronous request to update present days on the server
+  fetch('/teacher/update-present-days/' + studentId, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ presentDays: newPresentDays }),
+  })
+    .then(response => response.json())
+    .then(data => console.log('Updated present days:', data.presentDays))
+    .catch(error => console.error('Error updating present days:', error));
+}
 </script>

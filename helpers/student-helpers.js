@@ -37,10 +37,7 @@ module.exports = {
         // Assign the new roll number
         student.rollNumber = newRollNumber;
 
-        student.attendance = {
-          present: 0,
-          percentage: 0,
-        };
+        student.attendance = 0;
 
         student.marks = {
           english: 0,
@@ -186,5 +183,17 @@ module.exports = {
       }
     });
   },
+  updatePresentDays: async (newPresentDays, studentId) => {
+    try {
+        newPresentDays = newPresentDays || 0; 
+        await db
+            .get()
+            .collection(COLLECTION.STUDENTS_COLLECTION)
+            .updateOne({ _id: new ObjectId(studentId) }, { $set: { attendance: newPresentDays } });
+    } catch (error) {
+        console.error('Error in updatePresentDays:', error);
+        throw error;
+    }
+},
   
 };
