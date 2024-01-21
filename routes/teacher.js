@@ -210,18 +210,20 @@ router.post('/update-working-days', verifyLoginTeacher, async (req, res) => {
 
 router.post('/update-present-days/:id', verifyLoginTeacher, async (req, res) => {
   try {
-    const { presentDays } = req.body;
-    const studentId = req.params.id; // Extract student ID from the URL parameter
-
-    // Update the present days in the database for the specific student
-    await studentHelpers.updatePresentDays(presentDays, studentId);
-
-    res.json({ success: true, presentDays });
+     const { presentDays } = req.body;
+     const studentId = req.params.id;
+     const workingDays = await teacherHelpers.getWorkingDays(); // Fetch working days from the database
+ 
+     await studentHelpers.updatePresentDays(presentDays, studentId, workingDays);
+ 
+     // Calculate the percentage and return it in the response
+     const percentage = (presentDays / workingDays) * 100;
+ 
+     res.json({ success: true, presentDays, percentage });
   } catch (error) {
-    console.error('Error updating present days:', error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+     console.error('Error updating present days:', error);
+     res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
-});
-
+ });it
 
 module.exports = router;

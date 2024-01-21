@@ -45,11 +45,11 @@
           <td>
           <a class="btn btn-primary" onclick="updatePresent('{{this._id}}', -1)">-</a>
           <label for="present days label" id="present-days-label-{{this._id}}">
-          {{#if this.attendance}}{{this.attendance}}{{else}}0{{/if}}
+          {{#if this.attendance}}{{this.attendance.present}}{{else}}0{{/if}}
           </label>
           <a class="btn btn-primary" onclick="updatePresent('{{this._id}}', 1)">+</a>
           </td>
-          <td><label for="percentage">75</label></td>
+          <td><label for="percentage" id="percentage-label-{{this._id}}">{{this.attendance.percentage}}%</label></td>
           <td><a href="/teacher/student-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
         </tr>
         {{/each}}
@@ -59,6 +59,12 @@
 </section>
 
 <script>
+  function calculateAttendancePercentage(presentDays, workingDays) {
+  if (workingDays === 0) {
+    return 0;
+  }
+  return (presentDays / workingDays) * 100;
+}
   // Function to update the working days
   function updateWorkingDays(change) {
     var workingDaysLabel = document.getElementById('working-days-label');
@@ -79,30 +85,43 @@
       .then(data => console.log('Updated working days:', data.workingDays))
       .catch(error => console.error('Error updating working days:', error));
   }
-  function updatePresent(studentId, change) {
-  var presentDaysLabel = document.getElementById('present-days-label-' + studentId);
-  var currentPresentDays = parseInt(presentDaysLabel.textContent);
   
-  // Assuming you have a variable storing the working days
-  var workingDays = parseInt(document.getElementById('working-days-label').textContent);
+  async function updatePresent(studentId, change) {
+ try {
+    var presentDaysLabel = document.getElementById('present-days-label-' + studentId);
+    var currentPresentDays = parseInt(presentDaysLabel.textContent);
+    var workingDaysLabel = document.getElementById('working-days-label');
+    var workingDays = parseInt(workingDaysLabel.textContent);
 
-  var newPresentDays = currentPresentDays + change;
-  
-  // Ensure that the new present days is within the bounds of 0 and workingDays
-  newPresentDays = Math.max(0, Math.min(newPresentDays, workingDays));
-  
-  presentDaysLabel.textContent = newPresentDays;
+    var newPresentDays = currentPresentDays + change;
+    newPresentDays = Math.max(0, Math.min(newPresentDays, workingDays));
+    presentDaysLabel.textContent = newPresentDays;
 
-  // Send an asynchronous request to update present days on the server
-  fetch('/teacher/update-present-days/' + studentId, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ presentDays: newPresentDays }),
-  })
-    .then(response => response.json())
-    .then(data => console.log('Updated present days:', data.presentDays))
-    .catch(error => console.error('Error updating present days:', error));
+    // Send an asynchronous request to update present days on the server
+    const response = await fetch('/teacher/update-present-days/' + studentId, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ presentDays: newPresentDays }),
+    });
+
+    const data = await response.json();
+    console.log('Updated present days:', data.presentDays);
+
+    // Update the percentage dynamically
+    const percentageLabel = document.getElementById('percentage-label-' + studentId);
+    percentageLabel.textContent = data.percentage.toFixed(2) + '%'; // Format to two decimal places
+
+    // Call the function to update the percentage
+    updatePercentage(studentId, newPresentDays, workingDays, data.percentage);
+ } catch (error) {
+    console.error('Error updating present days:', error);
+ }
+}
+
+function updatePercentage(studentId, presentDays, workingDays, newPercentage) {
+ const percentageLabel = document.getElementById('percentage-label-' + studentId);
+ percentageLabel.textContent = newPercentage.toFixed(2) + '%';
 }
 </script>

@@ -3,7 +3,15 @@ const db = require("../config/connection");
 const COLLECTION = require("../config/collection");
 const bcrypt = require("bcrypt");
 
+const calculateAttendancePercentage = (presentDays, workingDays) => {
+  if (workingDays === 0) {
+    return 0;
+  }
+  return (presentDays / workingDays) * 100;
+};
+
 module.exports = {
+  calculateAttendancePercentage,
   addStudent: async (student, callback) => {
     try {
         // Generate a unique admission number
@@ -37,7 +45,10 @@ module.exports = {
         // Assign the new roll number
         student.rollNumber = newRollNumber;
 
-        student.attendance = 0;
+        student.attendance = {
+          present: 0,
+          percentage:0
+        }
 
         student.marks = {
           english: 0,
@@ -183,17 +194,35 @@ module.exports = {
       }
     });
   },
-  updatePresentDays: async (newPresentDays, studentId) => {
+ 
+
+  updatePresentDays: async (newPresentDays, studentId, workingDays) => {
     try {
-        newPresentDays = newPresentDays || 0; 
+        newPresentDays = newPresentDays || 0;
+        const attendance = {
+            present: newPresentDays,
+            percentage: calculateAttendancePercentage(newPresentDays, workingDays),
+        };
+
         await db
             .get()
             .collection(COLLECTION.STUDENTS_COLLECTION)
-            .updateOne({ _id: new ObjectId(studentId) }, { $set: { attendance: newPresentDays } });
+            .updateOne(
+                { _id: new ObjectId(studentId) },
+                {
+                    $set: {
+                        'attendance.present': attendance.present,
+                        'attendance.percentage': attendance.percentage,
+                    },
+                }
+            );
+
+        return attendance; // Return the updated attendance object
     } catch (error) {
         console.error('Error in updatePresentDays:', error);
         throw error;
     }
 },
+
   
 };

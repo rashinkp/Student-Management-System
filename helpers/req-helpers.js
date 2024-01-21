@@ -144,7 +144,10 @@ module.exports = {
           // Add more subjects as needed
         };
   
-        request.attendance = 0
+        request.attendance = {
+          present: 0,
+          percentage:0
+        }
   
         // Insert the request into the student collection
         const result = await studentCollection.insertOne(request);
