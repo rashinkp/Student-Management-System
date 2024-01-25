@@ -18,7 +18,8 @@ const verifyLoginUser = (req, res, next) => {
 };
 /* GET users listing. */
 router.get('/', function(req, res) {
-  res.render('user/home',{});
+  user = req.session.user
+  res.render('user/home',{user});
 });
 router.get('/login',(req,res)=>{
   res.render('user/login')
@@ -113,4 +114,16 @@ router.post('/req-teacher',async(req,res)=>{
     res.status(500).send('Internal Server Error');
   }
 })
+
+router.get('/profile',verifyLoginUser,(req,res)=>{
+  user = req.session.user;
+  res.render('user/profile',{user})
+})
+
+router.get('/logout',verifyLoginUser,(req,res)=>{
+  req.session.user=null;
+  res.redirect('/');
+})
+
+
 module.exports = router;

@@ -36,8 +36,9 @@
       </thead>
       <tbody>
         
-         {{#each teachers}}
+         
           <tr>
+            {{#each teachers}}
             <td>{{counter}}</td>
             <td><img
                 src="/images/teacher/{{this._id}}.jpg"
@@ -52,7 +53,6 @@
           </tbody>
           {{/each}}
         {{else if teacher}}
-        {{#each teachers}}
         <tr>
           <th>Sl No.</th>
           <th>Profile</th>
@@ -63,6 +63,7 @@
       </thead>
       <tbody>
           <tr>
+            {{#each teachers}}
             <td>{{counter}}</td>
             <td><img
                 src="/images/teacher/{{this._id}}.jpg"
