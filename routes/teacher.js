@@ -213,7 +213,7 @@ router.post('/update-present-days/:id', verifyLoginTeacher, async (req, res) => 
   try {
      const { presentDays } = req.body;
      const studentId = req.params.id;
-     const workingDays = await teacherHelpers.getWorkingDays(); // Fetch working days from the database
+     const workingDays = await teacherHelpers.getWorkingDays();
  
      await studentHelpers.updatePresentDays(presentDays, studentId, workingDays);
  
@@ -227,5 +227,62 @@ router.post('/update-present-days/:id', verifyLoginTeacher, async (req, res) => 
   }
  });
 
+ router.get('/controls', verifyLoginTeacher, async (req, res) => {
+  try {
+      const staff = req.session.teacher;
+      const workingDays = await teacherHelpers.getWorkingDays();
+
+      // Fetch total marks for each subject
+      const totalMarks = await teacherHelpers.getAllSubjectMarks();
+
+      res.render('teacher/controls', { staff, teacher: true, workingDays, totalMarks });
+  } catch (error) {
+      console.error('Error in /controls route:', error);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
+
+// POST route to update total marks
+router.post('/update-total-marks', verifyLoginTeacher, async (req, res) => {
+  try {
+      const { subject, mark } = req.body;
+
+      // Check if a document for the subject exists in the collection
+      const existingSubject = await teacherHelpers.getSubjectMark(subject);
+
+      if (existingSubject) {
+          // Subject exists, update the mark value
+          await teacherHelpers.updateSubjectMark(subject, mark);
+      } else {
+          // Subject doesn't exist, create a new document with the mark value
+          await teacherHelpers.addSubjectMark(subject, mark);
+      }
+
+      res.json({ success: true, mark });
+  } catch (error) {
+      console.error('Error updating total marks:', error);
+      res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+
+router.get('/get-all-subject-marks', verifyLoginTeacher, async (req, res) => {
+  try {
+      // Fetch total marks for all subjects
+      const totalMarks = await teacherHelpers.getAllSubjectMarks();
+
+      // Create an object to store the marks for each subject
+      const subjectMarks = {};
+      totalMarks.forEach(subject => {
+          subjectMarks[subject.subject] = subject.mark;
+      });
+
+      res.json(subjectMarks);
+  } catch (error) {
+      console.error('Error in /get-all-subject-marks route:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 module.exports = router;

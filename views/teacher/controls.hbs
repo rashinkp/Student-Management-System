@@ -1,0 +1,158 @@
+<style>
+    .box {
+        background-color: rgb(236, 236, 236);
+        margin-top: 10px;
+        padding: 10px;
+    }
+</style>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="box col-12">
+                <div class="top-section">
+                    <h2>Working Days</h2>
+                    <a class="btn btn-primary" onclick="updateWorkingDays(-1)">-</a>
+                    <label for="total-working-days" id="working-days-label">{{workingDays}}</label>
+                    <a class="btn btn-primary" onclick="updateWorkingDays(1)">+</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="box col-12">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Total Mark</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>English</td>
+                            <td>
+                                <a class="btn btn-primary" onclick="updateTotalMarks('english', -1)">-</a>
+                                <label id="english-mark-label">{{mark.english}}</label>
+                                <a class="btn btn-primary" onclick="updateTotalMarks('english', 1)">+</a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Second Language</td>
+                            <td>
+                                <a class="btn btn-primary" onclick="updateTotalMarks('sl', -1)">-</a>
+                                <label id="sl-mark-label">{{mark.sl}}</label>
+                                <a class="btn btn-primary" onclick="updateTotalMarks('sl', 1)">+</a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Maths</td>
+                            <td>
+                                <a class="btn btn-primary" onclick="updateTotalMarks('maths', -1)">-</a>
+                                <label id="maths-mark-label">{{mark.maths}}</label>
+                                <a class="btn btn-primary" onclick="updateTotalMarks('maths', 1)">+</a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Basic Science</td>
+                            <td>
+                                <a class="btn btn-primary" onclick="updateTotalMarks('bs', -1)">-</a>
+                                <label id="bs-mark-label">{{mark.bs}}</label>
+                                <a class="btn btn-primary" onclick="updateTotalMarks('bs', 1)">+</a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Social Science</td>
+                            <td>
+                                <a class="btn btn-primary" onclick="updateTotalMarks('ss', -1)">-</a>
+                                <label id="ss-mark-label">{{mark.ss}}</label>
+                                <a class="btn btn-primary" onclick="updateTotalMarks('ss', 1)">+</a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Information Technology</td>
+                            <td>
+                                <a class="btn btn-primary" onclick="updateTotalMarks('it', -1)">-</a>
+                                <label id="it-mark-label">{{mark.it}}</label>
+                                <a class="btn btn-primary" onclick="updateTotalMarks('it', 1)">+</a>
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function updateWorkingDays(change) {
+        var workingDaysLabel = document.getElementById('working-days-label');
+        var currentWorkingDays = parseInt(workingDaysLabel.textContent);
+        var newWorkingDays = currentWorkingDays + change;
+        newWorkingDays = Math.max(newWorkingDays, 0);
+        workingDaysLabel.textContent = newWorkingDays;
+
+        // Send an asynchronous request to update working days on the server
+        fetch('/teacher/update-working-days', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ workingDays: newWorkingDays }),
+        })
+            .then(response => response.json())
+            .then(data => console.log('Updated working days:', data.workingDays))
+            .catch(error => console.error('Error updating working days:', error));
+    }
+
+
+  function updateTotalMarks(subject, change) {
+        var markLabel = document.getElementById(subject + '-mark-label');
+        var currentMark = parseInt(markLabel.textContent);
+        if (isNaN(currentMark)) {
+            currentMark = 0; // Set default value to 0 if current mark is NaN
+        }
+        var newMark = currentMark + change;
+        newMark = Math.max(newMark, 0);
+        markLabel.textContent = newMark;
+
+        // Send an asynchronous request to update total marks on the server
+        fetch('/teacher/update-total-marks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ subject: subject, mark: newMark }),
+        })
+        .then(response => response.json())
+        .then(data => console.log('Updated total marks for ' + subject + ':', data.mark))
+        .catch(error => console.error('Error updating total marks for ' + subject + ':', error));
+    }
+
+    // Add this function to set the subject marks when the page loads
+    window.onload = function() {
+        fetchSubjectMarks();
+    }
+
+    function fetchSubjectMarks() {
+        fetch('/teacher/get-all-subject-marks')
+        .then(response => response.json())
+        .then(data => {
+            // Iterate through the subject marks and update the corresponding labels
+            Object.keys(data).forEach(subject => {
+                var markLabel = document.getElementById(subject + '-mark-label');
+                if (markLabel) {
+                    markLabel.textContent = data[subject];
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching subject marks:', error));
+    }
+</script>

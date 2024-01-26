@@ -148,6 +148,69 @@ module.exports = {
       throw error;
     }
   },
+
+
+  getSubjectMark: (subject) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const subjectMark = await db
+                .get()
+                .collection(COLLECTION.TOTAL_MARK)
+                .findOne({ subject: subject });
+            resolve(subjectMark);
+        } catch (error) {
+            console.error('Error in getSubjectMark:', error);
+            reject(error);
+        }
+    });
+},
+
+// Update subject mark in the collection
+updateSubjectMark: (subject, mark) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db
+                .get()
+                .collection(COLLECTION.TOTAL_MARK)
+                .updateOne({ subject: subject }, { $set: { mark: mark } });
+            resolve();
+        } catch (error) {
+            console.error('Error in updateSubjectMark:', error);
+            reject(error);
+        }
+    });
+},
+
+// Add subject mark to the collection
+addSubjectMark: (subject, mark) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db
+                .get()
+                .collection(COLLECTION.TOTAL_MARK)
+                .insertOne({ subject: subject, mark: mark });
+            resolve();
+        } catch (error) {
+            console.error('Error in addSubjectMark:', error);
+            reject(error);
+        }
+    });
+},
+getAllSubjectMarks: () => {
+  return new Promise(async (resolve, reject) => {
+      try {
+          const totalMarks = await db
+              .get()
+              .collection(COLLECTION.TOTAL_MARK)
+              .find()
+              .toArray();
+          resolve(totalMarks);
+      } catch (error) {
+          console.error('Error in getAllSubjectMarks:', error);
+          reject(error);
+      }
+  });
+}
     
     
 };

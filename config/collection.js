@@ -6,6 +6,7 @@ module.exports = {
     REQ_ANNOUNCEMENT_COLLECTION:'req-announcement',
     REQ_ADMISSION:"req-admission",
     REQ_TEACHER:"req-teacher",
-    WORKING_DAYS:"working_days"
+    WORKING_DAYS:"working_days",
+    TOTAL_MARK:"total_mark"
     
 }
