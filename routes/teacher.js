@@ -13,6 +13,7 @@ const verifyLoginTeacher = (req, res, next) => {
   }
 };
 
+
 router.get("/", verifyLoginTeacher, function (req, res) {
   let staff = req.session.teacher;
   res.render("teacher/home", { teacher: true, staff });
@@ -80,7 +81,9 @@ router.get("/student-profile/:id", verifyLoginTeacher, async (req, res) => {
     const student = await studentHelpers.getStudentById(studentId);
     const workingDays = await teacherHelpers.getWorkingDays();
     let staff = req.session.teacher;
-    res.render("principal/student-profile", { student, teacher: true, staff,workingDays });
+    const totalMark = await teacherHelpers.getAllSubjectMarks();
+    // console.log('>>:',totalMark);
+    res.render("principal/student-profile", { student, teacher: true, staff,workingDays,totalMark });
   } catch (error) {
     console.error("Error in /student-profile route:", error);
     res.status(500).send("Internal Server Error");
@@ -158,7 +161,6 @@ router.post("/request-announcement", verifyLoginTeacher, async (req, res) => {
 
 router.get("/profile", verifyLoginTeacher, (req, res) => {
   let staff = req.session.teacher;
-  console.log("here is the stff>>>>> ", staff);
   res.render("teacher/profile", { teacher: true, staff });
 });
 
@@ -195,13 +197,14 @@ router.get('/view-class/:class', verifyLoginTeacher, async (req, res) => {
 });
 
 // POST route to update working days
-router.post('/update-working-days', verifyLoginTeacher, async (req, res) => {
+router.post('/update-working-days', async (req, res) => {
   try {
     const { workingDays } = req.body;
 
     // Update the working days in the database
     await teacherHelpers.updateWorkingDays(workingDays);
 
+    // Send a success response
     res.json({ success: true, workingDays });
   } catch (error) {
     console.error('Error updating working days:', error);

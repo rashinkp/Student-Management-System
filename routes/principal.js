@@ -167,7 +167,9 @@ router.get('/student-profile/:id',verifyLoginPrincipal, async (req, res) => {
   try {
     const studentId = req.params.id;
     const student = await studentHelpers.getStudentById(studentId);
-    res.render('principal/student-profile', { student, principal: true });
+    const totalMark = await teacherHelpers.getAllSubjectMarks();
+    const workingDays = await teacherHelpers.getWorkingDays();
+    res.render('principal/student-profile', { student, principal: true,totalMark,workingDays });
   } catch (error) {
     console.error('Error in /student-profile route:', error);
     res.status(500).send('Internal Server Error');
@@ -401,4 +403,68 @@ router.get('/reject-teacher/:id', verifyLoginPrincipal, async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+
+router.get('/controls', verifyLoginPrincipal, async (req, res) => {
+  try {
+      const princi = req.session.principal;
+      const workingDays = await teacherHelpers.getWorkingDays();
+      const totalMarks = await teacherHelpers.getAllSubjectMarks();
+
+      res.render('teacher/controls', { princi, principal: true, workingDays, totalMarks });
+  } catch (error) {
+      console.error('Error in /controls route:', error);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
+
+
+
+
+router.post('/update-total-marks', verifyLoginPrincipal, async (req, res) => {
+  try {
+      const { subject, mark } = req.body;
+
+      // Check if a document for the subject exists in the collection
+      const existingSubject = await teacherHelpers.getSubjectMark(subject);
+
+      if (existingSubject) {
+          // Subject exists, update the mark value
+          await teacherHelpers.updateSubjectMark(subject, mark);
+      } else {
+          // Subject doesn't exist, create a new document with the mark value
+          await teacherHelpers.addSubjectMark(subject, mark);
+      }
+
+      res.json({ success: true, mark });
+  } catch (error) {
+      console.error('Error updating total marks:', error);
+      res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+
+
+router.get('/get-all-subject-marks', verifyLoginPrincipal, async (req, res) => {
+  try {
+      // Fetch total marks for all subjects
+      const totalMarks = await teacherHelpers.getAllSubjectMarks();
+
+      // Create an object to store the marks for each subject
+      const subjectMarks = {};
+      totalMarks.forEach(subject => {
+          subjectMarks[subject.subject] = subject.mark;
+      });
+
+      res.json(subjectMarks);
+  } catch (error) {
+      console.error('Error in /get-all-subject-marks route:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  } 
+});
+
+
+
+
 module.exports = router;

@@ -125,15 +125,21 @@ module.exports = {
 
   updateWorkingDays: async (newWorkingDays) => {
     try {
+      // console.log('New working days:', newWorkingDays);
       await db
         .get()
         .collection(COLLECTION.WORKING_DAYS)
-        .updateOne({}, { $set: { days: newWorkingDays } }, { upsert: true });
+        .updateOne(
+          {}, // Update all documents
+          { $set: { days: newWorkingDays } }, // Set the new working days
+          { upsert: true } // Create a new document if it doesn't exist
+        );
     } catch (error) {
       console.error('Error in updateWorkingDays:', error);
       throw error;
     }
   },
+  
 
   getWorkingDays: async () => {
     try {
@@ -181,7 +187,21 @@ updateSubjectMark: (subject, mark) => {
     });
 },
 
-// Add subject mark to the collection
+updateTotalMarks: async (subject, mark) => {
+  try {
+    await fetch('/teacher/update-total-marks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ subject: subject, mark: mark }), // Ensure correct data is sent
+    });
+  } catch (error) {
+    console.error('Error in updateTotalMarks:', error);
+    throw error;
+  }
+},
+
 addSubjectMark: (subject, mark) => {
     return new Promise(async (resolve, reject) => {
         try {
