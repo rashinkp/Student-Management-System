@@ -1,24 +1,56 @@
 <style>
+  table {
+    width: 80%;
+    margin: 20px 0;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
-  table { width: 80%; margin: 20px 0; border-collapse: collapse; box-shadow: 0
-  4px 8px rgba(0, 0, 0, 0.1); } th, td { padding: 12px; text-align: left;
-  border-bottom: 1px solid #ddd; } th { background-color: #f2f2f2; }
-  .details-box { width: 100%; max-width: 600px; padding: 20px; background-color:
-  #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out; } .details-box:hover { transform:
-  scale(1.05); } .details-box h2 { color: #333; } .details-box p { color: #666;
+  th,
+  td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  .details-box {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background-color:
+      #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .details-box:hover {
+    transform:
+      scale(1.05);
+  }
+
+  .details-box h2 {
+    color: #333;
+  }
+
+  .details-box p {
+    color: #666;
   }
 </style>
 
 <section>
-    <div class="container">
-     <div class="top-section">
+  <div class="container">
+    <div class="top-section">
       <h2>Working Days</h2>
       <a class="btn btn-primary" onclick="updateWorkingDays(-1)">-</a>
       <label for="total-working-days" id="working-days-label">{{workingDays}}</label>
       <a class="btn btn-primary" onclick="updateWorkingDays(1)">+</a>
     </div>
-        <table>
+    <table>
       <thead>
         <tr>
           <th>Admission</th>
@@ -33,21 +65,18 @@
       <tbody>
         {{#each students}}
         <tr>
-            <td>{{this.admissionNo}}</td>
+          <td>{{this.admissionNo}}</td>
           <td>{{this.rollNumber}}</td>
-          
-          <td><img
-              src="/images/student/{{this._id}}.jpg"
-              alt="Profile Image"
-              style="width: 50px; height: 50px; border-radius: 50%;"
-            /></td>
+
+          <td><img src="/images/student/{{this._id}}.jpg" alt="Profile Image"
+              style="width: 50px; height: 50px; border-radius: 50%;" /></td>
           <td>{{this.firstName}} {{this.secondName}}</td>
           <td>
-          <a class="btn btn-primary" onclick="updatePresent('{{this._id}}', -1)">-</a>
-          <label for="present days label" id="present-days-label-{{this._id}}">
-          {{#if this.attendance}}{{this.attendance.present}}{{else}}0{{/if}}
-          </label>
-          <a class="btn btn-primary" onclick="updatePresent('{{this._id}}', 1)">+</a>
+            <a class="btn btn-primary" onclick="updatePresent('{{this._id}}', -1)">-</a>
+            <label for="present days label" id="present-days-label-{{this._id}}">
+              {{#if this.attendance}}{{this.attendance.present}}{{else}}0{{/if}}
+            </label>
+            <a class="btn btn-primary" onclick="updatePresent('{{this._id}}', 1)">+</a>
           </td>
           <td><label for="percentage" id="percentage-label-{{this._id}}">{{this.attendance.percentage}}%</label></td>
           <td><a href="/teacher/student-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
@@ -55,18 +84,24 @@
         {{/each}}
       </tbody>
     </table>
-    </div>
+  </div>
 </section>
 
 <script>
   function calculateAttendancePercentage(presentDays, workingDays) {
-  if (workingDays === 0) {
-    return 0;
+    if (workingDays === 0) {
+      return 0;
+    }
+    return (presentDays / workingDays) * 100;
   }
-  return (presentDays / workingDays) * 100;
-}
+
+  
   // Function to update the working days
-  function updateWorkingDays(change) {
+
+
+
+async function updateWorkingDays(change) {
+  try {
     var workingDaysLabel = document.getElementById('working-days-label');
     var currentWorkingDays = parseInt(workingDaysLabel.textContent);
     var newWorkingDays = currentWorkingDays + change;
@@ -74,54 +109,83 @@
     workingDaysLabel.textContent = newWorkingDays;
 
     // Send an asynchronous request to update working days on the server
-    fetch('/teacher/update-working-days', {
+    const response = await fetch('/teacher/update-working-days', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ workingDays: newWorkingDays }),
-    })
-      .then(response => response.json())
-      .then(data => console.log('Updated working days:', data.workingDays))
-      .catch(error => console.error('Error updating working days:', error));
-  }
-  
-  async function updatePresent(studentId, change) {
- try {
-    var presentDaysLabel = document.getElementById('present-days-label-' + studentId);
-    var currentPresentDays = parseInt(presentDaysLabel.textContent);
-    var workingDaysLabel = document.getElementById('working-days-label');
-    var workingDays = parseInt(workingDaysLabel.textContent);
-
-    var newPresentDays = currentPresentDays + change;
-    newPresentDays = Math.max(0, Math.min(newPresentDays, workingDays));
-    presentDaysLabel.textContent = newPresentDays;
-
-    // Send an asynchronous request to update present days on the server
-    const response = await fetch('/teacher/update-present-days/' + studentId, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ presentDays: newPresentDays }),
     });
 
     const data = await response.json();
-    console.log('Updated present days:', data.presentDays);
+    console.log('Updated working days:', data.workingDays);
 
-    // Update the percentage dynamically
+    // Get all the present days labels for each student
+    const presentDaysLabels = document.querySelectorAll('[id^="present-days-label-"]');
+    
+    // Iterate over each present days label and update the percentage
+    presentDaysLabels.forEach(async (label) => {
+      const studentId = label.id.split('-').pop();
+      const presentDays = parseInt(label.textContent);
+      
+      // Send an asynchronous request to update the present days and percentage
+      const response = await fetch(`/teacher/update-present-days/${studentId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ presentDays: presentDays }),
+      });
+
+      const responseData = await response.json();
+      console.log('Updated present days for student', studentId, ':', responseData.presentDays);
+
+      // Update the percentage dynamically
+      const percentageLabel = document.getElementById('percentage-label-' + studentId);
+      percentageLabel.textContent = responseData.percentage.toFixed(2) + '%'; // Format to two decimal places
+    });
+  } catch (error) {
+    console.error('Error updating working days:', error);
+  }
+}
+
+
+  async function updatePresent(studentId, change) {
+    try {
+      var presentDaysLabel = document.getElementById('present-days-label-' + studentId);
+      var currentPresentDays = parseInt(presentDaysLabel.textContent);
+      var workingDaysLabel = document.getElementById('working-days-label');
+      var workingDays = parseInt(workingDaysLabel.textContent);
+
+      var newPresentDays = currentPresentDays + change;
+      newPresentDays = Math.max(0, Math.min(newPresentDays, workingDays));
+      presentDaysLabel.textContent = newPresentDays;
+
+      // Send an asynchronous request to update present days on the server
+      const response = await fetch('/teacher/update-present-days/' + studentId, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ presentDays: newPresentDays }),
+      });
+
+      const data = await response.json();
+      console.log('Updated present days:', data.presentDays);
+
+      // Update the percentage dynamically
+      const percentageLabel = document.getElementById('percentage-label-' + studentId);
+      percentageLabel.textContent = data.percentage.toFixed(2) + '%'; // Format to two decimal places
+
+      // Call the function to update the percentage
+      updatePercentage(studentId, newPresentDays, workingDays, data.percentage);
+    } catch (error) {
+      console.error('Error updating present days:', error);
+    }
+  }
+
+  function updatePercentage(studentId, presentDays, workingDays, newPercentage) {
     const percentageLabel = document.getElementById('percentage-label-' + studentId);
-    percentageLabel.textContent = data.percentage.toFixed(2) + '%'; // Format to two decimal places
-
-    // Call the function to update the percentage
-    updatePercentage(studentId, newPresentDays, workingDays, data.percentage);
- } catch (error) {
-    console.error('Error updating present days:', error);
- }
-}
-
-function updatePercentage(studentId, presentDays, workingDays, newPercentage) {
- const percentageLabel = document.getElementById('percentage-label-' + studentId);
- percentageLabel.textContent = newPercentage.toFixed(2) + '%';
-}
+    percentageLabel.textContent = newPercentage.toFixed(2) + '%';
+  }
 </script>

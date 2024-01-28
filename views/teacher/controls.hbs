@@ -92,6 +92,25 @@
 </section>
 
 <script>
+
+     function fetchSubjectMarks() {
+        let url = '/teacher/get-all-subject-marks';
+        if (window.location.pathname.startsWith('/principal')) {
+            url = '/principal/get-all-subject-marks';
+        }
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                // Iterate through the subject marks and update the corresponding labels
+                Object.keys(data).forEach(subject => {
+                    var markLabel = document.getElementById(subject + '-mark-label');
+                    if (markLabel) {
+                        markLabel.textContent = data[subject];
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching subject marks:', error));
+    }
     function updateWorkingDays(change) {
         var workingDaysLabel = document.getElementById('working-days-label');
         var currentWorkingDays = parseInt(workingDaysLabel.textContent);
@@ -114,24 +133,24 @@
 
 
     function updateTotalMarks(subject, change) {
-    var markLabel = document.getElementById(subject + '-mark-label');
-    var currentMark = parseInt(markLabel.textContent);
-    var newMark = currentMark + change;
-    newMark = Math.max(newMark, 0);
-    markLabel.textContent = newMark;
+        var markLabel = document.getElementById(subject + '-mark-label');
+        var currentMark = parseInt(markLabel.textContent);
+        var newMark = currentMark + change;
+        newMark = Math.max(newMark, 0);
+        markLabel.textContent = newMark;
 
-    // Send an asynchronous request to update total marks on the server
-    fetch('/teacher/update-total-marks', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ subject: subject, mark: newMark }), // Ensure correct data is sent
-    })
-    .then(response => response.json())
-    .then(data => console.log('Updated total marks for ' + subject + ':', data.mark))
-    .catch(error => console.error('Error updating total marks for ' + subject + ':', error));
-}
+        // Send an asynchronous request to update total marks on the server
+        fetch('/teacher/update-total-marks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ subject: subject, mark: newMark }), // Ensure correct data is sent
+        })
+            .then(response => response.json())
+            .then(data => console.log('Updated total marks for ' + subject + ':', data.mark))
+            .catch(error => console.error('Error updating total marks for ' + subject + ':', error));
+    }
 
 
     // Add this function to set the subject marks when the page loads
@@ -139,23 +158,6 @@
         fetchSubjectMarks();
     }
 
-    function fetchSubjectMarks() {
-        let url = '/teacher/get-all-subject-marks';
-        if (window.location.pathname.startsWith('/principal')) {
-            url = '/principal/get-all-subject-marks';
-        }
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                // Iterate through the subject marks and update the corresponding labels
-                Object.keys(data).forEach(subject => {
-                    var markLabel = document.getElementById(subject + '-mark-label');
-                    if (markLabel) {
-                        markLabel.textContent = data[subject];
-                    }
-                });
-            })
-            .catch(error => console.error('Error fetching subject marks:', error));
-    }
+   
 
 </script>
