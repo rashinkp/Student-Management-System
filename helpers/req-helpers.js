@@ -133,17 +133,6 @@ module.exports = {
         request.admissionNo = newAdmissionNumber;
         request.rollNumber = newRollNumber;
   
-        // Set default values for marks and attendance
-        request.marks = {
-          english: 0,
-          secondLanguage: 0,
-          maths: 0,
-          it: 0,
-          science: 0,
-          socialScience: 0,
-          // Add more subjects as needed
-        };
-  
         request.attendance = {
           present: 0,
           percentage:0

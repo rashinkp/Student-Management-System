@@ -75,87 +75,27 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <table class="table">
+           <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">Subject</th>
-                  <th scope="col"> Total Mark</th>
-                  <th scope="col">Mark</th>
+                  <th>Subject</th>
+                  <th>Total Mark</th>
+                  <th>Student Mark</th>
+                  <th>Percentage</th>
+                  <th>Grade</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>English</td>
-                  <td>
-                    <label id="english-total-mark">{{totalMark.[0].mark}}</label>
-                  </td>
-                  <td>
-                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'english', -1)">-</button>
-                    <label id="english-mark">{{student.marks.english}}</label>
-                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'english', 1)">+</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Second Language</td>
-                  <td>
-                    <label id="secondLanguage-total-mark">{{totalMark.[1].mark}}</label>
-                  </td>
-                  <td>
-                    <button class="btn btn-primary"
-                      onclick="updateMark('{{student._id}}', 'secondLanguage', -1)">-</button>
-                    <label id="secondLanguage-mark">{{student.marks.secondLanguage}}</label>
-                    <button class="btn btn-primary"
-                      onclick="updateMark('{{student._id}}', 'secondLanguage', 1)">+</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Maths</td>
-                  <td>
-                    <label id="maths-total-mark">{{totalMark.[2].mark}}</label>
-                  </td>
-                  <td>
-                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'maths', -1)">-</button>
-                    <label id="maths-mark">{{student.marks.maths}}</label>
-                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'maths', 1)">+</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Basic Science</td>
-                  <td>
-                    <label id="science-total-mark">{{totalMark.[3].mark}}</label>
-                  </td>
-                  <td>
-                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'science', -1)">-</button>
-                    <label id="science-mark">{{student.marks.science}}</label>
-                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'science', 1)">+</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Social Science</td>
-                  <td>
-                    <label id="socialScience-total-mark">{{totalMark.[4].mark}}</label>
-                  </td>
-                  <td>
-                    <button class="btn btn-primary"
-                      onclick="updateMark('{{student._id}}', 'socialScience', -1)">-</button>
-                    <label id="socialScience-mark">{{student.marks.socialScience}}</label>
-                    <button class="btn btn-primary"
-                      onclick="updateMark('{{student._id}}', 'socialScience', 1)">+</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Information Technology</td>
-                  <td>
-                    <label id="it-total-mark">{{totalMark.[5].mark}}</label>
-                  </td>
-                  <td>
-                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'it', -1)">-</button>
-                    <label id="it-mark">{{student.marks.it}}</label>
-                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'it', 1)">+</button>
-                  </td>
-                </tr>
+          
+                  {{#each subjects}}
+                  <tr>
+                    <td>{{this.subject}}</td>
+                    <td>{{this.mark}}</td>
+                  </tr>
+                  {{/each}}
+                
               </tbody>
-            </table>
+           </table>
           </div>
         </div>
       </div>

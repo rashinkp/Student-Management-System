@@ -3,7 +3,9 @@ var teacherHelpers = require("../helpers/teacher-helpers");
 var studentHelpers = require("../helpers/student-helpers");
 var announcementHelpers = require("../helpers/announcement-helpers");
 const reqHelpers = require("../helpers/req-helpers");
+const subjectHelpers = require("../helpers/subject-helpers");
 var router = express.Router();
+
 
 const verifyLoginTeacher = (req, res, next) => {
   if (req.session.teacher && req.session.loggedIn) {
@@ -81,10 +83,10 @@ router.get("/student-profile/:id", verifyLoginTeacher, async (req, res) => {
     const student = await studentHelpers.getStudentById(studentId);
     const workingDays = await teacherHelpers.getWorkingDays();
     let staff = req.session.teacher;
-    const totalMark = await teacherHelpers.getAllSubjectMarks();
+    const subjects = await subjectHelpers.getAllSubjects();
     // console.log("Student Data:", student); // Debug statement
     // console.log("Total Mark Data:", totalMark); // Debug statement
-    res.render("principal/student-profile", { student, teacher: true, staff, workingDays, totalMark });
+    res.render("principal/student-profile", { student, teacher: true, staff, workingDays, subjects });
   } catch (error) {
     console.error("Error in /student-profile route:", error);
     res.status(500).send("Internal Server Error");
@@ -231,21 +233,6 @@ router.post('/update-present-days/:id', verifyLoginTeacher, async (req, res) => 
   }
  });
 
- router.get('/controls', verifyLoginTeacher, async (req, res) => {
-  try {
-      const staff = req.session.teacher;
-      const workingDays = await teacherHelpers.getWorkingDays();
-
-      // Fetch total marks for each subject
-      const totalMarks = await teacherHelpers.getAllSubjectMarks();
-
-      res.render('teacher/controls', { staff, teacher: true, workingDays });
-  } catch (error) {
-      console.error('Error in /controls route:', error);
-      res.status(500).send('Internal Server Error');
-  }
-});
-
 
 // POST route to update total marks
 router.post('/update-total-marks', verifyLoginTeacher, async (req, res) => {
@@ -304,6 +291,21 @@ router.post("/update-mark/:studentId/:subject/:change", async (req, res) => {
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 });
+
+router.get('/controls', verifyLoginTeacher, async (req, res) => {
+  try {
+    const staff = req.session.teacher;
+    const workingDays = await teacherHelpers.getWorkingDays();
+    const totalMarks = await teacherHelpers.getAllSubjectMarks();
+    const subjects = await subjectHelpers.getAllSubjects();
+
+    res.render('teacher/controls', { staff, teacher: true, workingDays, totalMarks, subjects });
+  } catch (error) {
+    console.error('Error in /controls route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 
 module.exports = router;

@@ -7,6 +7,7 @@ module.exports = {
     REQ_ADMISSION:"req-admission",
     REQ_TEACHER:"req-teacher",
     WORKING_DAYS:"working_days",
-    TOTAL_MARK:"total_mark"
+    TOTAL_MARK:"total_mark",
+    SUBJECT:"subjects"
     
 }

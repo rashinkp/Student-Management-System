@@ -50,15 +50,6 @@ module.exports = {
           percentage:0
         }
 
-        student.marks = {
-          english: 0,
-          secondLanguage: 0,
-          maths: 0,
-          it: 0,
-          science: 0,
-          socialScience: 0,
-        };
-
         // Hash the password
         student.password = await bcrypt.hash(student.password, 10);
 

@@ -20,7 +20,54 @@
         </div>
         <div class="row">
             <div class="box col-12">
-                <table>
+                <h2>Subjects</h2>
+                <div class="input-subject mb-3">
+                    {{#if principal}}
+                    <form id="addSubjectForm" action="/principal/add-subject" method="POST">
+                        <div class="form-group">
+                            <label for="subjectName">Subject Name:</label>
+                            <input type="text" class="form-control" name="subject" id="subjectName"
+                                aria-describedby="emailHelp" placeholder="Enter subject">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="totalMark">Total Mark</label>
+                            <input type="number" class="form-control" name="mark" id="totalMark"
+                                placeholder="Total mark">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add subject</button>
+                    </form>
+                    {{/if}}
+                </div>
+
+                <!-- Display Subjects -->
+                {{#if principal}}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Total Mark</th>
+                            <th>Controls</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each subjects}}
+                        <tr>
+                            <td>{{this.subject}}</td>
+                            <td>
+                                <form action="/principal/update-subject-mark" method="POST">
+                                    <input type="hidden" name="subjectId" value="{{this._id}}">
+                                    <input type="number" name="mark" value="{{this.mark}}" required>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+                            </td>
+                            <td><a href="/principal/delete-subject" class="btn btn-danger"
+                                    data-subject-id="{{this._id}}" onclick="removeSubject(event)">Remove</a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{else}}
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Subject</th>
@@ -28,89 +75,51 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        {{#each subjects}}
                         <tr>
-                            <td>English</td>
+                            <td>{{this.subject}}</td>
                             <td>
-                                <a class="btn btn-primary" onclick="updateTotalMarks('english', -1)">-</a>
-                                <label id="english-mark-label">{{mark.english}}</label>
-                                <a class="btn btn-primary" onclick="updateTotalMarks('english', 1)">+</a>
+                                {{this.mark}}
                             </td>
+
                         </tr>
-
-                        <tr>
-                            <td>Second Language</td>
-                            <td>
-                                <a class="btn btn-primary" onclick="updateTotalMarks('sl', -1)">-</a>
-                                <label id="sl-mark-label">{{mark.sl}}</label>
-                                <a class="btn btn-primary" onclick="updateTotalMarks('sl', 1)">+</a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Maths</td>
-                            <td>
-                                <a class="btn btn-primary" onclick="updateTotalMarks('maths', -1)">-</a>
-                                <label id="maths-mark-label">{{mark.maths}}</label>
-                                <a class="btn btn-primary" onclick="updateTotalMarks('maths', 1)">+</a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Basic Science</td>
-                            <td>
-                                <a class="btn btn-primary" onclick="updateTotalMarks('bs', -1)">-</a>
-                                <label id="bs-mark-label">{{mark.bs}}</label>
-                                <a class="btn btn-primary" onclick="updateTotalMarks('bs', 1)">+</a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Social Science</td>
-                            <td>
-                                <a class="btn btn-primary" onclick="updateTotalMarks('ss', -1)">-</a>
-                                <label id="ss-mark-label">{{mark.ss}}</label>
-                                <a class="btn btn-primary" onclick="updateTotalMarks('ss', 1)">+</a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Information Technology</td>
-                            <td>
-                                <a class="btn btn-primary" onclick="updateTotalMarks('it', -1)">-</a>
-                                <label id="it-mark-label">{{mark.it}}</label>
-                                <a class="btn btn-primary" onclick="updateTotalMarks('it', 1)">+</a>
-                            </td>
-                        </tr>
-
-
+                        {{/each}}
                     </tbody>
                 </table>
+                {{/if}}
             </div>
+
         </div>
     </div>
 </section>
 
 <script>
-
-     function fetchSubjectMarks() {
-        let url = '/teacher/get-all-subject-marks';
-        if (window.location.pathname.startsWith('/principal')) {
-            url = '/principal/get-all-subject-marks';
-        }
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                // Iterate through the subject marks and update the corresponding labels
-                Object.keys(data).forEach(subject => {
-                    var markLabel = document.getElementById(subject + '-mark-label');
-                    if (markLabel) {
-                        markLabel.textContent = data[subject];
-                    }
-                });
+    function removeSubject(event) {
+        event.preventDefault();
+        const subjectId = event.target.getAttribute('data-subject-id');
+        const confirmation = confirm('Are you sure you want to remove this subject?');
+        if (confirmation) {
+            // Send an asynchronous request to delete the subject
+            fetch('/principal/delete-subject', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ subjectId }),
             })
-            .catch(error => console.error('Error fetching subject marks:', error));
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Subject removed successfully');
+                        window.location.reload();
+                    } else {
+                        alert('Error removing subject');
+                    }
+                })
+                .catch(error => console.error('Error deleting subject:', error));
+        }
     }
+
     function updateWorkingDays(change) {
         var workingDaysLabel = document.getElementById('working-days-label');
         var currentWorkingDays = parseInt(workingDaysLabel.textContent);
@@ -119,7 +128,7 @@
         workingDaysLabel.textContent = newWorkingDays;
 
         // Send an asynchronous request to update working days on the server
-        fetch('/teacher/update-working-days', {
+        fetch('/principal/update-working-days', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -132,32 +141,7 @@
     }
 
 
-    function updateTotalMarks(subject, change) {
-        var markLabel = document.getElementById(subject + '-mark-label');
-        var currentMark = parseInt(markLabel.textContent);
-        var newMark = currentMark + change;
-        newMark = Math.max(newMark, 0);
-        markLabel.textContent = newMark;
-
-        // Send an asynchronous request to update total marks on the server
-        fetch('/teacher/update-total-marks', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ subject: subject, mark: newMark }), // Ensure correct data is sent
-        })
-            .then(response => response.json())
-            .then(data => console.log('Updated total marks for ' + subject + ':', data.mark))
-            .catch(error => console.error('Error updating total marks for ' + subject + ':', error));
-    }
 
 
-    // Add this function to set the subject marks when the page loads
-    window.onload = function () {
-        fetchSubjectMarks();
-    }
-
-   
 
 </script>

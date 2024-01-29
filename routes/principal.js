@@ -7,6 +7,7 @@ var announcementHelpers = require('../helpers/announcement-helpers');
 var reqHelpers = require('../helpers/req-helpers');
 const fs = require('fs');
 const { ExplainVerbosity } = require('mongodb');
+const subjectHelpers = require('../helpers/subject-helpers')
 
 const verifyLoginPrincipal = (req, res, next) => {
   if (req.session.principal && req.session.loggedIn) {
@@ -407,63 +408,63 @@ router.get('/reject-teacher/:id', verifyLoginPrincipal, async (req, res) => {
 
 router.get('/controls', verifyLoginPrincipal, async (req, res) => {
   try {
-      const princi = req.session.principal;
-      const workingDays = await teacherHelpers.getWorkingDays();
-      const totalMarks = await teacherHelpers.getAllSubjectMarks();
+    const staff = req.session.teacher;
+    const workingDays = await teacherHelpers.getWorkingDays();
+    const totalMarks = await teacherHelpers.getAllSubjectMarks();
+    const subjects = await subjectHelpers.getAllSubjects();
 
-      res.render('teacher/controls', { princi, principal: true, workingDays });
+    res.render('teacher/controls', { staff, teacher: true, workingDays, totalMarks, subjects, principal:true });
   } catch (error) {
-      console.error('Error in /controls route:', error);
-      res.status(500).send('Internal Server Error');
+    console.error('Error in /controls route:', error);
+    res.status(500).send('Internal Server Error');
   }
 });
 
-
-
-
-
-router.post('/update-total-marks', verifyLoginPrincipal, async (req, res) => {
+router.post('/add-subject', verifyLoginPrincipal, async (req, res) => {
   try {
-      const { subject, mark } = req.body;
-
-      // Check if a document for the subject exists in the collection
-      const existingSubject = await teacherHelpers.getSubjectMark(subject);
-
+    const { subject, mark } = req.body;
+    const existingSubjects = await subjectHelpers.getAllSubjects();
+    
+    // Check if any subjects exist
+    if (existingSubjects.length > 0) {
+      // Check if the subject already exists
+      const existingSubject = existingSubjects.find(s => s.subject === subject);
       if (existingSubject) {
-          // Subject exists, update the mark value
-          await teacherHelpers.updateSubjectMark(subject, mark);
-      } else {
-          // Subject doesn't exist, create a new document with the mark value
-          await teacherHelpers.addSubjectMark(subject, mark);
+        return res.json({ success: false, error: 'Subject already exists' });
       }
+    }
 
-      res.json({ success: true, mark });
+    // Add the subject
+    await subjectHelpers.addSubject(subject, mark);
+
+    res.redirect('/principal/controls');
   } catch (error) {
-      console.error('Error updating total marks:', error);
-      res.status(500).json({ success: false, error: 'Internal Server Error' });
+    console.error('Error adding subject:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 });
 
-
-
-router.get('/get-all-subject-marks', verifyLoginPrincipal, async (req, res) => {
+router.post('/delete-subject', verifyLoginPrincipal, async (req, res) => {
   try {
-      // Fetch total marks for all subjects
-      const totalMarks = await teacherHelpers.getAllSubjectMarks();
-
-      // Create an object to store the marks for each subject
-      const subjectMarks = {};
-      totalMarks.forEach(subject => {
-          subjectMarks[subject.subject] = subject.mark;
-      });
-
-      res.json(subjectMarks);
+    const { subjectId } = req.body;
+    await subjectHelpers.deleteSubject(subjectId);
+    res.json({ success: true });
   } catch (error) {
-      console.error('Error in /get-all-subject-marks route:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-  } 
+    console.error('Error deleting subject:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
 });
 
+router.post('/update-subject-mark', verifyLoginPrincipal, async (req, res) => {
+  try {
+    const { subjectId, mark } = req.body;
+    await subjectHelpers.updateSubjectMark(subjectId, mark);
+    res.redirect('/principal/controls');
+  } catch (error) {
+    console.error('Error updating subject mark:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
 
 
 
