@@ -411,7 +411,7 @@ router.get('/controls', verifyLoginPrincipal, async (req, res) => {
       const workingDays = await teacherHelpers.getWorkingDays();
       const totalMarks = await teacherHelpers.getAllSubjectMarks();
 
-      res.render('teacher/controls', { princi, principal: true, workingDays, totalMarks });
+      res.render('teacher/controls', { princi, principal: true, workingDays });
   } catch (error) {
       console.error('Error in /controls route:', error);
       res.status(500).send('Internal Server Error');

@@ -82,8 +82,9 @@ router.get("/student-profile/:id", verifyLoginTeacher, async (req, res) => {
     const workingDays = await teacherHelpers.getWorkingDays();
     let staff = req.session.teacher;
     const totalMark = await teacherHelpers.getAllSubjectMarks();
-    // console.log('>>:',totalMark);
-    res.render("principal/student-profile", { student, teacher: true, staff,workingDays,totalMark });
+    console.log("Student Data:", student); // Debug statement
+    console.log("Total Mark Data:", totalMark); // Debug statement
+    res.render("principal/student-profile", { student, teacher: true, staff, workingDays, totalMark });
   } catch (error) {
     console.error("Error in /student-profile route:", error);
     res.status(500).send("Internal Server Error");
@@ -238,7 +239,7 @@ router.post('/update-present-days/:id', verifyLoginTeacher, async (req, res) => 
       // Fetch total marks for each subject
       const totalMarks = await teacherHelpers.getAllSubjectMarks();
 
-      res.render('teacher/controls', { staff, teacher: true, workingDays, totalMarks });
+      res.render('teacher/controls', { staff, teacher: true, workingDays });
   } catch (error) {
       console.error('Error in /controls route:', error);
       res.status(500).send('Internal Server Error');

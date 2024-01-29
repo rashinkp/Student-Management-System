@@ -89,6 +89,7 @@ module.exports = {
       }
     });
   },
+
   getStudentById: (studentId) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -96,14 +97,14 @@ module.exports = {
           .get()
           .collection(COLLECTION.STUDENTS_COLLECTION)
           .findOne({ _id: new ObjectId(studentId) });
-
         resolve(student);
       } catch (error) {
-        console.error("Error in getStudentById:", error);
+        console.error('Error in getStudentById:', error);
         reject(error);
       }
     });
   },
+  
   updateStudent: (studentId, student) => {
     return new Promise(async (resolve, reject) => {
       try {

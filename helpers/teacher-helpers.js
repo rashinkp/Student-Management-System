@@ -216,21 +216,24 @@ addSubjectMark: (subject, mark) => {
         }
     });
 },
+
+
 getAllSubjectMarks: () => {
   return new Promise(async (resolve, reject) => {
-      try {
-          const totalMarks = await db
-              .get()
-              .collection(COLLECTION.TOTAL_MARK)
-              .find()
-              .toArray();
-          resolve(totalMarks);
-      } catch (error) {
-          console.error('Error in getAllSubjectMarks:', error);
-          reject(error);
-      }
+    try {
+      const totalMarks = await db
+        .get()
+        .collection(COLLECTION.TOTAL_MARK)
+        .find({}, { projection: { _id: 0, subject: 1, mark: 1 } }) 
+        .toArray();
+      resolve(totalMarks);
+    } catch (error) {
+      console.error('Error in getAllSubjectMarks:', error);
+      reject(error);
+    }
   });
 }
+
     
     
 };
