@@ -223,5 +223,45 @@ module.exports = {
 },
 
 
+updateStudentMarks: async (studentId, subject, markChange) => {
+  try {
+    console.log("subject>>>",subject)
+    const filter = { _id: new ObjectId(studentId) };
+    const student = await db.get().collection(COLLECTION.STUDENTS_COLLECTION).findOne(filter);
+    const totalMarkData = await db.get().collection(COLLECTION.TOTAL_MARK).findOne({ subject });
+    // const totalMark = totalMarkData ? totalMarkData.mark : null;
+    // if (totalMark === null) {
+    //   throw new Error(`Total mark for ${subject} not found.`);
+    // }
+
+    // // Calculate the new mark
+    const newMark = student.marks[subject] + markChange;
+    // // const oldMark = student.marks
+    // console.log('studen:',student)
+    // console.log('old mark:',student.marks[subject])
+    // console.log('mark chang:',markChange)
+    // console.log(totalMark)
+    // console.log(newMark);
+    // // Check if the new mark meets the condition
+    // if (totalMark >= newMark) {
+    //   // Update the student's mark
+      const update = { $inc: { [`marks.${subject}`]: markChange } }; 
+      await db.get().collection(COLLECTION.STUDENTS_COLLECTION).updateOne(filter, update);
+
+      // Optionally, you can return the updated student object
+      const updatedStudent = await db.get().collection(COLLECTION.STUDENTS_COLLECTION).findOne(filter);
+      return updatedStudent;
+    // } else {
+    //   console.log(`total mark cannot be less than the  mark `);
+    // }
+  } catch (error) {
+    console.error("Error updating student marks:", error);
+    throw error;
+  }
+},
+
+
+
+
   
 };

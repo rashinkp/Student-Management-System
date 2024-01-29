@@ -87,73 +87,71 @@
                 <tr>
                   <td>English</td>
                   <td>
-                    <label id="english-mark-label">{{totalMark.[0].mark}}</label>
+                    <label id="english-total-mark">{{totalMark.[0].mark}}</label>
                   </td>
                   <td>
-                    <a class="btn btn-primary" onclick="updateStudentMark('english', -1)">-</a>
-                    <label id="english-mark-label">{{student.marks.english}}</label>
-                    <a class="btn btn-primary" onclick="updateStudentMark('english', 1)">+</a>
+                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'english', -1)">-</button>
+                    <label id="english-mark">{{student.marks.english}}</label>
+                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'english', 1)">+</button>
                   </td>
                 </tr>
-
                 <tr>
                   <td>Second Language</td>
                   <td>
-                    <label id="sl-mark-label">{{totalMark.[1].mark}}</label>
+                    <label id="secondLanguage-total-mark">{{totalMark.[1].mark}}</label>
                   </td>
                   <td>
-                    <a class="btn btn-primary" onclick="updateStudentMark('secondLanguage', -1)">-</a>
-                    <label id="sl-mark-label">{{student.marks.secondLanguage}}</label>
-                    <a class="btn btn-primary" onclick="updateStudentMark('secondLanguage', 1)">+</a>
+                    <button class="btn btn-primary"
+                      onclick="updateMark('{{student._id}}', 'secondLanguage', -1)">-</button>
+                    <label id="secondLanguage-mark">{{student.marks.secondLanguage}}</label>
+                    <button class="btn btn-primary"
+                      onclick="updateMark('{{student._id}}', 'secondLanguage', 1)">+</button>
                   </td>
                 </tr>
-
                 <tr>
                   <td>Maths</td>
                   <td>
-                    <label id="maths-mark-label">{{totalMark.[2].mark}}</label>
+                    <label id="maths-total-mark">{{totalMark.[2].mark}}</label>
                   </td>
                   <td>
-                    <a class="btn btn-primary" onclick="updateStudentMark('maths', -1)">-</a>
-                    <label id="maths-mark-label">{{student.marks.maths}}</label>
-                    <a class="btn btn-primary" onclick="updateStudentMark('maths', 1)">+</a>
+                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'maths', -1)">-</button>
+                    <label id="maths-mark">{{student.marks.maths}}</label>
+                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'maths', 1)">+</button>
                   </td>
                 </tr>
-
                 <tr>
                   <td>Basic Science</td>
                   <td>
-                    <label id="bs-mark-label">{{totalMark.[3].mark}}</label>
+                    <label id="science-total-mark">{{totalMark.[3].mark}}</label>
                   </td>
                   <td>
-                    <a class="btn btn-primary" onclick="updateStudentMark('science', -1)">-</a>
-                    <label id="science-mark-label">{{student.marks.science}}</label>
-                    <a class="btn btn-primary" onclick="updateStudentMark('science', 1)">+</a>
+                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'science', -1)">-</button>
+                    <label id="science-mark">{{student.marks.science}}</label>
+                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'science', 1)">+</button>
                   </td>
                 </tr>
-
                 <tr>
                   <td>Social Science</td>
                   <td>
-                    <label id="ss-mark-label">{{totalMark.[4].mark}}</label>
+                    <label id="socialScience-total-mark">{{totalMark.[4].mark}}</label>
                   </td>
                   <td>
-                    <a class="btn btn-primary" onclick="updateStudentMark('socialScience', -1)">-</a>
-                    <label id="socialScience-mark-label">{{student.marks.socialScience}}</label>
-                    <a class="btn btn-primary" onclick="updateStudentMark('socialScience', 1)">+</a>
+                    <button class="btn btn-primary"
+                      onclick="updateMark('{{student._id}}', 'socialScience', -1)">-</button>
+                    <label id="socialScience-mark">{{student.marks.socialScience}}</label>
+                    <button class="btn btn-primary"
+                      onclick="updateMark('{{student._id}}', 'socialScience', 1)">+</button>
                   </td>
-
                 </tr>
-
                 <tr>
                   <td>Information Technology</td>
                   <td>
-                    <label id="it-mark-label">{{totalMark.[5].mark}}</label>
+                    <label id="it-total-mark">{{totalMark.[5].mark}}</label>
                   </td>
-                   <td>
-                    <a class="btn btn-primary" onclick="updateStudentMark('it', -1)">-</a>
-                    <label id="it-mark-label">{{student.marks.it}}</label>
-                    <a class="btn btn-primary" onclick="updateStudentMark('it', 1)">+</a>
+                  <td>
+                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'it', -1)">-</button>
+                    <label id="it-mark">{{student.marks.it}}</label>
+                    <button class="btn btn-primary" onclick="updateMark('{{student._id}}', 'it', 1)">+</button>
                   </td>
                 </tr>
               </tbody>
@@ -186,4 +184,26 @@
       })
       .catch(error => console.error('Error fetching subject marks:', error));
   }
+
+async function updateMark(studentId, subject, change) {
+  try {
+    const response = await fetch(`/teacher/update-mark/${studentId}/${subject}/${change}`, {
+      method: 'POST'
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      // Update the displayed mark
+      document.getElementById(`${subject}-mark`).innerText = data.updatedStudent.marks[subject];
+      document.getElementById(`${subject}-total-mark`).innerText = data.totalMark.find(item => item.subject === subject).mark;
+    } else {
+      console.error('Failed to update mark');
+    }
+    fetchSubjectMarks(); // Optional: Update other marks dynamically
+  } catch (error) {
+    console.error('Error updating mark:', error);
+  }
+}
+
+  
 </script>

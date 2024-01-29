@@ -82,8 +82,8 @@ router.get("/student-profile/:id", verifyLoginTeacher, async (req, res) => {
     const workingDays = await teacherHelpers.getWorkingDays();
     let staff = req.session.teacher;
     const totalMark = await teacherHelpers.getAllSubjectMarks();
-    console.log("Student Data:", student); // Debug statement
-    console.log("Total Mark Data:", totalMark); // Debug statement
+    // console.log("Student Data:", student); // Debug statement
+    // console.log("Total Mark Data:", totalMark); // Debug statement
     res.render("principal/student-profile", { student, teacher: true, staff, workingDays, totalMark });
   } catch (error) {
     console.error("Error in /student-profile route:", error);
@@ -288,5 +288,22 @@ router.get('/get-all-subject-marks', verifyLoginTeacher, async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+router.post("/update-mark/:studentId/:subject/:change", async (req, res) => {
+  try {
+    const { studentId, subject, change } = req.params;
+    const markChange = parseInt(change); // Convert the change to an integer
+
+    // Update student marks using the helper function
+    const updatedStudent = await studentHelpers.updateStudentMarks(studentId, subject, markChange);
+
+    // Send back the updated student object (optional)
+    res.json({ success: true, updatedStudent });
+  } catch (error) {
+    console.error("Error updating student marks:", error);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
+  }
+});
+
 
 module.exports = router;
