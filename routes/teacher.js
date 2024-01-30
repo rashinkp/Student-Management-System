@@ -215,7 +215,7 @@ router.post('/update-working-days', async (req, res) => {
   }
 });
 
-router.post('/update-present-days/:id', verifyLoginTeacher, async (req, res) => {
+router.post('/update-present-days/:id', async (req, res) => {
   try {
      const { presentDays } = req.body;
      const studentId = req.params.id;
