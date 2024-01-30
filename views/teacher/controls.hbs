@@ -5,16 +5,41 @@
         padding: 10px;
     }
 </style>
+<script>
+
+    updateCurrentDate();
+</script>
 
 <section>
     <div class="container">
         <div class="row">
             <div class="box col-12">
                 <div class="top-section">
-                    <h2>Working Days</h2>
-                    <a class="btn btn-primary" onclick="updateWorkingDays(-1)">-</a>
-                    <label for="total-working-days" id="working-days-label">{{workingDays}}</label>
-                    <a class="btn btn-primary" onclick="updateWorkingDays(1)">+</a>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Working Days</th>
+                                <th>Today</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{#if principal}}
+                                    <a class="btn btn-primary" onclick="updateWorkingDays(-1)">-</a>
+                                    <label for="total-working-days" id="working-days-label">{{workingDays}}</label>
+                                    <a class="btn btn-primary" onclick="updateWorkingDays(1)">+</a>
+                                    {{else}}
+                                    <label for="total-working-days" id="working-days-label">{{workingDays}}</label>
+
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    <p>{{currentDate}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -94,6 +119,11 @@
 </section>
 
 <script>
+    function updateCurrentDate() {
+        const currentDateElement = document.getElementById('current-date');
+        const currentDate = new Date().toLocaleDateString();
+        currentDateElement.textContent = currentDate;
+    }
     function removeSubject(event) {
         event.preventDefault();
         const subjectId = event.target.getAttribute('data-subject-id');

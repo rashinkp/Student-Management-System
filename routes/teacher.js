@@ -5,7 +5,7 @@ var announcementHelpers = require("../helpers/announcement-helpers");
 const reqHelpers = require("../helpers/req-helpers");
 const subjectHelpers = require("../helpers/subject-helpers");
 var router = express.Router();
-
+const moment = require('moment')
 
 const verifyLoginTeacher = (req, res, next) => {
   if (req.session.teacher && req.session.loggedIn) {
@@ -234,63 +234,27 @@ router.post('/update-present-days/:id', verifyLoginTeacher, async (req, res) => 
  });
 
 
-// POST route to update total marks
-router.post('/update-total-marks', verifyLoginTeacher, async (req, res) => {
-  try {
-      const { subject, mark } = req.body;
-
-      // Check if a document for the subject exists in the collection
-      const existingSubject = await teacherHelpers.getSubjectMark(subject);
-
-      if (existingSubject) {
-          // Subject exists, update the mark value
-          await teacherHelpers.updateSubjectMark(subject, mark);
-      } else {
-          // Subject doesn't exist, create a new document with the mark value
-          await teacherHelpers.addSubjectMark(subject, mark);
-      }
-
-      res.json({ success: true, mark });
-  } catch (error) {
-      console.error('Error updating total marks:', error);
-      res.status(500).json({ success: false, error: 'Internal Server Error' });
-  }
-});
 
 
-router.get('/get-all-subject-marks', verifyLoginTeacher, async (req, res) => {
-  try {
-      // Fetch total marks for all subjects
-      const totalMarks = await teacherHelpers.getAllSubjectMarks();
+// router.get('/get-all-subject-marks', verifyLoginTeacher, async (req, res) => {
+//   try {
+//       // Fetch total marks for all subjects
+//       const totalMarks = await teacherHelpers.getAllSubjectMarks();
 
-      // Create an object to store the marks for each subject
-      const subjectMarks = {};
-      totalMarks.forEach(subject => {
-          subjectMarks[subject.subject] = subject.mark;
-      });
+//       // Create an object to store the marks for each subject
+//       const subjectMarks = {};
+//       totalMarks.forEach(subject => {
+//           subjectMarks[subject.subject] = subject.mark;
+//       });
 
-      res.json(subjectMarks);
-  } catch (error) {
-      console.error('Error in /get-all-subject-marks route:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+//       res.json(subjectMarks);
+//   } catch (error) {
+//       console.error('Error in /get-all-subject-marks route:', error);
+//       res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
 
-router.post("/update-mark/:studentId/:subject/:change", async (req, res) => {
-  try {
-    const { studentId, subject, change } = req.params;
-    const markChange = parseInt(change); // Convert the change to an integer
 
-    // Update student marks using the helper function
-    const updatedStudent = await studentHelpers.updateStudentMarks(studentId, subject, markChange);
-
-    // Send back the updated student object (optional)
-    res.json({ success: true, updatedStudent });
-  } catch (error) {
-    console.error("Error updating student marks:", error);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
-  }
-});
 
 router.get('/controls', verifyLoginTeacher, async (req, res) => {
   try {
@@ -298,8 +262,9 @@ router.get('/controls', verifyLoginTeacher, async (req, res) => {
     const workingDays = await teacherHelpers.getWorkingDays();
     const totalMarks = await teacherHelpers.getAllSubjectMarks();
     const subjects = await subjectHelpers.getAllSubjects();
+    const currentDate = moment().format('DD/MM/YYYY');
 
-    res.render('teacher/controls', { staff, teacher: true, workingDays, totalMarks, subjects });
+    res.render('teacher/controls', { staff, teacher: true, workingDays, totalMarks, subjects,currentDate });
   } catch (error) {
     console.error('Error in /controls route:', error);
     res.status(500).send('Internal Server Error');

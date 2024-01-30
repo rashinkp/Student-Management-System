@@ -8,6 +8,7 @@ var reqHelpers = require('../helpers/req-helpers');
 const fs = require('fs');
 const { ExplainVerbosity } = require('mongodb');
 const subjectHelpers = require('../helpers/subject-helpers')
+const moment = require('moment');
 
 const verifyLoginPrincipal = (req, res, next) => {
   if (req.session.principal && req.session.loggedIn) {
@@ -168,9 +169,9 @@ router.get('/student-profile/:id',verifyLoginPrincipal, async (req, res) => {
   try {
     const studentId = req.params.id;
     const student = await studentHelpers.getStudentById(studentId);
-    const totalMark = await teacherHelpers.getAllSubjectMarks();
     const workingDays = await teacherHelpers.getWorkingDays();
-    res.render('principal/student-profile', { student, principal: true,totalMark,workingDays });
+    const subjects = await subjectHelpers.getAllSubjects();
+    res.render('principal/student-profile', { student, principal: true,workingDays,subjects });
   } catch (error) {
     console.error('Error in /student-profile route:', error);
     res.status(500).send('Internal Server Error');
@@ -412,8 +413,9 @@ router.get('/controls', verifyLoginPrincipal, async (req, res) => {
     const workingDays = await teacherHelpers.getWorkingDays();
     const totalMarks = await teacherHelpers.getAllSubjectMarks();
     const subjects = await subjectHelpers.getAllSubjects();
+    const currentDate = moment().format('DD/MM/YYYY');
 
-    res.render('teacher/controls', { staff, teacher: true, workingDays, totalMarks, subjects, principal:true });
+    res.render('teacher/controls', { staff, teacher: true, workingDays, totalMarks, subjects, principal: true, currentDate });
   } catch (error) {
     console.error('Error in /controls route:', error);
     res.status(500).send('Internal Server Error');
