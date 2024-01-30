@@ -30,7 +30,76 @@
         <h2 class="text-center mt-5 mb-5">Classes</h2>
 
         <!-- Bootstrap Grid System -->
+       {{#if principal}}
+         <div class="row">
+            
+                <div class="col-md-4">
+                <a href="/principal/view-class/1">
+                <div class="card" data-class="1">Class 1</div>
+                </a>
+            </div>
+            
+            <div class="col-md-4">
+                <a href="/principal/view-class/2">
+                <div class="card" data-class="2">Class 2</div>
+                </a>
+            </div>
+            <div class="col-md-4">
+               <a href="/principal/view-class/3">
+                <div class="card" data-class="3">Class 3</div>
+                </a>
+            </div>
+        </div>
+
         <div class="row">
+            <div class="col-md-4">
+               <a href="/principal/view-class/4">
+                <div class="card" data-class="4">Class 4</div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/principal/view-class/5">
+                <div class="card" data-class="5">Class 5</div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/principal/view-class/6">
+                <div class="card" data-class="6">Class 6</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/principal/view-class/7">
+                <div class="card" data-class="7">Class 7</div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/principal/view-class/8">
+                <div class="card" data-class="8">Class 8</div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/principal/view-class/9">
+                <div class="card" data-class="9">Class 9</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/principal/view-class/10">
+                <div class="card" data-class="10">Class 10</div>
+                </a>
+            </div>
+        </div>
+
+
+       {{else}}
+
+
+         <div class="row">
             
                 <div class="col-md-4">
                 <a href="/teacher/view-class/1">
@@ -93,4 +162,5 @@
                 </a>
             </div>
         </div>
+       {{/if}}
     </div>

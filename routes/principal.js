@@ -469,5 +469,23 @@ router.post('/update-subject-mark', verifyLoginPrincipal, async (req, res) => {
 });
 
 
+router.get('/view-class/:class', verifyLoginPrincipal, async (req, res) => {
+  try {
+    const studentClass = req.params.class;
+
+    if (!studentClass) {
+      return res.status(400).send('Class parameter not provided');
+    }
+
+    const workingDays = await teacherHelpers.getWorkingDays();
+    const students = await studentHelpers.getAllStudentsByClass(studentClass);
+
+    res.render('teacher/view-class', { principal: true,students, workingDays });
+  } catch (error) {
+    console.error('Error in /view-class route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 module.exports = router;
