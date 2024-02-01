@@ -75,27 +75,40 @@
         </div>
         <div class="row">
           <div class="col-12">
-           <table class="table">
+            {{#if student.mark}}
+            <table class="table">
               <thead>
                 <tr>
                   <th>Subject</th>
-                  <th>Total Mark</th>
                   <th>Student Mark</th>
                   <th>Percentage</th>
                   <th>Grade</th>
                 </tr>
               </thead>
               <tbody>
-          
-                  {{#each subjects}}
-                  <tr>
-                    <td>{{this.subject}}</td>
-                    <td>{{this.mark}}</td>
-                  </tr>
-                  {{/each}}
-                
+                {{#each student.mark}}
+                <tr>
+                  <td>{{@key}}</td>
+                  <td id="{{this._id}}-total-mark">{{totalMarksObj.[@key]}}</td>
+                  <!-- Display the total mark for the subject -->
+                  <td>
+                    <form>
+                      <input type="hidden" name="subjectId" value="{{this._id}}">
+                      <input id="{{this._id}}-mark" type="number" name="mark" value="{{this}}" required>
+                      <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                  </td>
+                  <td>Percentage</td>
+                  <td>Grade</td>
+                </tr>
+                {{/each}}
+
               </tbody>
-           </table>
+            </table>
+
+            {{else}}
+            <a href="/teacher/add-mark/{{student._id}}" class="btn btn-primary">Add mark</a>
+            {{/if}}
           </div>
         </div>
       </div>
@@ -106,44 +119,8 @@
 
 <script>
   function confirmRemove() { var result = confirm("Are you sure you want toremove this student?"); if (result) { window.location.href = "/principal/remove-student/{{student._id}}"; } }
-  function fetchSubjectMarks() {
-    let url = '/teacher/get-all-subject-marks';
-    if (window.location.pathname.startsWith('/principal')) {
-      url = '/principal/get-all-subject-marks';
-    }
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        // Iterate through the subject marks and update the corresponding labels
-        Object.keys(data).forEach(subject => {
-          var markLabel = document.getElementById(subject + '-mark-label');
-          if (markLabel) {
-            markLabel.textContent = data[subject];
-          }
-        });
-      })
-      .catch(error => console.error('Error fetching subject marks:', error));
-  }
-
-async function updateMark(studentId, subject, change) {
-  try {
-    const response = await fetch(`/teacher/update-mark/${studentId}/${subject}/${change}`, {
-      method: 'POST'
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      // Update the displayed mark
-      document.getElementById(`${subject}-mark`).innerText = data.updatedStudent.marks[subject];
-      document.getElementById(`${subject}-total-mark`).innerText = data.totalMark.find(item => item.subject === subject).mark;
-    } else {
-      console.error('Failed to update mark');
-    }
-    fetchSubjectMarks(); // Optional: Update other marks dynamically
-  } catch (error) {
-    console.error('Error updating mark:', error);
-  }
-}
-
   
+
+
+
 </script>

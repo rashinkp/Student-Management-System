@@ -411,11 +411,12 @@ router.get('/controls', verifyLoginPrincipal, async (req, res) => {
   try {
     const staff = req.session.teacher;
     const workingDays = await teacherHelpers.getWorkingDays();
-    const totalMarks = await teacherHelpers.getAllSubjectMarks();
     const subjects = await subjectHelpers.getAllSubjects();
     const currentDate = moment().format('DD/MM/YYYY');
 
-    res.render('teacher/controls', { staff, teacher: true, workingDays, totalMarks, subjects, principal: true, currentDate });
+    // console.log("total mark in the principal:",totalMarks)
+
+    res.render('teacher/controls', { staff, teacher: true, workingDays, subjects, principal: true, currentDate });
   } catch (error) {
     console.error('Error in /controls route:', error);
     res.status(500).send('Internal Server Error');

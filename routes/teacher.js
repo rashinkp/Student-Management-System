@@ -82,16 +82,18 @@ router.get("/student-profile/:id", verifyLoginTeacher, async (req, res) => {
     const studentId = req.params.id;
     const student = await studentHelpers.getStudentById(studentId);
     const workingDays = await teacherHelpers.getWorkingDays();
-    let staff = req.session.teacher;
     const subjects = await subjectHelpers.getAllSubjects();
-    // console.log("Student Data:", student); // Debug statement
-    // console.log("Total Mark Data:", totalMark); // Debug statement
+
+    let staff = req.session.teacher;
+    // console.log("Student mark:", student.mark); // Debug statement
+    // console.log("Total Marks:", totalMark); // Debug statement
     res.render("principal/student-profile", { student, teacher: true, staff, workingDays, subjects });
   } catch (error) {
     console.error("Error in /student-profile route:", error);
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 router.get("/list-teachers", verifyLoginTeacher, (req, res) => {
   teacherHelpers.getAllTeachers().then((teachers) => {
@@ -260,16 +262,44 @@ router.get('/controls', verifyLoginTeacher, async (req, res) => {
   try {
     const staff = req.session.teacher;
     const workingDays = await teacherHelpers.getWorkingDays();
-    const totalMarks = await teacherHelpers.getAllSubjectMarks();
     const subjects = await subjectHelpers.getAllSubjects();
     const currentDate = moment().format('DD/MM/YYYY');
 
-    res.render('teacher/controls', { staff, teacher: true, workingDays, totalMarks, subjects,currentDate });
+    res.render('teacher/controls', { staff, teacher: true, workingDays, subjects,currentDate });
   } catch (error) {
     console.error('Error in /controls route:', error);
     res.status(500).send('Internal Server Error');
   }
 });
+
+router.get("/add-mark/:id", verifyLoginTeacher, async (req, res) => {
+  try {
+    const studentId = req.params.id;
+    // Call the addMark function to add marks for the student
+    await studentHelpers.addMark(studentId);
+    res.redirect(`/teacher/student-profile/${studentId}`);
+  } catch (error) {
+    console.error("Error in /add-mark route:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.post("/update-student-mark", verifyLoginTeacher, async (req, res) => {
+  try {
+
+    console.log("studentid:",studentid,"subjectid:",subjectId,"mark:",mark)
+    
+    // Update the mark for the specified subject
+    await studentHelpers.updateStudentMark(studentId, subjectId, mark);
+
+    // Send a success response
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error in /update-student-mark route:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 
 
 

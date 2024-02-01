@@ -14,56 +14,63 @@ module.exports = {
   calculateAttendancePercentage,
   addStudent: async (student, callback) => {
     try {
-        // Generate a unique admission number
-        const lastAdmissionNumber = await db
-            .get()
-            .collection(COLLECTION.STUDENTS_COLLECTION)
-            .find()
-            .sort({ admissionNo: -1 })
-            .limit(1)
-            .toArray();
+      // Generate a unique admission number
+      const lastAdmissionNumber = await db
+        .get()
+        .collection(COLLECTION.STUDENTS_COLLECTION)
+        .find()
+        .sort({ admissionNo: -1 })
+        .limit(1)
+        .toArray();
 
-        const lastAdmission = lastAdmissionNumber[0];
-        const lastAdmissionNo = lastAdmission ? lastAdmission.admissionNo : 999; // Default to 999 if NaN
+      const lastAdmission = lastAdmissionNumber[0];
+      const lastAdmissionNo = lastAdmission ? lastAdmission.admissionNo : 999; // Default to 999 if NaN
 
-        const newAdmissionNumber = isNaN(lastAdmissionNo) ? 1000 : lastAdmissionNo + 1;
+      const newAdmissionNumber = isNaN(lastAdmissionNo)
+        ? 1000
+        : lastAdmissionNo + 1;
 
-        student.admissionNo = newAdmissionNumber;
+      student.admissionNo = newAdmissionNumber;
 
-        // Generate a unique roll number based on the student's class
-        const lastRollNumber = await db
-            .get()
-            .collection(COLLECTION.STUDENTS_COLLECTION)
-            .find({ class: student.class })
-            .sort({ rollNumber: -1 })
-            .limit(1)
-            .toArray();
+      // Generate a unique roll number based on the student's class
+      const lastRollNumber = await db
+        .get()
+        .collection(COLLECTION.STUDENTS_COLLECTION)
+        .find({ class: student.class })
+        .sort({ rollNumber: -1 })
+        .limit(1)
+        .toArray();
 
-        const lastRoll = lastRollNumber[0];
-        const newRollNumber = lastRoll && lastRoll.rollNumber !== undefined ? lastRoll.rollNumber + 1 : 1;
+      const lastRoll = lastRollNumber[0];
+      const newRollNumber =
+        lastRoll && lastRoll.rollNumber !== undefined
+          ? lastRoll.rollNumber + 1
+          : 1;
 
-        // Assign the new roll number
-        student.rollNumber = newRollNumber;
+      // Assign the new roll number
+      student.rollNumber = newRollNumber;
 
-        student.attendance = {
-          present: 0,
-          percentage:0
-        }
+      student.attendance = {
+        present: 0,
+        percentage: 0,
+      };
 
-        // Hash the password
-        student.password = await bcrypt.hash(student.password, 10);
+      // Hash the password
+      student.password = await bcrypt.hash(student.password, 10);
 
-        // Insert the student with the assigned admission number and roll number
-        const result = await db.get().collection(COLLECTION.STUDENTS_COLLECTION).insertOne(student);
+      // Insert the student with the assigned admission number and roll number
+      const result = await db
+        .get()
+        .collection(COLLECTION.STUDENTS_COLLECTION)
+        .insertOne(student);
 
-        // Pass the admission number and roll number in the callback
-        callback(result.insertedId, newAdmissionNumber, newRollNumber);
+      // Pass the admission number and roll number in the callback
+      callback(result.insertedId, newAdmissionNumber, newRollNumber);
     } catch (error) {
-        console.error('Error in addStudent:', error);
-        throw error;
+      console.error("Error in addStudent:", error);
+      throw error;
     }
-},
-
+  },
 
   getAllStudents: () => {
     return new Promise(async (resolve, reject) => {
@@ -90,12 +97,12 @@ module.exports = {
           .findOne({ _id: new ObjectId(studentId) });
         resolve(student);
       } catch (error) {
-        console.error('Error in getStudentById:', error);
+        console.error("Error in getStudentById:", error);
         reject(error);
       }
     });
   },
-  
+
   updateStudent: (studentId, student) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -168,17 +175,17 @@ module.exports = {
   getAllStudentsByClass: (studentClass) => {
     return new Promise(async (resolve, reject) => {
       try {
-        let filter = {}; 
+        let filter = {};
         if (studentClass) {
           filter = { class: studentClass };
         }
-  
+
         let students = await db
           .get()
           .collection(COLLECTION.STUDENTS_COLLECTION)
           .find(filter)
           .toArray();
-  
+
         resolve(students);
       } catch (error) {
         console.error("Error in getAllStudents:", error);
@@ -186,73 +193,83 @@ module.exports = {
       }
     });
   },
- 
 
   updatePresentDays: async (newPresentDays, studentId, workingDays) => {
     try {
-        newPresentDays = newPresentDays || 0;
-        const percentage = calculateAttendancePercentage(newPresentDays, workingDays).toFixed(2);
+      newPresentDays = newPresentDays || 0;
+      const percentage = calculateAttendancePercentage(
+        newPresentDays,
+        workingDays
+      ).toFixed(2);
 
-        await db
-            .get()
-            .collection(COLLECTION.STUDENTS_COLLECTION)
-            .updateOne(
-                { _id: new ObjectId(studentId) },
-                {
-                    $set: {
-                        'attendance.present': newPresentDays,
-                        'attendance.percentage': parseFloat(percentage), // Convert back to a number
-                    },
-                }
-            );
+      await db
+        .get()
+        .collection(COLLECTION.STUDENTS_COLLECTION)
+        .updateOne(
+          { _id: new ObjectId(studentId) },
+          {
+            $set: {
+              "attendance.present": newPresentDays,
+              "attendance.percentage": parseFloat(percentage), // Convert back to a number
+            },
+          }
+        );
 
-        return { present: newPresentDays, percentage }; // Return the updated attendance object
+      return { present: newPresentDays, percentage }; // Return the updated attendance object
     } catch (error) {
-        console.error('Error in updatePresentDays:', error);
-        throw error;
+      console.error("Error in updatePresentDays:", error);
+      throw error;
     }
-},
+  },
 
+  addMark: async (studentId) => {
+    try {
+      // Retrieve subjects from the subject collection
+      const subjects = await db
+        .get()
+        .collection(COLLECTION.SUBJECT)
+        .find({}, { projection: { subject: 1, _id: 0 } }) // Only retrieve the subject field and exclude _id
+        .toArray();
 
-updateStudentMarks: async (studentId, subject, markChange) => {
-  try {
-    console.log("subject>>>",subject)
-    const filter = { _id: new ObjectId(studentId) };
-    const student = await db.get().collection(COLLECTION.STUDENTS_COLLECTION).findOne(filter);
-    const totalMarkData = await db.get().collection(COLLECTION.TOTAL_MARK).findOne({ subject });
-    // const totalMark = totalMarkData ? totalMarkData.mark : null;
-    // if (totalMark === null) {
-    //   throw new Error(`Total mark for ${subject} not found.`);
-    // }
+      console.log("Subjects:", subjects);
 
-    // // Calculate the new mark
-    const newMark = student.marks[subject] + markChange;
-    // // const oldMark = student.marks
-    // console.log('studen:',student)
-    // console.log('old mark:',student.marks[subject])
-    // console.log('mark chang:',markChange)
-    // console.log(totalMark)
-    // console.log(newMark);
-    // // Check if the new mark meets the condition
-    // if (totalMark >= newMark) {
-    //   // Update the student's mark
-      const update = { $inc: { [`marks.${subject}`]: markChange } }; 
-      await db.get().collection(COLLECTION.STUDENTS_COLLECTION).updateOne(filter, update);
+      // Prepare the marks object with default values (0)
+      const markObj = {};
+      subjects.forEach((subject) => {
+        markObj[subject.subject] = 0;
+      });
 
-      // Optionally, you can return the updated student object
-      const updatedStudent = await db.get().collection(COLLECTION.STUDENTS_COLLECTION).findOne(filter);
-      return updatedStudent;
-    // } else {
-    //   console.log(`total mark cannot be less than the  mark `);
-    // }
-  } catch (error) {
-    console.error("Error updating student marks:", error);
-    throw error;
+      // Update the student with the mark object
+      await db
+        .get()
+        .collection(COLLECTION.STUDENTS_COLLECTION)
+        .updateOne(
+          { _id: new ObjectId(studentId) },
+          { $set: { mark: markObj } }
+        );
+
+      return true;
+    } catch (error) {
+      console.error("Error in addMark:", error);
+      throw error;
+    }
+  },
+
+  updateStudentMark: async (studentId, subjectId, newMark) => {
+    try {
+      // Update the mark for the specified subject of the student
+      await db
+        .get()
+        .collection(COLLECTION.STUDENTS_COLLECTION)
+        .updateOne(
+          { _id: new ObjectId(studentId) },
+          { $set: { [`mark.${subjectId}`]: newMark } }
+        );
+
+      return true; // Return true if the update is successful
+    } catch (error) {
+      console.error("Error in updateStudentMark:", error);
+      throw error;
+    }
   }
-},
-
-
-
-
-  
 };

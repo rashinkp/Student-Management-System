@@ -156,83 +156,84 @@ module.exports = {
   },
 
 
-  getSubjectMark: (subject) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const subjectMark = await db
-                .get()
-                .collection(COLLECTION.TOTAL_MARK)
-                .findOne({ subject: subject });
-            resolve(subjectMark);
-        } catch (error) {
-            console.error('Error in getSubjectMark:', error);
-            reject(error);
-        }
-    });
-},
+//   getSubjectMark: (subject) => {
+//     return new Promise(async (resolve, reject) => {
+//         try {
+//             const subjectMark = await db
+//                 .get()
+//                 .collection(COLLECTION.TOTAL_MARK)
+//                 .findOne({ subject: subject });
+//             resolve(subjectMark);
+//         } catch (error) {
+//             console.error('Error in getSubjectMark:', error);
+//             reject(error);
+//         }
+//     });
+// },
 
-// Update subject mark in the collection
-updateSubjectMark: (subject, mark) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            await db
-                .get()
-                .collection(COLLECTION.TOTAL_MARK)
-                .updateOne({ subject: subject }, { $set: { mark: mark } });
-            resolve();
-        } catch (error) {
-            console.error('Error in updateSubjectMark:', error);
-            reject(error);
-        }
-    });
-},
+// // Update subject mark in the collection
+// updateSubjectMark: (subject, mark) => {
+//     return new Promise(async (resolve, reject) => {
+//         try {
+//             await db
+//                 .get()
+//                 .collection(COLLECTION.TOTAL_MARK)
+//                 .updateOne({ subject: subject }, { $set: { mark: mark } });
+//             resolve();
+//         } catch (error) {
+//             console.error('Error in updateSubjectMark:', error);
+//             reject(error);
+//         }
+//     });
+// },
 
-updateTotalMarks: async (subject, mark) => {
-  try {
-    await fetch('/teacher/update-total-marks', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ subject: subject, mark: mark }), // Ensure correct data is sent
-    });
-  } catch (error) {
-    console.error('Error in updateTotalMarks:', error);
-    throw error;
-  }
-},
+// updateTotalMarks: async (subject, mark) => {
+//   try {
+//     await fetch('/teacher/update-total-marks', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({ subject: subject, mark: mark }), // Ensure correct data is sent
+//     });
+//   } catch (error) {
+//     console.error('Error in updateTotalMarks:', error);
+//     throw error;
+//   }
+// },
 
-addSubjectMark: (subject, mark) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            await db
-                .get()
-                .collection(COLLECTION.TOTAL_MARK)
-                .insertOne({ subject: subject, mark: mark });
-            resolve();
-        } catch (error) {
-            console.error('Error in addSubjectMark:', error);
-            reject(error);
-        }
-    });
-},
+// addSubjectMark: (subject, mark) => {
+//     return new Promise(async (resolve, reject) => {
+//         try {
+//             await db
+//                 .get()
+//                 .collection(COLLECTION.TOTAL_MARK)
+//                 .insertOne({ subject: subject, mark: mark });
+//             resolve();
+//         } catch (error) {
+//             console.error('Error in addSubjectMark:', error);
+//             reject(error);
+//         }
+//     });
+// },
 
 
-getAllSubjectMarks: () => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const totalMarks = await db
-        .get()
-        .collection(COLLECTION.TOTAL_MARK)
-        .find({}, { projection: { _id: 0, subject: 1, mark: 1 } }) 
-        .toArray();
-      resolve(totalMarks);
-    } catch (error) {
-      console.error('Error in getAllSubjectMarks:', error);
-      reject(error);
-    }
-  });
-}
+// getAllSubjectMarks: () => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       const totalMarks = await db
+//         .get()
+//         .collection(COLLECTION.TOTAL_MARK)
+//         .find({}, { projection: { _id: 0, subject: 1, mark: 1 } }) 
+//         .toArray();
+//         console.log("total mark in helpers:",totalMarks);
+//       resolve(totalMarks);
+//     } catch (error) {
+//       console.error('Error in getAllSubjectMarks:', error);
+//       reject(error);
+//     }
+//   });
+// },
 
     
     
