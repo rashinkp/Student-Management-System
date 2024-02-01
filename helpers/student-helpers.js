@@ -254,22 +254,21 @@ module.exports = {
       throw error;
     }
   },
-
-  updateStudentMark: async (studentId, subjectId, newMark) => {
+  updateStudentMark: async (studentId, subject, mark) => {
     try {
-      // Update the mark for the specified subject of the student
+      // Update the mark for the specified subject and student
       await db
         .get()
         .collection(COLLECTION.STUDENTS_COLLECTION)
         .updateOne(
           { _id: new ObjectId(studentId) },
-          { $set: { [`mark.${subjectId}`]: newMark } }
+          { $set: { [`mark.${subject}`]: mark } }
         );
-
-      return true; // Return true if the update is successful
     } catch (error) {
-      console.error("Error in updateStudentMark:", error);
+      console.error("Error updating student mark:", error);
       throw error;
     }
-  }
+  },
+
+
 };

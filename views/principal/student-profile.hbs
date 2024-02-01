@@ -89,19 +89,19 @@
                 {{#each student.mark}}
                 <tr>
                   <td>{{@key}}</td>
-                  <td id="{{this._id}}-total-mark">{{totalMarksObj.[@key]}}</td>
-                  <!-- Display the total mark for the subject -->
                   <td>
-                    <form>
-                      <input type="hidden" name="subjectId" value="{{this._id}}">
-                      <input id="{{this._id}}-mark" type="number" name="mark" value="{{this}}" required>
+                    <form class="updateMarkForm" data-student-id="{{../studentId}}" data-subject="{{@key}}">
+                      <input type="number" name="mark" value="{{this}}" required />
                       <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                   </td>
-                  <td>Percentage</td>
+                  <td>{{../attendance.percentage}}%</td>
                   <td>Grade</td>
                 </tr>
                 {{/each}}
+
+
+
 
               </tbody>
             </table>
@@ -119,7 +119,37 @@
 
 <script>
   function confirmRemove() { var result = confirm("Are you sure you want toremove this student?"); if (result) { window.location.href = "/principal/remove-student/{{student._id}}"; } }
-  
+  document.addEventListener("DOMContentLoaded", () => {
+    const updateMarkForms = document.querySelectorAll(".updateMarkForm");
+    updateMarkForms.forEach(form => {
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const mark = formData.get("mark");
+        const studentId = form.getAttribute("data-student-id");
+        const subject = form.getAttribute("data-subject");
+        try {
+          const response = await fetch("/teacher/update-student-mark", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ studentId, subject, mark }),
+          });
+          if (response.ok) {
+            // Update the UI to reflect the new mark value
+            // You may need to reload the page or update specific elements
+          } else {
+            console.error("Failed to update mark");
+          }
+        } catch (error) {
+          console.error("Error updating mark:", error);
+        }
+      });
+    });
+  });
+
+
 
 
 
