@@ -57,8 +57,10 @@ router.get("/list-teachers",verifyLoginPrincipal, (req, res) => {
 
 
 
-router.get('/add-teacher',verifyLoginPrincipal,(req,res)=>{
-  res.render('principal/add-teacher',{principal:true});
+router.get('/add-teacher',verifyLoginPrincipal, async(req,res)=>{
+  let subjects = await subjectHelpers.getAllSubjects();
+  // console.log('subjects:',subjects);
+  res.render('principal/add-teacher',{principal:true,subjects});
 })
 router.post('/add-teacher', (req, res) => {
   if (req.file) {

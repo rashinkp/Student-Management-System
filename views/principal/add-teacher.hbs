@@ -1,78 +1,79 @@
+<style>
+    .form-box {
+        max-width: 600px;
+        margin: auto;
+        margin-top: 60px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        border-radius: 8px;
+        background-color: #ffffff;
+        animation: fadeIn 0.5s ease-in-out;
+        margin-bottom: 60px;
+        cursor: pointer;
+    }
 
-    <style>
-       
-        .form-box {
-            max-width: 600px;
-            margin: auto;
-            margin-top: 60px;
-            padding: 20px;
-            box-shadow: 0 4px 8px
-            rgba(0, 0, 0, 0.1); transition: transform 0.3s ease-in-out; 
-            border-radius: 8px;
-            background-color: #ffffff;
-            animation: fadeIn 0.5s ease-in-out;
-            margin-bottom: 60px;
-            cursor: pointer;
-        }
-        .form-box:hover{
-            transform: scale(1.05); 
-        }
+    .form-box:hover {
+        transform: scale(1.05);
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
         }
 
-        form {
-            display: grid;
-            gap: 16px;
-
+        to {
+            opacity: 1;
         }
+    }
 
-          .name-section {
-            display: grid;
-            gap: 16px;
-            grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-        }
+    form {
+        display: grid;
+        gap: 16px;
 
-        .name-section input {
-            margin-bottom: 0;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-        }
+    }
 
-        input,
-        select,
-        button {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
+    .name-section {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    }
 
-        button {
-            background-color: #4caf50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+    .name-section input {
+        margin-bottom: 0;
+    }
 
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    input,
+    select,
+    button {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
 
 
-   <section>
+<section>
     <div class="container ">
-         <div class="form-box">
+        <div class="form-box">
             <div class="row">
                 <h2 class="text-center text-primary my-3">
                     {{#if user}}
@@ -80,80 +81,85 @@
                     {{else if principal}}
                     Add Teacher
                     {{/if}}
-                    </h2>
+                </h2>
             </div>
-        <form id="teacherForm" method="POST" 
-        {{#if principal}}
-            action="/principal/add-teacher"
-        {{else if user}}
-            action="/req-teacher"
-        {{/if}}
-         enctype="multipart/form-data">
-           <div class="name-section">
-               <div class="row">
-                <div class="col-md-6 col-sm-12">
-                     <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+            <form id="teacherForm" method="POST" {{#if principal}} action="/principal/add-teacher" {{else if user}}
+                action="/req-teacher" {{/if}} enctype="multipart/form-data">
+                <div class="name-section">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName" name="firstName" placeholder="Enter your first name"
+                                required>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName" name="secondName" placeholder="Enter your last name"
+                                required>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6 col-sm-12">
-                    <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="secondName" placeholder="Enter your last name" required>
-                </div>
-               </div>
-           </div>
-            <label for="age">Age:</label>
-            <input type="number" id="age" name="age" placeholder="Enter your age" required>
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" placeholder="Enter your age" required>
 
-            <label for="sex">Sex:</label>
-            <select id="sex" name="sex" required>
-                <option value="" disabled selected>Select your gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-            </select>
+                <label for="sex">Sex:</label>
+                <select id="sex" name="sex" required>
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
 
-            <label for="qualification">Education Qualification:</label>
-            <input type="text" id="qualification" name="qualification" placeholder="Enter your qualification" required>
+                <label for="qualification">Education Qualification:</label>
+                <input type="text" id="qualification" name="qualification" placeholder="Enter your qualification"
+                    required>
 
-            <label for="place">Place:</label>
-            <input type="text" id="place" name="place" placeholder="Enter your place" required>
+                <label for="place">Place:</label>
+                <input type="text" id="place" name="place" placeholder="Enter your place" required>
 
 
-            <label for="state">Class:</label>
-            <input type="text" id="class" name="class" placeholder="Enter class which you want to teach">
+                <label for="state">Class:</label>
+                <select name="class" id="classList">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
 
-            <label for="state">Specified Subject:</label>
-            <select id="state" name="subject" required>
-                <option value="" disabled selected>Select your Subject</option>
-                <option value="Maths">Maths</option>
-                <option value="Computer">Computer</option>
-                <option value="English">English</option>
-                <option value="SecondLanguage">Second Language</option>
-                <option value="BasicScience">Basic Science</option>
-                <option value="SocialScience">SocialScience</option>
-            </select>
+                    <label for="subject">Specified Subject:</label>
+                    <select id="subject" name="subject" required>
+                        <option value="" disabled selected>Select your Subject</option>
+                        {{#each subjects}}
+                        <option value="{{this.subject}}">{{this.subject}}</option>
+                        {{/each}}
+                    </select>
 
-            <label for="image">Upload Image:</label>
-            <input type="file" id="image" name="image" accept="image/*" placeholder="Choose a profile image">
+                <label for="image">Upload Image:</label>
+                <input type="file" id="image" name="image" accept="image/*" placeholder="Choose a profile image">
 
-            <label for="email">Mobile Number:</label>
-            <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" required>
+                <label for="email">Mobile Number:</label>
+                <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" required>
 
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Create teacher's password" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Create teacher's password" required>
 
-            <button type="submit">
-                {{#if principal}}
-                Add Teacher
-                {{else if user}}
-                Req as Teacher
-                {{/if}}
+                <button type="submit">
+                    {{#if principal}}
+                    Add Teacher
+                    {{else if user}}
+                    Req as Teacher
+                    {{/if}}
                 </button>
-        </form>
+            </form>
+        </div>
     </div>
-    </div>
-   </section>
-
+</section>

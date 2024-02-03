@@ -6,8 +6,12 @@ var studentHelpers = require('../helpers/student-helpers');
 var announcementHelpers = require('../helpers/announcement-helpers');
 var reqHelpers = require('../helpers/req-helpers');
 var userHelpers = require('../helpers/user-helpers')
+var subjectHelpers = require("../helpers/subject-helpers")
 const fs = require('fs');
 const { ExplainVerbosity } = require('mongodb');
+const nodemailer = require('nodemailer');
+
+
 
 const verifyLoginUser = (req, res, next) => {
   if (req.session.user && req.session.loggedIn) {
@@ -34,7 +38,7 @@ router.post('/req-admission', verifyLoginUser, async (req, res) => {
       const studentData = req.body;
       const result = await reqHelpers.insertRequestAdmission(studentData);
 
-      const id = result.insertedId; // Get the inserted document's ID
+      const id = result.insertedId; 
 
       const destinationPath = path.join(__dirname, '../public/images/student', id + '.jpg');
       
@@ -82,11 +86,17 @@ router.post('/user-signup', (req, res) => {
   });
 });
 
-router.get('/req-teacher',(req,res)=>{
-  res.render('principal/add-teacher',{user:true});
-})
+router.get('/req-teacher', verifyLoginUser, (req, res) => {
+  subjectHelpers.getAllSubjects().then(subjects => {
+    res.render('principal/add-teacher', { user: true, subjects });
+  }).catch(error => {
+    console.error('Error fetching subjects:', error);
+    res.status(500).send('Internal Server Error');
+  });
+});
 
-router.post('/req-teacher',async(req,res)=>{
+
+router.post('/req-teacher',verifyLoginUser,async(req,res)=>{
   try {
     if (req.file) {
       let image = req.file;
@@ -94,6 +104,7 @@ router.post('/req-teacher',async(req,res)=>{
       const result = await reqHelpers.insertRequestTeacher(teacherData);
 
       const id = result.insertedId;
+      
 
       const destinationPath = path.join(__dirname, '../public/images/teacher', id + '.jpg');
       
