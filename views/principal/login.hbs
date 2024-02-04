@@ -1,18 +1,16 @@
+
 <section>
   <div class="container">
 
-    <div
-      class="row justify-content-center align-items-center"
-      style="height:80vh;"
-    >
+    <div class="row justify-content-center align-items-center" style="height:80vh;">
 
       <div class="col-md-6 col-lg-4">
 
         <div class="card shadow-lg border-0 rounded-lg mt-5">
 
-          <div class="card-header"><h3
-              class="text-center font-weight-light my-4"
-            >Login</h3></div>
+          <div class="card-header">
+            <h3 class="text-center font-weight-light my-4">Login as Principal</h3>
+          </div>
           <div class="card-body">
 
             <form action="/principal/principal-login" method="POST">
@@ -21,13 +19,7 @@
 
                 <label for="email">Email address</label>
 
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  name="email"
-                  placeholder="Enter email"
-                />
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" />
 
               </div>
 
@@ -35,20 +27,14 @@
 
                 <label for="password">Password</label>
 
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  name="password"
-                  placeholder="Enter password"
-                />
+                <input type="password" class="form-control" id="password" name="password"
+                  placeholder="Enter password" />
 
               </div>
 
-              <button
-                type="submit"
-                class="btn btn-primary btn-block"
-              >Login</button>
+              <div class="col-12" style="text-align: center;">
+                <button type="submit" class="btn btn-primary btn-block mt-3">Login</button>
+              </div>
 
             </form>
 
@@ -56,9 +42,38 @@
 
         </div>
 
+
+
+
+
+
+
+
+
+      </div>
+
+      <div class="row">
+        <h1 style="text-align: center;" class="mt-5">Login as...</h1>
+        <div class="col-md-4">
+          <a href="/teacher/login"><div class="card shadow-lg border-0 rounded-lg mt-5 p-5 text-center">
+            <h2>Teacher</h2>
+          </div></a>
+        </div>
+          <div class="col-md-4">
+          <a href="/student/login"><div class="card shadow-lg border-0 rounded-lg mt-5 p-5 text-center">
+            <h2>Student</h2>
+          </div></a>
+        </div>
+          <div class="col-md-4">
+          <a href="/user-login"><div class="card shadow-lg border-0 rounded-lg mt-5 p-5 text-center">
+            <h2>User</h2>
+          </div></a>
+        </div>
       </div>
 
     </div>
+
+
 
   </div>
 

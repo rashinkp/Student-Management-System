@@ -22,9 +22,10 @@ router.get('/',verifyLoginPrincipal, function(req, res, next) {
   let princi = req.session.principal
   res.render('principal/home',{principal:true,princi });
 });
-router.get('/principal-login',(req,res)=>{
-  res.render(('principal/login'));
-})
+router.get('/principal-login', (req, res) => {
+  res.render('principal/login', { login: true });
+});
+
 router.post('/principal-login',(req,res)=>{
   let response = req.body
   let princi = {

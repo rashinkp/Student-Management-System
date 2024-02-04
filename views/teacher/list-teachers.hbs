@@ -84,15 +84,17 @@
             {{/each}}
        
         {{else}}
-        {{#each teachers}}
+        
         <tr>
           <th>Sl No.</th>
           <th>Profile</th>
           <th>Name</th>
           <th>Age</th>
+          <th>Class</th>
         </tr>
       </thead>
       <tbody>
+        {{#each teachers}}
           <tr>
             <td>{{counter}}</td>
             <td><img
@@ -102,10 +104,12 @@
               /></td>
             <td>{{this.firstName}} {{this.secondName}}</td>
             <td>{{this.age}}</td>
+            <td>{{this.class}}</td>
           </tr>
+          {{/each}}
            </tbody>
   
-        {{/each}}
+        
         {{/if}}
 
         </table>
