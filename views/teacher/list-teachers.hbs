@@ -22,8 +22,12 @@
       color: #BBE1FA;
       font-size: 2.5rem;
       margin-bottom: 30px;
+      cursor: pointer;
     }
 
+    .heading:hover{
+      color: #3282B8;
+    }
     .buttons {
       margin-bottom: 20px;
     }
@@ -114,7 +118,7 @@
 <body>
   <section>
     <div class="container">
-      <h1 class="heading">All Teachers</h1>
+      <h1 class="heading mt-5">View All Teachers</h1>
       {{#if principal}}
       <div class="buttons">
         <a href="#" class="add-teacher-btn">Add Teacher</a>
@@ -147,7 +151,13 @@
             <td>{{this.age}}</td>
             <td>{{this.class}}</td>
             <td>{{this.subject}}</td>
-            <td><a class="edit-btn">View</a></td>
+            <td>
+              <a 
+              class="edit-btn" 
+              href="/principal/teacher-profile/{{this._id}}">
+              View
+              </a>
+              </td>
           </tr>
           {{/each}}
           <!-- Add more rows for additional teachers -->

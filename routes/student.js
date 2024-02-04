@@ -122,6 +122,18 @@ router.get('/view-principal', verifyLoginStudent, async (req, res) => {
   }
 });
 
+router.get('/teacher-profile/:id',verifyLoginStudent, async (req, res) => {
+  try {
+      const teacherId = req.params.id;
+      const staff = await teacherHelpers.getTeacherById(teacherId);
+      const student_data = req.session.student;
+      res.render('principal/teacher-profile', { staff,student_check:true,student_data });
+  } catch (error) {
+      console.error('Error in /teacher-profile route:', error);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
 
 
 module.exports = router;
