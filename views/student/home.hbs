@@ -1,82 +1,96 @@
-<style>
+ <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
 
-  .box { cursor: pointer; width: 300px; height: 200px; margin: 20px; padding:
-  20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px
-  rgba(0, 0, 0, 0.1); transition: transform 0.3s ease-in-out; } .box:hover {
-  transform: scale(1.05); } .box h2 { color: #333; } .box p { color: #666; }
-  .cmn-text{
-    text-decoration: none;
-  }
-</style>
+      background-color:  #1B262C;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .option {
+      margin: 20px;
+      padding: 20px;
+      background-color:#0F4C75;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+      width: calc(33.33% - 40px); /* 3 items in a row for large devices */
+      text-decoration: none;
+    }
+    .option:hover {
+      transform: scale(1.1);
+      background-color: #0F4C75;
+    }
+    .option i {
+      font-size: 48px;
+      margin-bottom: 10px;
+      color: #ffffff; /* light blue */
+    }
+    .option p {
+      margin: 0;
+      font-size: 18px;
+      color: #ffffff; /* light blue */
+    }
+    .option a {
+      text-decoration: none; /* Remove underline from anchor tags */
+      color: inherit; /* Inherit text color */
+    }
+
+    /* Medium devices (tablets, 768px and up) */
+    @media (max-width: 991.98px) {
+      .option {
+        width: calc(50% - 40px); /* 2 items in a row for medium devices */
+      }
+    }
+
+    /* Small devices (phones, 576px and up) */
+    @media (max-width: 575.98px) {
+      .option {
+        width: calc(100% - 40px); /* 1 item in a row for small devices */
+      }
+    }
+  </style>
+
 <section>
   <div class="container">
-
-    <div class="row">
-      <div class="col-md-6">
-        <a class="cmn-text" href="/student/attendance">
-          <div class="box">
-          <h2>Attendance</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit
-            amet urna at nunc vulputate tincidunt.</p>
-        </div>
-        </a>
-
-      </div>
-      <div class="col-md-6">
-        <a class="cmn-text" href="/studnet/other">
-          <div class="box">
-          <h2>Other</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit
-            amet urna at nunc vulputate tincidunt.</p>
-        </div>
-        </a>
-
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <a class="cmn-text" href="/student/list-students">
-        <div class="box">
-          <h2>Students</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit
-            amet urna at nunc vulputate tincidunt.</p>
-        </div>
-        </a>
-
-      </div>
-      <div class="col-md-6">
-        <a class="cmn-text" href="/student/list-teachers">
-          <div class="box">
-            <h2>Teachers</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit
-              amet urna at nunc vulputate tincidunt.</p>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        <a class="cmn-text" href="/student/classes">
-          <div class="box">
-          <h2>Classes</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit
-            amet urna at nunc vulputate tincidunt.</p>
-        </div>
-        </a>
-
-      </div>
-      <div class="col-md-6">
-        <a class="cmn-text" href="/student/announcements">
-          <div class="box">
-          <h2>Announcement</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit
-            amet urna at nunc vulputate tincidunt.</p>
-        </div>
-        </a>
-
-      </div>
-    </div>
-
+    <a href="/student/attendance" class="option">
+      <i class="far fa-calendar-alt"></i>
+      <p>View Attendance</p>
+    </a>
+    <a href="student/view-mark" class="option">
+      <i class="fas fa-book"></i>
+      <p>View Mark</p>
+    </a>
+    <a href="/student/view-principal" class="option">
+      <i class="fas fa-user-tie"></i>
+      <p>View Principal</p>
+    </a>
+    <a href="/student/list-teachers" class="option">
+      <i class="fas fa-chalkboard-teacher"></i>
+      <p>View Teachers</p>
+    </a>
+    <a href="/student/list-students" class="option">
+      <i class="fas fa-user-graduate"></i>
+      <p>View Students</p>
+    </a>
+    <a href="/student/announcements" class="option">
+      <i class="fas fa-bullhorn"></i>
+      <p>View Announcements</p>
+    </a>
+    <a href="/student/profile" class="option">
+      <img src="/images/student/{{student_data._id}}.jpg" alt="Student Photo" style="width: 90px; height: 90px; border-radius: 50%; margin-bottom: 10px;">
+      <p>My Profile</p>
+    </a>
   </div>
 </section>
+
+    </div>
+  </section>

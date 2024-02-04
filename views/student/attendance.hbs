@@ -1,53 +1,69 @@
 
-    <style>
+<style>
+   body {
+  font-family: Arial, sans-serif;
+  background-color: #1B262C;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
 
-        h1 {
-            text-align: center;
-            color: #333;
-        }
+.container {
+  text-align: center;
+}
 
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            background: #fff;
-        }
+.heading {
+  color: #BBE1FA;
+  font-size: 2.5rem;
+  font-weight: bolder;
+  margin-bottom: 30px;
+}
 
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
+.box {
+  background-color: #0F4C75;
+  color: #BBE1FA;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 0 20px;
+  width: 200px;
+  height: 200px; /* Set fixed height */
+  display: inline-block;
+  transition: transform 0.3s ease;
+  box-sizing: border-box; /* Include padding and border in the width and height */
+  cursor: pointer;
+}
 
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
+.box:hover {
+  transform: translateY(-10px);
+}
 
-        tbody tr:hover {
-            background-color: #f5f5f5;
-        }
+.number {
+  font-size: 3.2rem;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #fff;
+}
+h2{
+    font-size: 1.6rem;
+}
 
-        td:last-child {
-            text-align: center;
-        }
-    </style>
+</style>
+  
 
-    <h1>Attendance Report</h1>
-
-    <table id="attendanceTable">
-        <thead>
-            <tr>
-                <th>Total Working Days</th>
-                <th>Present Days</th>
-                <th style="text-align: center;">Percentage</th>
-            </tr>
-        </thead>
-        <tbody>
-            <td>{{workingDays}}</td>
-            <td>{{student_data.attendance.present}}</td>
-            <td>{{student_data.attendance.percentage}}</td>
-        </tbody>
-    </table>
+<section>
+    <div class="container mt-5">
+        <h1 class="heading mb-5">Attendance Report</h1>
+        <div class="box total-working-days">
+          <h2>Total Working Days</h2>
+          <p class="number">{{workingDays}}</p>
+        </div>
+        <div class="box present-days">
+          <h2>Student Present Days</h2>
+          <p class="number">{{student_data.attendance.present}}</p>
+        </div>
+        <div class="box percentage">
+          <h2>Total Percentage</h2>
+          <p class="number">{{student_data.attendance.percentage}}%</p>
+        </div>
+      </div>
+</section>

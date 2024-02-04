@@ -1,68 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principal Profile</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #1B262C;
+            color: #BBE1FA;
             margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+            align-items: center;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
+            background-color: #0F4C75;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            text-align: left;
+            /* Align content to left */
         }
 
-        .profile img {
+        #profile-pic {
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            margin-right: 20px;
+            margin: 0 auto 20px;
+            /* Center profile picture */
+            background-color: #3282B8;
+            /* Placeholder for profile picture */
         }
 
-        .details {
-            flex-grow: 1;
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #BBE1FA;
+            color: #0F4C75;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .details p {
-            margin: 10px 0;
+        .btn:hover {
+            background-color: #1B262C;
+            color: #BBE1FA;
         }
 
-        @media only screen and (max-width: 600px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .profile img {
-                margin-right: 0;
-                margin-bottom: 20px;
-            }
+        .message-input {
+            padding: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #BBE1FA;
+            background-color: #3282B8;
+            color: #FFFFFF;
+            box-sizing: border-box;
         }
-        .controle-section{
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .message-input::placeholder {
+            color: #FFFFFF;
+            opacity: 1;
+        }
+
+        .call-icon {
+            font-size: 24px;
+        }
+
+        span {
+            color: #fff;
         }
     </style>
-  
+</head>
 
-  <section>
-      <div class="container">
-        <div class="profile">
-            <img src="https://cdn-icons-png.flaticon.com/512/2919/2919906.png" alt="Principal Photo">
+<body>
+    <div class="container mt-5 mb-5">
+        <img id="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2919/2919906.png"
+            alt="principal photo not supported">
+        <p><strong>Name: </strong><span>{{principal_data.name}}</span></p>
+        <p><strong>Age:</strong> <span>{{principal_data.age}}</span></p>
+        <p><strong>Sex:</strong> <span>{{principal_data.sex}}</span></p>
+        <p><strong>Place:</strong> <span>{{principal_data.place}}</span></p>
+        <p><strong>State:</strong> <span>{{principal_data.state}}</span></p>
+        <p><strong>Phone Number:</strong> <span>{{principal_data.mobile}}</span></p>
+        <p><strong>Email:</strong> <span>{{principal_data.email}}</span></p>
+
+        {{#if principal}}
+        <div class="controle-section">
+            <a href="/principal/logout" class="btn btn-danger">Logout</a>
         </div>
-        <div class="details">
-            <p><strong>Name:</strong>{{principal_data.name}}</p>
-            <p><strong>Age:</strong> {{principal_data.age}}</p>
-            <p><strong>Email:</strong> {{principal_data.email}}</p>
-            <!-- Add more details as needed -->
-        </div>
+        {{else}}
+        <input type="text" class="message-input" id="message" placeholder="Type your message...">
+        <button class="btn" onclick="sendMessage()">Send Message</button>
+        <button class="btn" onclick="callPrincipal()">Call Principal</button>
+        {{/if}}
+
     </div>
-    <div class="controle-section">
-        <a href="/principal/logout" class="btn btn-danger">Logout</a>
-    </div>
-  </section>
+
+</body>
+
+</html>

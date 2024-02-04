@@ -1,46 +1,142 @@
-<style>
+<!DOCTYPE html>
+<html lang="en">
 
-  table { width: 80%; margin: 20px 0; border-collapse: collapse; box-shadow: 0
-  4px 8px rgba(0, 0, 0, 0.1); } th, td { padding: 12px; text-align: left;
-  border-bottom: 1px solid #ddd; } th { background-color: #f2f2f2; }
-  .details-box { width: 100%; max-width: 600px; padding: 20px; background-color:
-  #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out; } .details-box:hover { transform:
-  scale(1.05); } .details-box h2 { color: #333; } .details-box p { color: #666;
-  }
-</style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Teachers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1B262C;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
 
-<section>
-  <div class="container mt-5">
-    <div class="row mb-5">
+    .container {
+      text-align: center;
+    }
+
+    .heading {
+      color: #BBE1FA;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      margin-bottom: 20px;
+    }
+
+    .buttons a {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #0F4C75;
+      color: #BBE1FA;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none; /* Remove underline from links */
+      display: inline-block; /* Make the links inline-block to respect padding */
+    }
+
+    .buttons a:hover {
+      background-color: #3282B8;
+    }
+
+    .teacher-table {
+      width: 90%; /* Adjust the width to 95% */
+      margin: 0 auto; /* Center the table */
+      border-collapse: collapse;
+      background-color: #0F4C75;
+      color: #BBE1FA;
+    }
+
+    .teacher-table th,
+    .teacher-table td {
+      padding: 15px;
+    }
+
+    .teacher-table th {
+      background-color: #3282B8;
+      color: #BBE1FA; /* Set the table header text color */
+    }
+
+    .teacher-table tbody tr:nth-child(even) {
+      background-color: #1B262C;
+    }
+
+    .edit-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #BBE1FA;
+      color: #0F4C75;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .edit-btn:hover {
+      background-color: #1B262C;
+      color: #BBE1FA;
+    }
+
+    /* Style for search bar */
+    .dataTables_filter input[type="search"] {
+      width: 300px; /* Adjust the width as needed */
+      height: 40px; /* Adjust the height as needed */
+      border-radius: 5px;
+      border: 1px solid #BBE1FA;
+      background-color: #0F4C75;
+      color: #BBE1FA;
+      font-size: 1rem;
+      text-align: center;
+      margin: auto;
+      margin-top: 5px;
+      margin-bottom: 20px; /* Center the search bar and reduce margin */
+      display: block;
+      padding: 0 10px; /* Add padding for better appearance */
+    }
+
+    .dataTables_filter input[type="search"]::placeholder {
+      color: #BBE1FA; /* Set placeholder color to white */
+      text-align: center; /* Center placeholder text */
+    }
+
+    label{
+      color: #fff;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <div class="container">
+      <h1 class="heading">All Teachers</h1>
       {{#if principal}}
-        <div class="col-12">
-          <a href="/principal/add-teacher" class="btn btn-success">Add Teacher</a>
-          <a href="/principal/req-teacher" class="btn btn-primary">See Requests from Teacher</a>
-        </div>
-      {{/if}}
+      <div class="buttons">
+        <a href="#" class="add-teacher-btn">Add Teacher</a>
+        <a href="#" class="request-post-btn">Requests for Teacher Post</a>
       </div>
-    
-        
-    <table>
-      <thead>
-        {{#if principal}}
-        
-        <tr>
-          <th>Sl No.</th>
-          <th>Profile</th>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Class</th>
-          <th>Subject</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-         
+      {{/if}}
+      <table id="teacher-table" class="teacher-table">
+        <thead>
           <tr>
-            {{#each teachers}}
+            <th>Serial No</th>
+            <th>Profile</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Class</th>
+            <th>Subject</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Teacher data will be populated dynamically here -->
+          {{#each teachers}}
+          <tr>
             <td>{{counter}}</td>
             <td><img
                 src="/images/teacher/{{this._id}}.jpg"
@@ -51,69 +147,30 @@
             <td>{{this.age}}</td>
             <td>{{this.class}}</td>
             <td>{{this.subject}}</td>
-            <td><a href="/principal/teacher-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
-          </tr>
-
-          </tbody>
-          {{/each}}
-        {{else if teacher}}
-        <tr>
-          <th>Sl No.</th>
-          <th>Profile</th>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Class</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr>
-            {{#each teachers}}
-            <td>{{counter}}</td>
-            <td><img
-                src="/images/teacher/{{this._id}}.jpg"
-                alt="Profile Image"
-                style="width: 50px; height: 50px; border-radius: 50%;"
-              /></td>
-            <td>{{this.firstName}} {{this.secondName}}</td>
-            <td>{{this.age}}</td>
-            <td>{{this.class}}</td>
-            <td><a href="/teacher/teacher-profile/{{this._id}}" class="btn btn-primary">View Details</a></td>
-          </tr>
-           </tbody>
-            {{/each}}
-       
-        {{else}}
-        
-        <tr>
-          <th>Sl No.</th>
-          <th>Profile</th>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Class</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each teachers}}
-          <tr>
-            <td>{{counter}}</td>
-            <td><img
-                src="/images/teacher/{{this._id}}.jpg"
-                alt="Profile Image"
-                style="width: 50px; height: 50px; border-radius: 50%;"
-              /></td>
-            <td>{{this.firstName}} {{this.secondName}}</td>
-            <td>{{this.age}}</td>
-            <td>{{this.class}}</td>
+            <td><a class="edit-btn">View</a></td>
           </tr>
           {{/each}}
-           </tbody>
-  
-        
-        {{/if}}
+          <!-- Add more rows for additional teachers -->
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-        </table>
-        <!-- Add more rows as needed -->
-     
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#teacher-table').DataTable({
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], // Customize the number of entries per page
+        "pageLength": 10, // Default page length
+        "searching": true, // Enable searching
+        "ordering": false, // Disable ordering
+        "info": false, // Disable information display
+        "pagingType": "numbers", // Show only numeric pagination
+        "lengthChange": false // Disable the length change feature
+      });
+    });
+  </script>
+</body>
 
-</section>
+</html>

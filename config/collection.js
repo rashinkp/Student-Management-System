@@ -8,6 +8,7 @@ module.exports = {
     REQ_TEACHER:"req-teacher",
     WORKING_DAYS:"working_days",
     TOTAL_MARK:"total_mark",
-    SUBJECT:"subjects"
+    SUBJECT:"subjects",
+    PRINCIPAL:"principal"
     
 }

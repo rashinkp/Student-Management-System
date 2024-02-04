@@ -2,7 +2,7 @@ var express = require('express');
 var teacherHelpers = require('../helpers/teacher-helpers');
 var studentHelpers = require('../helpers/student-helpers');
 var announcementHelpers = require('../helpers/announcement-helpers')
-const reqHelpers = require('../helpers/req-helpers');
+var principalHelpers = require("../helpers/principal-helpers")
 var router = express.Router();
 
 const verifyLoginStudent = (req, res, next) => {
@@ -110,5 +110,18 @@ router.get('/attendance',verifyLoginStudent,async(req,res)=>{
 
   res.render('student/attendance',{student_check:true,student_data,workingDays});
 })
+
+router.get('/view-principal', verifyLoginStudent, async (req, res) => {
+  try {
+    const principal_data = await principalHelpers.getPrincipal();
+    const student_data = req.session.student;
+    res.render('principal/profile', { student_check: true, student_data, principal_data });
+  } catch (error) {
+    console.error("Error in view-principal route:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
 
 module.exports = router;
