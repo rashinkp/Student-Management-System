@@ -152,12 +152,16 @@
             <td>{{this.class}}</td>
             <td>{{this.subject}}</td>
             <td>
-              <a 
-              class="edit-btn" 
-              href="/principal/teacher-profile/{{this._id}}">
-              View
-              </a>
-              </td>
+              {{#if ../principal}}
+                <a class="edit-btn" href="/principal/teacher-profile/{{this._id}}">View</a>
+              {{else if ../teacher}}
+                <a class="edit-btn" href="/teacher/teacher-profile/{{this._id}}">View</a>
+              {{else if ../student_check}}
+                <a class="edit-btn" href="/student/teacher-profile/{{this._id}}">View</a>
+              {{else}}
+                <a class="edit-btn" href="/teacher-profile/{{this._id}}">View</a>
+              {{/if}}
+            </td>
           </tr>
           {{/each}}
           <!-- Add more rows for additional teachers -->

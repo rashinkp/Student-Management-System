@@ -11,23 +11,15 @@
 <body>
     {{#if principal}}
         {{> principal-header}}
-    {{else}}
-    {{#if teacher}}
+    {{else if teacher}}
         {{> teacher-header}}
-    {{else}}
-    {{#if student_check}}
+    {{else if student_check}}
       {{> student-header}}
-    {{else}}
-    {{#if parent}} 
+    {{else if parent}} 
        {{> parent-header}}
-    {{#if login}}
-
+    {{else if login}}
     {{else}}
         {{> user-header}}  
-    {{/if}}
-    {{/if}}
-    {{/if}}
-    {{/if}}
     {{/if}}
 {{{body}}}
 

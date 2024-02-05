@@ -62,7 +62,7 @@ router.post('/req-admission', verifyLoginUser, async (req, res) => {
 
 
 router.get('/user-login',(req,res)=>{
-  res.render('user/user-login')
+  res.render('user/user-login',{login:true})
 })
 
 router.post('/user-login', (req, res) => {

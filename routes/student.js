@@ -19,7 +19,7 @@ router.get('/',verifyLoginStudent, function(req, res) {
 });
 
 router.get('/login',(req,res)=>{
-  res.render('student/login');
+  res.render('student/login',{login:true});
 })
 router.post('/login', async function (req, res) {
   const { email, password } = req.body;

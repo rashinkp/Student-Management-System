@@ -22,6 +22,7 @@ router.get("/", verifyLoginTeacher, function (req, res) {
 });
 
 router.get("/login", function (req, res) {
+
   res.render("teacher/login");
 });
 
@@ -45,6 +46,7 @@ router.post("/login", async function (req, res) {
           teacher: true,
           loginError: "Invalid email or password",
         });
+        console.log("password didn't match....")
       }
     } else {
       // Teacher not found, show an error message
@@ -52,6 +54,7 @@ router.post("/login", async function (req, res) {
         teacher: true,
         loginError: "Invalid email or password",
       });
+      console.log('email or password error...')
     }
   } catch (error) {
     console.error("Error in teacher login:", error);
