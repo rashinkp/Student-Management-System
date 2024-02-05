@@ -1,6 +1,7 @@
 const { ObjectId } = require('mongodb');
 const db = require('../config/connection');
 const COLLECTION = require('../config/collection');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     insertRequestAnnouncement: (requestDetails) => {
@@ -173,6 +174,8 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       try {
         const reqTeacher = await db.get().collection(COLLECTION.REQ_TEACHER);
+        console.log(requestDetails);
+        requestDetails.password = await bcrypt.hash(requestDetails.password,10);
         const result = await reqTeacher.insertOne(requestDetails);
         resolve(result);
       } catch (error) {
