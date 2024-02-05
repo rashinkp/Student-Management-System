@@ -1,52 +1,113 @@
-<style>
-  body { margin: 0; font-family: Arial, sans-serif; } .profile-container {
-  display: flex; flex-direction: column; align-items: center; padding: 20px; }
-  .profile-image { width: 150px; height: 150px; border-radius: 50%;
-  margin-bottom: 20px; } .profile-details { text-align: center; }
-  .profile-actions { margin-top: 20px; } button { padding: 10px 20px; margin: 0
-  10px; font-size: 16px; cursor: pointer; background-color: #4CAF50; color:
-  white; border: none; border-radius: 5px; transition: background-color 0.3s; }
-  button:hover { background-color: #45a049; }
+<!DOCTYPE html>
+<html lang="en">
 
-</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principal Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1B262C;
+            color: #BBE1FA;
+            margin: 0;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-<div class="profile-container">
-  <img
-    src="/images/teacher/{{staff._id}}.jpg"
-    alt="Profile Image"
-    class="profile-image"
-  />
-  <div class="profile-details">
-    <h2>{{staff.firstName}} {{staff.secondName}}</h2>
-    <p>Age: {{staff.age}}</p>
-    <p>Sex: {{staff.sex}}</p>
-    <p>Education Qualification: {{staff.qualification}}</p>
-    <p>Place: {{staff.place}}, State: {{staff.state}}</p>
-    <p>Mobile:{{staff.mobile}}</p>
-    <p>Email: {{staff.email}}</p>
-  </div>
-  {{#if principal}}
-    <div class="profile-actions">
-    <a
-      href="/principal/edit-teacher/{{staff._id}}"
-      class="btn btn-secondary"
-      id="editButton"
-    >Edit</a>
-    <a
-      class="btn btn-danger"
-      id="removeButton"
-      onclick="confirmRemove()"
-    >Remove</a>
-  </div>
-  {{/if}}
+        .container {
+            background-color: #0F4C75;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            text-align: left;
+            /* Align content to left */
+        }
 
-</div>
+        #profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            /* Center profile picture */
+            background-color: #3282B8;
+            /* Placeholder for profile picture */
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #BBE1FA;
+            color: #0F4C75;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #1B262C;
+            color: #BBE1FA;
+        }
+
+        .message-input {
+            padding: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #BBE1FA;
+            background-color: #3282B8;
+            color: #FFFFFF;
+            box-sizing: border-box;
+        }
+
+        .message-input::placeholder {
+            color: #FFFFFF;
+            opacity: 1;
+        }
+
+        .call-icon {
+            font-size: 24px;
+        }
+
+        span {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5 mb-5">
+        <img id="profile-pic" src="/images/teacher/{{staff._id}}.jpg"
+            alt="principal photo not supported">
+        <p><strong>Name: </strong><span>{{staff.firstName}} {{staff.secondName}}</span></p>
+        <p><strong>Age:</strong> <span>{{staff.age}}</span></p>
+        <p><strong>Sex:</strong> <span>{{staff.sex}}</span></p>
+        <p><strong>Place:</strong> <span>{{staff.place}}</span></p>
+        <p><strong>Qualification:</strong> <span>{{staff.qualification}}</span></p>
+        <p><strong>Phone Number:</strong> <span>{{staff.mobile}}</span></p>
+        <p><strong>Email:</strong> <span>{{staff.email}}</span></p>
+
+        
+        <input type="text" class="message-input" id="message" placeholder="Type your message...">
+        <button class="btn" onclick="sendMessage()">Send Message</button>
+        <button class="btn" onclick="callTeacher()">Call Teacher</button>
+
+        {{#if principal}}
+        <div class="controle-section mt-5">
+            <a href="/principal/remove-teacher/{{staff._id}}" onclick="removeTeacher()" class="btn btn-danger">Remove Teacher</a>
+            <a href="/principal/edit-teacher/{{staff._id}}" class="btn btn-danger">Edit Teacher</a>
+        </div>
+        {{/if}}
+    </div>
+
+</body>
 
 <script>
-  function confirmRemove() {
-    var result = confirm("Are you sure you want to remove this teacher?");
-    if (result) {
-      window.location.href = "/principal/remove-teacher/{{staff._id}}";
-    }
+  function removeTeacher(){
+    alert("Do you want to remove this teacher?")
   }
 </script>
+
+</html>
