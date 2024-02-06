@@ -1,82 +1,178 @@
-{{!-- <title>{{student.firstName}} {{student.secondName}} Profile</title> --}}
 <style>
-  .profile-image {
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #1B262C;
+    color: #BBE1FA;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #0F4C75;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    /* to contain animations */
+  }
+
+  .section {
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #3282B8;
+    animation: slideIn 1s ease forwards;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  h2 {
+    color: #BBE1FA;
+  }
+
+  .profile-photo {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     margin-bottom: 20px;
   }
 
-  .profile-container {
-    margin-top: 20px;
-    display: flex;
-    border-radius: 30px;
-    background-color: rgb(225, 225, 225);
-    padding: 20px;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
   }
+
+  th,
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #BBE1FA;
+  }
+
+  th {
+    background-color: #0F4C75;
+    color: #BBE1FA;
+  }
+
+  td {
+    background-color: #1B262C;
+  }
+
+  input[type="text"] {
+    width: calc(100% - 110px);
+    padding: 10px;
+    border: 1px solid #3282B8;
+    border-radius: 5px 0 0 5px;
+    background-color: #1B262C;
+    color: #BBE1FA;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #BBE1FA;
+    border: none;
+    color: #0F4C75;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* Change button to anchor tag */
+  }
+
+  .btn:hover {
+    background-color: #0F4C75;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  span {
+    color: #fff;
+  }
+  .box {
+  background-color: #0F4C75;
+  color: #BBE1FA;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 0 20px;
+  width: 150px;
+  height: 150px; /* Set fixed height */
+  display: inline-block;
+  transition: transform 0.3s ease;
+  box-sizing: border-box; /* Include padding and border in the width and height */
+  cursor: pointer;
+}
+
+.box:hover {
+  transform: translateY(-10px);
+}
+.number {
+  font-size: 3.2rem;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #fff;
+}
+.attendance-head{
+    font-size: 1rem;
+}
+.section-head{
+  font-size: 1.5rem;
+  font-weight: bolder;
+  color: white;
+}
 </style>
 
 <section>
   <div class="container">
-
-    <div class="profile-container">
-      <img src="/images/student/{{student._id}}.jpg" alt="Profile Image" class="profile-image" />
-      <div class="profile-details ms-5">
-        <h2>{{student.firstName}} {{student.secondName}}</h2>
-        <p>Age: {{student.age}}</p>
-        <p>Sex: {{student.sex}}</p>
-        <p>Class: {{student.class}}</p>
-        <p>Place: {{student.place}}, State: {{student.state}}</p>
-        <p>Mobile:{{student.mobile}}</p>
-        <p>Email: {{student.email}}</p>
-      </div>
-      {{#if principal}}
-      <div class="profile-actions">
-        <a href="/principal/edit-student/{{student._id}}" class="btn btn-secondary" id="editButton">Edit</a>
-        <a class="btn btn-danger" id="removeButton" onclick="confirmRemove()">Remove</a>
-      </div>
-      {{else}}
-      {{/if}}
-    </div>
-
-    <div class="profile-container">
-      <div class="row">
-        <div class="col-12">
-          <h1 class="text-center">Attendance</h1>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Total Days</th>
-                  <th scope="col">Present</th>
-                  <th scope="col">Percentage</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{workingDays}}</td>
-                  <td>{{student.attendance.present}}</td>
-                  <td id="attendancePercentage">{{student.attendance.percentage}}</td>
-                </tr>
-
-              </tbody>
-            </table>
-          </div>
-        </div>
+    <div class="section">
+      <h2 class="section-head mb-5">Profile</h2>
+      <div>
+        <img class="profile-photo" src="/images/student/{{student._id}}.jpg" alt="Profile Photo">
+        <p><strong>Name:</strong><span>{{student.firstName}} {{student.secondName}}</span></p>
+        <p><strong>Admission No:</strong> <span>{{student.admissionNo}}</span></p>
+        <p><strong>Age:</strong> <span>{{student.age}}</span></p>
+        <p><strong>Sex:</strong> <span>{{student.sex}}</span></p>
+        <p><strong>Class:</strong> <span>{{student.class}}</span></p>
+        <p><strong>Roll Number:</strong> <span>{{student.rollNumber}}</span></p>
+        <p><strong>State:</strong> <span>{{student.state}}</span></p>
+        <p><strong>Place:</strong> <span>{{student.place}}</span></p>
+        <p><strong>Mobile:</strong> <span>{{student.mobile}}</span></p>
+        <p><strong>Email:</strong> <span>{{student.email}}</span></p>
       </div>
     </div>
-
-    <div class="profile-container">
-      <div class="row">
-        <div class="col-12">
-          <h1 class="text-center">Mark</h1>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            {{#if student.mark}}
-            <table class="table">
+    <div class="section">
+      <h2 class="section-head mb-5">Attendance</h2>
+      <div class="box total-working-days mb-3">
+        <h3 class="attendance-head">Total Working Days</h3>
+        <p class="number">{{workingDays}}</p>
+      </div>
+      <div class="box present-days">
+        <h3 class="attendance-head">Student Present Days</h3>
+        <p class="number">{{student.attendance.present}}</p>
+      </div>
+      <div class="box percentage">
+        <h3 class="attendance-head">Total Percentage</h3>
+        <p class="number">{{student.attendance.percentage}}%</p>
+      </div>
+    </div>
+    <div class="section">
+      <h2 class="section-head mb-5">Marks</h2>
+      {{#if student.mark}}
+            <table>
               <thead>
                 <tr>
                   <th>Subject</th>
@@ -88,7 +184,7 @@
                 <tr>
                   <td>{{@key}}</td>
                   <td>
-                    <form class="updateMarkForm" data-student-id="{{../studentId}}" data-subject="{{@key}}">
+                     <form class="updateMarkForm" data-student-id="{{../studentId}}" data-subject="{{@key}}">
                       <input type="number" name="mark" value="{{this}}" required />
                       <button type="submit" class="btn btn-primary">Update</button>
                     </form>
@@ -103,14 +199,28 @@
             </table>
 
             {{else}}
-            <a href="/teacher/add-mark/{{student._id}}" class="btn btn-primary">Add mark</a>
+            <a href="/teacher/add-mark/{{student._id}}" class="btn">Add mark</a>
             {{/if}}
-          </div>
-        </div>
+    </div>
+    <div class="section">
+      <h2 class="section-head mb-5">Contact</h2>
+      <div>
+        <input class="mb-3" type="text" placeholder="Type your message...">
+        <a class="btn me-1" href="#">Send Message</a>
+        <a class="btn" href="#">Call</a>
       </div>
     </div>
-
+   {{#if principal}}
+     <div class="section">
+      <h2 class="section-head mb-5">Controls</h2>
+      <div class="controls">
+        <a href="/principal/edit-student/{{student._id}}" class="btn" id="editButton">Edit</a>
+        <a class="btn" id="removeButton" onclick="confirmRemove()">Remove</a>
+      </div>
+    </div>
+    {{/if}}
   </div>
+
 </section>
 
 <script>
@@ -144,9 +254,4 @@
       });
     });
   });
-
-
-
-
-
 </script>

@@ -1,0 +1,112 @@
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #1B262C;
+    color: #BBE1FA;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #0F4C75;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    /* to contain animations */
+  }
+
+  .section {
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #3282B8;
+    animation: slideIn 1s ease forwards;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  h2 {
+    color: #BBE1FA;
+  }
+
+  .profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #BBE1FA;
+  }
+
+  th {
+    background-color: #0F4C75;
+    color: #BBE1FA;
+  }
+
+  td {
+    background-color: #1B262C;
+  }
+
+
+
+</style>
+
+<section>
+  <div class="container">
+      {{#if student_data.mark}}
+            <table>
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Student Mark</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each student.mark}}
+                <tr>
+                  <td>{{@key}}</td>
+                  <td>
+                     <form class="updateMarkForm" data-student-id="{{../student_data._id}}" data-subject="{{@key}}">
+                      <input type="number" name="mark" value="{{this}}" required />
+                      <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                  </td>
+                </tr>
+                {{/each}}
+
+
+
+
+              </tbody>
+            </table>
+
+            {{else}}
+            <a href="/teacher/add-mark/{{student._id}}" class="btn">Add mark</a>
+            {{/if}}
+    </div>
+    
+
+</section>

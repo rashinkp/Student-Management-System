@@ -3,6 +3,7 @@ var teacherHelpers = require('../helpers/teacher-helpers');
 var studentHelpers = require('../helpers/student-helpers');
 var announcementHelpers = require('../helpers/announcement-helpers')
 var principalHelpers = require("../helpers/principal-helpers")
+var subjectHelpers = require("../helpers/subject-helpers")
 var router = express.Router();
 
 const verifyLoginStudent = (req, res, next) => {
@@ -93,6 +94,8 @@ router.get('/list-students',verifyLoginStudent,(req,res)=>{
     });
 })
 
+
+
 router.get('/announcements',verifyLoginStudent,async(req,res)=>{
   try {
     const announcements = await announcementHelpers.getAllAnnouncements();
@@ -133,6 +136,12 @@ router.get('/teacher-profile/:id',verifyLoginStudent, async (req, res) => {
       res.status(500).send('Internal Server Error');
   }
 });
+
+router.get('/view-mark',verifyLoginStudent,async(req,res)=>{
+  student_data = req.session.student;
+  
+  res.render('student/view-mark',{student_check:true,student_data})
+})
 
 
 
