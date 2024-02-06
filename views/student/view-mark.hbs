@@ -69,30 +69,38 @@
   td {
     background-color: #1B262C;
   }
-
+    .white{
+        color:#fff;
+        font-weight: bolder;
+        font-size: 1.2rem;
+    }
+    .header{
+        color:#fff;
+        font-weight: bolder;
+        font-size: 1.5rem;
+    }
 
 
 </style>
 
 <section>
-  <div class="container">
+  <div class="container mt-5">
       {{#if student_data.mark}}
             <table>
               <thead>
                 <tr>
-                  <th>Subject</th>
-                  <th>Student Mark</th>
+                  <th class="header">Subject</th>
+                  <th class="header">Student Mark</th>
                 </tr>
               </thead>
               <tbody>
-                {{#each student.mark}}
+                {{#each student_data.mark}}
                 <tr>
                   <td>{{@key}}</td>
                   <td>
-                     <form class="updateMarkForm" data-student-id="{{../student_data._id}}" data-subject="{{@key}}">
-                      <input type="number" name="mark" value="{{this}}" required />
-                      <button type="submit" class="btn btn-primary">Update</button>
-                    </form>
+                    <div class="white">
+                        {{this}}
+                    </div>
                   </td>
                 </tr>
                 {{/each}}

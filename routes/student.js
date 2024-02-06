@@ -139,7 +139,7 @@ router.get('/teacher-profile/:id',verifyLoginStudent, async (req, res) => {
 
 router.get('/view-mark',verifyLoginStudent,async(req,res)=>{
   student_data = req.session.student;
-  
+  console.log(student_data)
   res.render('student/view-mark',{student_check:true,student_data})
 })
 
