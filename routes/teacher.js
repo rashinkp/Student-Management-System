@@ -23,7 +23,7 @@ router.get("/", verifyLoginTeacher, function (req, res) {
 
 router.get("/login", function (req, res) {
 
-  res.render("teacher/login");
+  res.render("teacher/login",{login:true});
 });
 
 router.post("/login", async function (req, res) {

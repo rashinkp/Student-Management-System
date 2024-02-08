@@ -1,85 +1,114 @@
-<section>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.css">
+  <style>
+    body {
+      background-color: #1B262C;
+      font-family: Arial, sans-serif;
+      color: #BBE1FA;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #0F4C75;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      max-width: 400px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #3282B8;
+      color: #ffffff;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    input[type="checkbox"] {
+      margin-top: 10px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #BBE1FA;
+      color: #1B262C;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #1B262C;
+      color: #fff;
+    }
+
+    .new-admission {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+      color: #fff;
+      /* Change placeholder text color to white */
+    }
+    .tag{
+      color: #fff;
+    }
+    .icon-anger{
+      text-decoration: none;  
+      color: #ffffff;
+    }
+    .icon-anger:hover{
+      color: #1B262C;
+    }
+  </style>
   <div class="container">
-
-    <div
-      class="row justify-content-center align-items-center"
-      style="height:80vh;"
-    >
-
-      <div class="col-md-6 col-lg-4">
-
-        <div class="card shadow-lg border-0 rounded-lg mt-5">
-
-          <div class="card-header"><h3
-              class="text-center font-weight-light my-4"
-            >Login as Teacher</h3></div>
-          <div class="card-body">
-
-            <form action="/teacher/login" method="POST">
-
-              <div class="form-group">
-
-                <label for="email">Email address</label>
-
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  name="email"
-                  placeholder="Enter email"
-                />
-
-              </div>
-
-              <div class="form-group">
-
-                <label for="password">Password</label>
-
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  name="password"
-                  placeholder="Enter password"
-                />
-
-              </div>
-
-              <div class="col-12 mt-4" style="text-align: center;">
-                <button
-                type="submit"
-                class="btn btn-primary btn-block"
-              >Login</button>
-              </div>
-
-            </form>
-
-          </div>
-
-        </div>
-
-      </div>
-      <div class="row">
-        <h1 style="text-align: center;" class="mt-5">Login as...</h1>
-        <div class="col-md-4">
-          <a href="/principal/principal-login"><div class="card shadow-lg border-0 rounded-lg mt-5 p-5 text-center">
-            <h2>Principal</h2>
-          </div></a>
-        </div>
-        <div class="col-md-4">
-          <a href="/student/login"><div class="card shadow-lg border-0 rounded-lg mt-5 p-5 text-center">
-            <h2>Student</h2>
-          </div></a>
-        </div>
-          <div class="col-md-4">
-          <a href="/user-login"><div class="card shadow-lg border-0 rounded-lg mt-5 p-5 text-center">
-            <h2>User</h2>
-          </div></a>
-        </div>
-      </div>
-
+    <h2>Teacher Login</h2>
+    <form id="loginForm" action="/teacher/login" method="POST">
+      <input name="email" type="text" id="email" placeholder="Email">
+      <input name="password" type="password" id="password" placeholder="Password">
+      <label for="showPassword"><input type="checkbox" id="showPassword"> Show Password</label>
+      <input type="submit" value="Login">
+    </form>
+    <p class="new-admission">Join as Teacher? <a href="#" class="tag">Click here</a></p>
+    <div style="text-align: center; margin-top: 30px;">
+      <a class="icon-anger" href="/"><i class="fa fa-home fa-lg" style="margin-right: 20px;"></i></a>
+      <a class="icon-anger" href="/principal/principal-login"><i class="fa fa-user-tie fa-lg" style="margin-right: 20px;"></i></a>
+      <a class="icon-anger" href="/student/login"><i class="fa-solid fa-graduation-cap fa-lg" style="margin-right: 20px;"></i></a>
+      <a class="icon-anger" href="/user-login"><i class="fa fa-user fa-lg" style="margin-right: 20px;"></i></a>
     </div>
-
   </div>
 
-</section>
+  <script>
+    const showPasswordCheckbox = document.getElementById('showPassword');
+    const passwordInput = document.getElementById('password');
+
+    showPasswordCheckbox.addEventListener('change', function () {
+      const isChecked = this.checked;
+      if (isChecked) {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    });
+  </script>
