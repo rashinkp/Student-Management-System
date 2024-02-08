@@ -1,151 +1,112 @@
-
-   <style>
-    .container {
-        margin-top: 60px;
-    }
-
-    .box {
-        width: 100%;
-        max-width: 1200px;
-        cursor: pointer;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #3498db;
-        color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        position: relative;
-        
-    }
-    .box-section{
-        overflow: hidden; /* Hide overflowing content */
-        max-height: 200px; /* Set a maximum height for the box */
-        padding-right: 100px;
-    }
-
-    .box:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    h3 {
-        margin-bottom: 10px;
-        font-size: 24px;
-    }
-
-    .date {
-        margin-bottom: 10px;
-        font-size: 16px;
-    }
-
-    p {
-        font-size: 16px;
-        overflow: hidden; /* Hide overflowing content */
-        text-overflow: ellipsis; /* Add ellipsis (...) for text overflow */
-        white-space: nowrap; /* Prevent text from wrapping */
-    }
-
-    .add-announcement-btn {
-        display: block;
-        margin-bottom: 20px;
-        padding: 10px;
-        background-color: #27ae60;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .add-announcement-btn:hover {
-        background-color: #218c53;
-    }
-
-    .btn-section {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .announcement {
-        position: relative;
-        display: flex;
-        align-items: center;
-    }
-
-    .announcement-buttons {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-        display: flex;
-        flex-direction: column;
-    }
-
-    .edit-button,
-    .delete-button {
-        margin-bottom: 5px;
-        padding: 5px;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
-    }
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #1B262C; /* Dark background */
+    margin: 0;
+  }
+  .container{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .section {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  .button {
+    background-color: #0F4C75; /* Darker card color */
+    color: #BBE1FA; /* Light text */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+    text-decoration: none;
+  }
+  .button:hover {
+    background-color: #3282B8; /* Lighter button color on hover */
+    color: #fff;
+  }
+  .card {
+    background-color: #0F4C75; /* Darker card color */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    color: #BBE1FA; /* Light text */
+    margin: 10px;
+    max-width: 400px;
+    width: calc(100% - 40px);
+  }
+  .date {
+    font-size: 14px;
+    color: #ffffff; /* Light text */
+  }
+  .title {
+    font-size: 24px;
+    margin: 10px 0;
+  }
+  .description {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .tag {
+    font-size: 14px;
+    color: #BBE1FA; /* Light text */
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #BBE1FA;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease;
+  }
+  .tag:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
 </style>
 
-<div class="container">
-    <!-- Add Announcement Button -->
-    <div class="row">
-        <div class="btn-section col-12">
-            {{#if principal}}
-                <a class="btn btn-primary" href="/principal/create-announcement">Add Announcement</a>
-                <a href="/principal/request-announcements" class="btn btn-secondary ms-5">See requests</a>
-
-            {{else if teacher}}
-                <a class="btn btn-primary" href="/teacher/request-announcement">Req for Announcement</a>
-            {{else}}
-            {{/if}}
-        </div>
-    </div>
-
-    <!-- Iterate over announcements and display each box -->
+<section>
+  <div class="container">
+    
     {{#if principal}}
-        {{#each announcements}}
-    <div class="box announcement">
-        <div class="box-section">
-            <h3>{{this.title}}</h3>
-            <div class="date">{{this.date}}</div>
-            <p>{{this.description}}</p>
-        </div>
-        <div class="announcement-buttons p-5">
-            <a class="btn btn-secondary edit-button" href="#">Edit</a>
-            <a class="btn btn-danger delete-button" onclick="confirmDelete('{{this._id}}')">Delete</a>
-        </div>
-    </div>
-{{/each}}
-{{else}}
+      <div class="section">
+        <a href="/principal/create-announcement" class="button">Add Announcements</a>
+        <a href="/principal/request-announcements" class="button">View Requests</a>
+      </div>
+    {{else if teacher}}
+      <div class="section">
+        <a href="/teacher/request-announcement" class="button">Send Request</a>
+      </div>
+    {{/if}}
+    
     {{#each announcements}}
-    <div class="box announcement">
-        <div class="box-section">
-            <h3>{{this.title}}</h3>
-            <div class="date">{{this.date}}</div>
-            <p>{{this.description}}</p>
-        </div>
-    </div>
-{{/each}}
-{{/if}}
-</div>
+      <div class="card">
+        <div class="date">{{this.date}}</div>
+        <div class="title">{{this.title}}</div>
+        <div class="description">{{this.description}}</div>
+        {{#if ../principal}}
+          <a  class="tag">Edit</a>
+          <a onclick="confirmDelete('{{this._id}}')" class="tag">Delete</a>
+        {{/if}}
+      </div>
+    {{/each}}
+    
+  </div>
+</section>
 
 <script>
-    function confirmDelete(announcementId) {
-        // Show a confirmation dialog
-        const isConfirmed = confirm('Are you sure you want to delete this announcement?');
-        
-        if (isConfirmed) {
-            // If confirmed, redirect to the delete route
-            window.location.href = `/principal/delete-announcement/${announcementId}`;
-        }
-    }
+  function confirmDelete(announcementId) {
+      // Show a confirmation dialog
+      const isConfirmed = confirm('Are you sure you want to delete this announcement?');
+      
+      if (isConfirmed) {
+          // If confirmed, redirect to the delete route
+          window.location.href = `/principal/delete-announcement/${announcementId}`;
+      }
+  }
 </script>
 
