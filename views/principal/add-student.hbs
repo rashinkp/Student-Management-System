@@ -1,153 +1,275 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.css">
+<style>
+    body {
+        background-color: #1B262C;
+        font-family: Arial, sans-serif;
+        color: #BBE1FA;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 180vh;
+    }
 
-    <style>
-       
-        .form-box {
-            max-width: 600px;
-            margin: auto;
-            margin-top: 60px;
-            padding: 20px;
-            box-shadow: 0 4px 8px
-            rgba(0, 0, 0, 0.1); transition: transform 0.3s ease-in-out; 
-            border-radius: 8px;
-            background-color: #ffffff;
-            animation: fadeIn 0.5s ease-in-out;
-            margin-bottom: 60px;
-            cursor: pointer;
-        }
-        .form-box:hover{
-            transform: scale(1.05); 
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        form {
-            display: grid;
-            gap: 16px;
-
-        }
-
-          .name-section {
-            display: grid;
-            gap: 16px;
-            grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-        }
-
-        .name-section input {
-            margin-bottom: 0;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        input,
-        select,
-        button {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #4caf50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    .container {
+    background-color: #0F4C75;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
+}
 
 
-   <section>
-    <div class="container ">
-         <div class="form-box">
-            <div class="row">
-                {{#if user}}
-                    <h2 class="text-center text-primary my-3">Take admission</h2>
-                {{else if principal}}
-                    <h2 class="text-center text-primary my-3">Add Student</h2>
-                {{/if}}
-                
-            </div>
-        <form id="teacherForm" method="POST" 
-        {{#if principal}}
-        action="/principal/add-student" 
-        {{else if user}}
-        action="/req-admission"
-        {{/if}}
-        enctype="multipart/form-data">
-           <div class="name-section">
-               <div class="row">
-                <div class="col-md-6 col-sm-12">
-                     <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="secondName" placeholder="Enter your last name" >
-                </div>
-               </div>
-           </div>
-            <label for="age">Age:</label>
-            <input type="number" id="age" name="age" placeholder="Enter your age" required>
+    h2 {
+        text-align: center;
+    }
 
-            <label for="sex">Sex:</label>
-            <select id="sex" name="sex" required>
-                <option value="" disabled selected>Select your gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-            </select>
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #3282B8;
+        color: #ffffff;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
 
-            <label for="qualification">Class</label>
-            <input type="text" id="qualification" name="class" placeholder="Enter your class you want admission" required>
+    input[type="checkbox"] {
+        margin-top: 10px;
+    }
 
-            <label for="place">Place:</label>
-            <input type="text" id="place" name="place" placeholder="Enter your place" required>
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #BBE1FA;
+        color: #1B262C;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
 
-            <label for="state">State:</label>
-            <select id="state" name="state" required>
-                <option value="" disabled selected>Select your state</option>
-                <option value="Andhra Pradesh">Andhra Pradesh</option>
-                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                <option value="Assam">Assam</option>
-            </select>
+    input[type="submit"]:hover {
+        background-color: #1B262C;
+        color: #fff;
+    }
 
-           
+    .new-admission {
+        text-align: center;
+        margin-top: 20px;
+    }
 
-            <label for="image">Upload Image:</label>
-            <input type="file" id="image" name="image" accept="image/*" placeholder="Choose a profile image" required>
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+        color: #fff;
+        /* Change placeholder text color to white */
+    }
 
-            <label for="email">Mobile Number:</label>
-            <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" required>
+    .tag {
+        color: #fff;
+    }
 
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+    .icon-anger {
+        text-decoration: none;
+        color: #ffffff;
+    }
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Create your password" required>
+    .icon-anger:hover {
+        color: #1B262C;
+    }
 
-            <button type="submit">
-                {{#if user}}
-                    Req For admission
-                {{else if principal}}
-                    Add Student
-                {{/if}}
-            </button>
-        </form>
+    .tag:hover {
+        font-weight: bold;
+        color: #1B262C;
+    }
+
+    .styled-select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #3282B8;
+        color: #ffffff;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    /* Style the arrow icon */
+    .styled-select::after {
+        content: '\25BC';
+        /* Unicode character for down arrow */
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        pointer-events: none;
+        /* Ensure the icon does not interfere with select functionality */
+    }
+
+    /* Style the arrow icon on hover */
+    .styled-select:hover::after {
+        color: #fff;
+    }
+
+    /* Style the dropdown options */
+    .styled-select option {
+        background-color: #3282B8;
+        color: #ffffff;
+        font-size: 16px;
+    }
+
+    /* Hide the original file input */
+    .file-input {
+        display: none;
+    }
+
+    /* Style the file input container */
+    .file-input-container {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    /* Style the file input label */
+    .file-input-label {
+        background-color: #3282B8;
+        color: #ffffff;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    /* Style the file input label on hover */
+    .file-input-label:hover {
+        background-color: #1B262C;
+    }
+
+    .image-preview-container {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    /* Style the image preview */
+    #image-preview {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+</style>
+<div class="container mb-5">
+    {{#if principal}}
+    <h2>Add a Student</h2>
+    {{else if login}}
+    <h2>Request for Admission</h2>
+    {{/if}}
+    <form id="loginForm" method="POST" {{#if principal}} action="/principal/add-student" {{else if login}}
+        action="/req-admission" {{/if}} enctype="multipart/form-data">
+        <input name="firstName" type="text" id="firstName" placeholder="First Name" required>
+        <input name="secondName" type="text" id="secondName" placeholder="Second Name" required>
+        <input name="age" type="text" id="age" placeholder="Age" required>
+        <select id="sex" name="sex" class="styled-select" required>
+            <option value="" disabled selected>Sex</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+        <input name="class" type="text" id="class" placeholder="Class" required>
+        <input name="place" type="text" id="place" placeholder="Place" required>
+        <input name="district" type="text" id="district" placeholder="District" required>
+        <input name="state" type="text" id="state" placeholder="State" required>
+        <div class="file-input-container">
+            <label for="image" class="file-input-label">Choose File</label>
+            <input class="file-input" name="image" type="file" id="image" accept="image/*" required>
+        </div>
+        <!-- Add an image preview container -->
+        <div class="image-preview-container">
+            <img id="image-preview" src="#" alt="Image Preview" style="display: none;">
+        </div>
+
+        <input name="mobile" type="text" id="mobile" placeholder="Mobile Number" required>
+        <input name="email" type="text" id="email" placeholder="Email" required>
+        <input name="password" type="password" id="password" placeholder="Create a Password" required>
+        <input  type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <small id="passwordMatchMessage" style="display: none; color: #FF6347;">Passwords do not match!</small><br>
+        <label for="showPassword"><input type="checkbox" id="showPassword"> Show Password</label>
+        <input type="submit" value="Submit">
+    </form>
+    <p class="new-admission">Or login here </p>
+    <div style="text-align: center; margin-top: 30px;">
+        <a class="icon-anger" href="/"><i class="fa fa-home fa-lg" style="margin-right: 20px;"></i></a>
+        <a class="icon-anger" href="/principal/principal-login"><i class="fa fa-user-tie fa-lg"
+                style="margin-right: 20px;"></i></a>
+        <a class="icon-anger" href="/teacher/login"><i class="fa fa-chalkboard-teacher fa-lg"
+                style="margin-right: 20px;"></i></a>
+        <a class="icon-anger" href="/user-login"><i class="fa fa-user fa-lg" style="margin-right: 20px;"></i></a>
+
     </div>
-    </div>
-   </section>
+</div>
 
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('image-preview').src = e.target.result;
+                document.getElementById('image-preview').style.display = 'block';
+            };
+
+            reader.readAsDataURL(input.files[0]); // Convert image to base64 string
+        }
+    }
+
+    // Listen for changes in the file input
+    document.getElementById('image').addEventListener('change', function () {
+        readURL(this);
+    });
+    const showPasswordCheckbox = document.getElementById('showPassword');
+    const passwordInput = document.getElementById('password');
+
+    showPasswordCheckbox.addEventListener('change', function () {
+        const isChecked = this.checked;
+        if (isChecked) {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    });
+
+    // Function to check if passwords match
+function checkPasswordMatch() {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+
+    if (password !== confirmPassword) {
+        passwordMatchMessage.style.display = 'inline'; // Show warning message
+    } else {
+        passwordMatchMessage.style.display = 'none'; // Hide warning message if passwords match
+    }
+}
+
+// Add event listener to password confirmation field for blur event
+document.getElementById('confirmPassword').addEventListener('blur', checkPasswordMatch);
+
+// Add event listener to form submission for checking password match
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    checkPasswordMatch(); // Check password match before submitting the form
+    if (document.getElementById('passwordMatchMessage').style.display === 'inline') {
+        event.preventDefault(); // Prevent default form submission if passwords do not match
+    }
+});
+
+
+</script>

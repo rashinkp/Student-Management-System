@@ -28,10 +28,10 @@ router.get('/', function(req, res) {
 router.get('/login',(req,res)=>{
   res.render('user/login')
 })
-router.get('/admission-req',verifyLoginUser,(req,res)=>{
-  res.render('principal/add-student',{user:true})
+router.get('/admission-req',(req,res)=>{
+  res.render('principal/add-student',{login:true})
 })
-router.post('/req-admission', verifyLoginUser, async (req, res) => {
+router.post('/req-admission', async (req, res) => {
   try {
     if (req.file) {
       let image = req.file;
@@ -77,7 +77,7 @@ router.post('/user-login', (req, res) => {
   });
 });
 router.get('/user-signup',(req,res)=>{
-  res.render('user/user-signup')
+  res.render('user/user-signup',{login:true})
 })
 router.post('/user-signup', (req, res) => {
   userHelpers.addUser(req.body).then((response) => {

@@ -1,52 +1,144 @@
-<section>
-  <div class="container">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.css">
+<style>
+  body {
+    background-color: #1B262C;
+    font-family: Arial, sans-serif;
+    color: #BBE1FA;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 
-    <div
-      class="row justify-content-center align-items-center"
-      style="height:80vh;"
-    >
+  .container {
+    background-color: #0F4C75;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
-      <div class="col-md-6 col-lg-4">
+  h2 {
+    text-align: center;
+  }
 
-        <div class="card shadow-lg border-0 rounded-lg mt-5">
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3282B8;
+    color: #ffffff;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
 
-          <div class="card-header"><h3
-              class="text-center font-weight-light my-4"
-            >Signup User</h3></div>
-          <div class="card-body">
+  input[type="checkbox"] {
+    margin-top: 10px;
+  }
 
-           <form action="/user-signup" method="POST">
+  input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #BBE1FA;
+    color: #1B262C;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
 
-    <div class="form-group">
-        <label for="email">Email address</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" />
-    </div>
+  input[type="submit"]:hover {
+    background-color: #1B262C;
+    color: #fff;
+  }
 
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" />
-    </div>
+  .new-admission {
+    text-align: center;
+    margin-top: 20px;
+  }
 
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Create password" />
-    </div>
-
-    <button type="submit" class="btn btn-primary btn-block">Signup</button>
-
-    <a href="/user-login">Already have an account?</a>
-
-</form>
-
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
+  input[type="text"]::placeholder,
+  input[type="password"]::placeholder {
+    color: #fff;
+    /* Change placeholder text color to white */
+  }
+  .tag{
+    color: #fff;
+  }
+  .tag:hover{
+    font-weight: bold;
+    color: #1B262C;
+  }
+  .icon-anger{
+    text-decoration: none;  
+    color: #ffffff;
+  }
+  .icon-anger:hover{
+    color: #1B262C;
+  }
+</style>
+<div class="container">
+  <h2>User Signup</h2>
+  <form id="loginForm" action="/user-signup" method="POST">
+    <input name="email" type="text" id="email" placeholder="Email" required>
+    <input name="name" type="text" id="name" placeholder="Name" required>
+    <input name="password" type="password" id="password" placeholder="Create a Password" required>
+        <input  type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <small id="passwordMatchMessage" style="display: none; color: #FF6347;">Passwords do not match!</small><br>
+    <label for="showPassword"><input type="checkbox" id="showPassword"> Show Password</label>
+    <input type="submit" value="Signup">
+  </form>
+    <p class="new-admission">Have an account? <a href="/user-login" class="tag">Click here</a></p>
+  <div style="text-align: center; margin-top: 30px;">
+    <a class="icon-anger" href="/"><i class="fa fa-home fa-lg" style="margin-right: 20px;"></i></a>
+    <a class="icon-anger" href="/principal/principal-login"><i class="fa fa-user-tie fa-lg" style="margin-right: 20px;"></i></a>
+    <a class="icon-anger" href="/teacher/login"><i class="fa fa-chalkboard-teacher fa-lg" style="margin-right: 20px;"></i></a>
+    <a class="icon-anger" href="/student/login"><i class="fa-solid fa-graduation-cap fa-lg" style="margin-right: 20px;"></i></a>
   </div>
+</div>
 
-</section>
+<script>
+  const showPasswordCheckbox = document.getElementById('showPassword');
+  const passwordInput = document.getElementById('password');
+
+  showPasswordCheckbox.addEventListener('change', function () {
+    const isChecked = this.checked;
+    if (isChecked) {
+      passwordInput.type = 'text';
+    } else {
+      passwordInput.type = 'password';
+    }
+  });
+  function checkPasswordMatch() {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+
+    if (password !== confirmPassword) {
+        passwordMatchMessage.style.display = 'inline'; // Show warning message
+    } else {
+        passwordMatchMessage.style.display = 'none'; // Hide warning message if passwords match
+    }
+}
+
+// Add event listener to password confirmation field for blur event
+document.getElementById('confirmPassword').addEventListener('blur', checkPasswordMatch);
+
+// Add event listener to form submission for checking password match
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    checkPasswordMatch(); // Check password match before submitting the form
+    if (document.getElementById('passwordMatchMessage').style.display === 'inline') {
+        event.preventDefault(); // Prevent default form submission if passwords do not match
+    }
+});
+
+</script>
