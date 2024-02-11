@@ -1,60 +1,108 @@
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1B262C;
+      color: #BBE1FA;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
 
-  .box { cursor: pointer; width: 300px; height: 200px; margin: 20px; padding:
-  20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px
-  rgba(0, 0, 0, 0.1); transition: transform 0.3s ease-in-out; } .box:hover {
-  transform: scale(1.05); } .box h2 { color: #333; } .box p { color: #666; }
-  .cmn-text{
-    text-decoration: none;
-  }
-</style>
-<section>
+    section {
+      margin-top: 6rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: grid;
+      gap: 20px;
+      max-width: 800px;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: #0F4C75;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease; /* Adjusted transition duration */
+      cursor: pointer;
+      text-decoration: none; /* Remove text decoration */
+      color: inherit; /* Inherit text color */
+      margin-bottom: 20px;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      color: #fff; /* Change text color to white */
+    }
+
+    .card:hover i {
+      color: #ffffff; /* Change icon color to original color on hover */
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    .card i {
+      font-size: 48px;
+      margin-bottom: 18px;
+      color: #BBE1FA; /* Change icon color to original color */
+    }
+
+    /* Responsive Styles */
+    @media only screen and (min-width: 992px) { /* Large devices */
+      .container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media only screen and (max-width: 991px) and (min-width: 601px) { /* Medium devices */
+      .container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media only screen and (max-width: 600px) { /* Small devices */
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+
+  <section>
+    
   <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <h2 class="text-center mt-5 mb-5">Welcome {{princi.name}}</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <a class="cmn-text" href="/principal/list-students">
-        <div class="box">
-          <h2>Students</h2>
-          <p>Here you can view all students and manage their information and mark.</p>
-        </div>
-        </a>
-
-      </div>
-      <div class="col-md-6">
-        <a class="cmn-text" href="/principal/list-teachers">
-          <div class="box">
-            <h2>Teachers</h2>
-            <p>Here you can view all teachers and manage them. you can add, remove teacher and see job requests for teacher post</p>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        <a class="cmn-text" href="/principal/classes">
-          <div class="box">
-          <h2>Classes</h2>
-          <p>Here you can see  all  classes in this school and can take attendance for all students also. You can see students in each classess</p>
-        </div>
-        </a>
-
-      </div>
-      <div class="col-md-6">
-        <a class="cmn-text" href="/principal/announcements">
-          <div class="box">
-          <h2>Announcement</h2>
-          <p>View all announcements and see requests came for announcement there you can accept it or decline it.</p>
-        </div>
-        </a>
-
-      </div>
-    </div>
-
+    <a  href="/principal/list-teachers" class="card">
+      <i class="fas fa-users"></i>
+      <h2>Staff</h2>
+    </a>
+    <a href="/principal/list-students" class="card">
+      <i class="fas fa-user-graduate"></i>
+      <h2>Students</h2>
+    </a>
+    <a  href="/principal/classes" class="card">
+      <i class="fas fa-chalkboard"></i>
+      <h2>Classes</h2>
+    </a>
+    <a href="/principal/announcements" class="card">
+      <i class="fas fa-bullhorn"></i>
+      <h2>Announcements</h2>
+    </a>
+    <a href="/principal/controls" class="card">
+      <i class="fas fa-cogs"></i>
+      <h2>Controls</h2>
+    </a>
+    <a href="/principal/profile" class="card">
+          <img src="https://cdn-icons-png.flaticon.com/512/2919/2919906.png" alt="Demo Photo" class="img-fluid mb-3"
+            style="width: 52px; height: 50px;">
+      <h2>Profile</h2>
+    </a>
   </div>
-</section>
+  </section>

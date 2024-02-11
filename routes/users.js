@@ -86,9 +86,9 @@ router.post('/user-signup', (req, res) => {
   });
 });
 
-router.get('/req-teacher', verifyLoginUser, (req, res) => {
+router.get('/req-teacher', (req, res) => {
   subjectHelpers.getAllSubjects().then(subjects => {
-    res.render('principal/add-teacher', { user: true, subjects });
+    res.render('principal/add-teacher', { login: true, subjects });
   }).catch(error => {
     console.error('Error fetching subjects:', error);
     res.status(500).send('Internal Server Error');
@@ -96,7 +96,7 @@ router.get('/req-teacher', verifyLoginUser, (req, res) => {
 });
 
 
-router.post('/req-teacher',verifyLoginUser,async(req,res)=>{
+router.post('/req-teacher',async(req,res)=>{
   try {
     if (req.file) {
       let image = req.file;

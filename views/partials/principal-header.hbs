@@ -1,41 +1,57 @@
- <style>
-    .profile-circle {
-    cursor: pointer;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  background-color: #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+<style>
+  .nav-link {
+    color: #fff;
+  }
 
-.profile-circle img {
-  width: 100%;
-  height: auto;
-  border-radius: 50%;
-}  
-  </style>
+  .header-font {
+    color: #fff;
+  }
+
+  .header-font:hover {
+    color: #3282B8;
+  }
+
+  .nav-link:hover {
+    color: #3282B8;
+  }
+
+  /* New animation styles */
+  .img-fluid {
+    transition: transform 0.3s ease;
+  }
+
+  .img-fluid:hover {
+    transform: scale(1.4);
+  }
+</style>
 <header>
-   
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
-    <a class="navbar-brand ms-2" href="/principal"><h3>iSchool Principal</h3></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+
+  <nav class="navbar navbar-expand-lg p-3" style="background-color:#1B262C;">
+    <a class="navbar-brand ms-2" href="/principal">
+      <h3 class="header-font">iSchool Principal</h3>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-         <li class="nav-item"><a class="nav-link" href="/principal">Home</a></li>
-         <li class="nav-item"><a class="nav-link" href="/principal/list-students">Students</a></li>
+        <li class="nav-item"><a class="nav-link" href="/principal">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/principal/list-students">Students</a></li>
         <li class="nav-item"><a class="nav-link" href="/principal/list-teachers">Staff</a></li>
         <li class="nav-item"><a class="nav-link" href="/principal/classes">Classes</a></li>
         <li class="nav-item"><a class="nav-link" href="/principal/announcements">Announcements</a></li>
         <li class="nav-item"><a class="nav-link" href="/principal/controls">Controls</a></li>
       </ul>
-      <div class="profile-circle">
-    <a href="/principal/profile"><img src="https://cdn-icons-png.flaticon.com/512/2919/2919906.png" alt="Demo Photo"></a>
-  </div>
+      {{#if principal}}
+      <div class="rounded-circle overflow-hidden">
+        <a href="/principal/profile">
+          <img src="https://cdn-icons-png.flaticon.com/512/2919/2919906.png" alt="Demo Photo" class="img-fluid"
+            style="width: 52px; height: 50px;">
+        </a>
+      </div>
+      {{/if}}
     </div>
   </nav>
 
