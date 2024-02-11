@@ -1,166 +1,207 @@
     <style>
         body {
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
+            background-color: #1B262C;
+            color: #BBE1FA;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .title {
+            width: 100%;
+            text-align: center;
+            font-size: 44px;
+            margin-bottom: 40px;
+            margin-top: 60px;
         }
 
         .card {
-            margin: 10px;
-            height: 250px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background-color: #0F4C75;
+            padding: 10px;
+            border-radius: 10px;
+            width: calc(33.33% - 10px);
             cursor: pointer;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: transform 0.3s ease;
+            box-sizing: border-box;
+            text-decoration: none; /* Added to remove default link underline */
+            color: inherit; /* Added to inherit text color from parent */
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 84px !important;
+            /* Increased size of class number */
+        }
+
+        .card p {
+            text-align: center;
+            transition: font-size 0.3s ease;
+            /* Smooth transition for font size change */
         }
 
         .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: #fff;
         }
-        .row{
-            margin-bottom: 10px;
+
+        @media screen and (max-width: 768px) {
+            .card {
+                width: calc(50% - 10px);
+                /* 2 cards per row in medium devices */
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .card {
+                width: 100%;
+                /* 1 card per row in small devices */
+            }
+        }
+
+        @media screen and (min-width: 768px) {
+            .card h2 {
+                font-size: 36px;
+            }
         }
     </style>
 
+
+<section>
+    
+    <div class="title">Classes</div>
     <div class="container">
-        <h2 class="text-center mt-5 mb-5">Classes</h2>
-
-        <!-- Bootstrap Grid System -->
-       {{#if principal}}
-         <div class="row">
-            
-                <div class="col-md-4">
-                <a href="/principal/view-class/1">
-                <div class="card" data-class="1">Class 1</div>
-                </a>
-            </div>
-            
-            <div class="col-md-4">
-                <a href="/principal/view-class/2">
-                <div class="card" data-class="2">Class 2</div>
-                </a>
-            </div>
-            <div class="col-md-4">
-               <a href="/principal/view-class/3">
-                <div class="card" data-class="3">Class 3</div>
-                </a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-               <a href="/principal/view-class/4">
-                <div class="card" data-class="4">Class 4</div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="/principal/view-class/5">
-                <div class="card" data-class="5">Class 5</div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="/principal/view-class/6">
-                <div class="card" data-class="6">Class 6</div>
-                </a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <a href="/principal/view-class/7">
-                <div class="card" data-class="7">Class 7</div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="/principal/view-class/8">
-                <div class="card" data-class="8">Class 8</div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="/principal/view-class/9">
-                <div class="card" data-class="9">Class 9</div>
-                </a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <a href="/principal/view-class/10">
-                <div class="card" data-class="10">Class 10</div>
-                </a>
-            </div>
-        </div>
-
-
-       {{else}}
-
-
-         <div class="row">
-            
-                <div class="col-md-4">
-                <a href="/teacher/view-class/1">
-                <div class="card" data-class="1">Class 1</div>
-                </a>
-            </div>
-            
-            <div class="col-md-4">
-                <a href="/teacher/view-class/2">
-                <div class="card" data-class="2">Class 2</div>
-                </a>
-            </div>
-            <div class="col-md-4">
-               <a href="/teacher/view-class/3">
-                <div class="card" data-class="3">Class 3</div>
-                </a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-               <a href="/teacher/view-class/4">
-                <div class="card" data-class="4">Class 4</div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="/teacher/view-class/5">
-                <div class="card" data-class="5">Class 5</div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="/teacher/view-class/6">
-                <div class="card" data-class="6">Class 6</div>
-                </a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <a href="/teacher/view-class/7">
-                <div class="card" data-class="7">Class 7</div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="/teacher/view-class/8">
-                <div class="card" data-class="8">Class 8</div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="/teacher/view-class/9">
-                <div class="card" data-class="9">Class 9</div>
-                </a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <a href="/teacher/view-class/10">
-                <div class="card" data-class="10">Class 10</div>
-                </a>
-            </div>
-        </div>
-       {{/if}}
+        <!-- Class 1 -->
+        <a
+         {{#if principal}} 
+         href="/principal/view-class/1"
+         {{else if teacher}}
+         href="/teacher/view-class/1"
+         {{/if}}
+         class="card">
+            <h2>1</h2>
+            <p>No of students: 25</p>
+            <p>No of teachers: 2</p>
+        </a>
+        <!-- Class 2 -->
+        <a
+         {{#if principal}} 
+         href="/principal/view-class/2"
+         {{else if teacher}}
+         href="/teacher/view-class/2"
+         {{/if}}
+         class="card">
+            <h2>2</h2>
+            <p>No of students: 30</p>
+            <p>No of teachers: 3</p>
+        </a>
+        <!-- Class 3 -->
+        <a
+         {{#if principal}} 
+         href="/principal/view-class/3"
+         {{else if teacher}}
+         href="/teacher/view-class/3"
+         {{/if}}
+         class="card">
+            <h2>3</h2>
+            <p>No of students: 20</p>
+            <p>No of teachers: 2</p>
+        </a>
+        <!-- Class 4 -->
+        <a
+         {{#if principal}} 
+         href="/principal/view-class/4"
+         {{else if teacher}}
+         href="/teacher/view-class/4"
+         {{/if}}
+         class="card">
+            <h2>4</h2>
+            <p>No of students: 28</p>
+            <p>No of teachers: 2</p>
+        </a>
+        <!-- Class 5 -->
+        <a
+         {{#if principal}} 
+         href="/principal/view-class/5"
+         {{else if teacher}}
+         href="/teacher/view-class/5"
+         {{/if}}
+         class="card">
+            <h2>5</h2>
+            <p>No of students: 22</p>
+            <p>No of teachers: 1</p>
+        </a>
+        <!-- Class 6 -->
+        <a
+         {{#if principal}} 
+         href="/principal/view-class/6"
+         {{else if teacher}}
+         href="/teacher/view-class/6"
+         {{/if}}
+         class="card">
+            <h2>6</h2>
+            <p>No of students: 29</p>
+            <p>No of teachers: 3</p>
+        </a>
+        <!-- Class 7 -->
+        <a
+         {{#if principal}} 
+         href="/principal/view-class/7"
+         {{else if teacher}}
+         href="/teacher/view-class/7"
+         {{/if}}
+         class="card">
+            <h2>7</h2>
+            <p>No of students: 27</p>
+            <p>No of teachers: 2</p>
+        </a>
+        <!-- Class 8 -->
+        <a
+         {{#if principal}} 
+         href="/principal/view-class/8"
+         {{else if teacher}}
+         href="/teacher/view-class/8"
+         {{/if}}
+         class="card">
+            <h2>8</h2>
+            <p>No of students: 24</p>
+            <p>No of teachers: 1</p>
+        </a>
+        <!-- Class 9 -->
+        <a
+         {{#if principal}} 
+         href="/principal/view-class/9"
+         {{else if teacher}}
+         href="/teacher/view-class/9"
+         {{/if}}
+         class="card">
+            <h2>9</h2>
+            <p>No of students: 26</p>
+            <p>No of teachers: 2</p>
+        </a>
+        <!-- Class 10 -->
+        <a
+         {{#if principal}} 
+         href="/principal/view-class/10"
+         {{else if teacher}}
+         href="/teacher/view-class/10"
+         {{/if}}
+         class="card">
+            <h2>10</h2>
+            <p>No of students: 23</p>
+            <p>No of teachers: 2</p>
+        </a>
     </div>
+</section>
