@@ -4,6 +4,7 @@ var studentHelpers = require("../helpers/student-helpers");
 var announcementHelpers = require("../helpers/announcement-helpers");
 const reqHelpers = require("../helpers/req-helpers");
 const subjectHelpers = require("../helpers/subject-helpers");
+const principalHelpers = require('../helpers/principal-helpers')
 var router = express.Router();
 const moment = require('moment')
 
@@ -293,6 +294,19 @@ router.post("/update-student-mark", async (req, res) => {
     res.sendStatus(200);
   } catch (error) {
     console.error("Error updating student mark:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+
+router.get('/view-principal', verifyLoginTeacher, async (req, res) => {
+  try {
+    const principal_data = await principalHelpers.getPrincipal();
+    const staff = req.session.teacher;
+    res.render('principal/profile', { teacher: true, staff, principal_data });
+  } catch (error) {
+    console.error("Error in view-principal route:", error);
     res.status(500).send("Internal Server Error");
   }
 });

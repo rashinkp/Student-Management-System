@@ -1,1 +1,115 @@
-<h2>Hello {{staff.firstName}} {{staff.secondName}}</h2>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1B262C;
+      color: #BBE1FA;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    section {
+      margin-top: 6rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: grid;
+      gap: 20px;
+      max-width: 800px;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: #0F4C75;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease; /* Adjusted transition duration */
+      cursor: pointer;
+      text-decoration: none; /* Remove text decoration */
+      color: inherit; /* Inherit text color */
+      margin-bottom: 20px;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      color: #fff; /* Change text color to white */
+    }
+
+    .card:hover i {
+      color: #ffffff; /* Change icon color to original color on hover */
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    .card i {
+      font-size: 48px;
+      margin-bottom: 18px;
+      color: #BBE1FA; /* Change icon color to original color */
+    }
+
+    /* Responsive Styles */
+    @media only screen and (min-width: 992px) { /* Large devices */
+      .container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media only screen and (max-width: 991px) and (min-width: 601px) { /* Medium devices */
+      .container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media only screen and (max-width: 600px) { /* Small devices */
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+
+  <section>
+    
+  <div class="container">
+    <a  href="/teacher/view-principal" class="card">
+      <i class="fas fa-user-tie"></i>
+      <h2>Principal</h2>
+    </a>
+    <a  href="/teacher/list-teachers" class="card">
+      <i class="fas fa-users"></i>
+      <h2>Staff</h2>
+    </a>
+    <a href="/teacher/list-students" class="card">
+      <i class="fas fa-user-graduate"></i>
+      <h2>Students</h2>
+    </a>
+    <a  href="/teacher/classes" class="card">
+      <i class="fas fa-chalkboard"></i>
+      <h2>Classes</h2>
+    </a>
+    <a href="/teacher/announcements" class="card">
+      <i class="fas fa-bullhorn"></i>
+      <h2>Announcements</h2>
+    </a>
+    <a href="/teacher/controls" class="card">
+      <i class="fas fa-cogs"></i>
+      <h2>Controls</h2>
+    </a>
+    <a href="/teacher/profile" class="card">
+          <img src="/images/teacher/{{staff._id}}.jpg" alt="Teacher Photo" class="img-fluid mb-3"
+            style="width: 52px; height: 50px; border-radius: 35px;">
+      <h2>Profile</h2>
+    </a>
+  </div>
+  </section>
+
+
+   
