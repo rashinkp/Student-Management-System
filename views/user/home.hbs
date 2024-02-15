@@ -1,62 +1,100 @@
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1B262C;
+            color: #BBE1FA;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        section{
+          margin-top: 40px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .card {
+            background-color: #0F4C75;
+            color: #BBE1FA;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            padding: 30px;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .card p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .card a {
+            display: inline-block;
+            background-color: #BBE1FA;
+            color: #1B262C;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+        .card a:hover {
+            background-color: #1B262C;
+            color: #fff;
+        }
+    </style>
 
-  <section class="features">
+
+
+<section>
     <div class="container">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 d-flex align-items-stretch">
-            <div class="feature-box animated bounceInUp">
-              <i class="fas fa-user-graduate fa-4x"></i>
-              <h3>Our Students</h3>
-              <p>Discover our vibrant student community and their achievements.</p>
-              <a href="#" class="btn btn-primary">Learn More</a>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex align-items-stretch">
-            <div class="feature-box animated bounceInUp">
-              <i class="fas fa-chalkboard-teacher fa-4x"></i>
-              <h3>Our Teachers</h3>
-              <p>Meet our dedicated and passionate educators.</p>
-              <a href="#" class="btn btn-primary">Meet the Team</a>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex align-items-stretch">
-            <div class="feature-box animated bounceInUp">
-              <i class="fas fa-user-tie fa-4x"></i>
-              <h3>Our Principal</h3>
-              <p>Get to know our visionary leader and their message.</p>
-              <a href="#" class="btn btn-primary">Read Message</a>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-md-offset-2 d-flex align-items-stretch">
-            <div class="feature-box animated bounceInUp">
-              <i class="fas fa-building fa-4x"></i>
-              <h3>Our Facilities</h3>
-              <p>Explore our state-of-the-art campus and resources.</p>
-              <a href="#" class="btn btn-primary">Take a Virtual Tour</a>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex align-items-stretch">
-            <div class="feature-box animated bounceInUp">
-              <i class="fas fa-bell fa-4x"></i>
-              <h3>Notifications</h3>
-              <p>Stay up-to-date with important announcements and events.</p>
-              <a href="#" class="btn btn-primary">View Notifications</a>
-            </div>
-          </div>
 
-          <div class="col-md-4 d-flex align-items-stretch">
-            <div class="feature-box animated bounceInUp">
-              <i class="fas fa-bell fa-4x"></i>
-              <h3>Join as teacher</h3>
-              <p>Stay up-to-date with important announcements and events.</p>
-              <a href="/req-teacher" class="btn btn-primary">Send Request</a>
-            </div>
-          </div>
-
-          
+        <div id="our-teachers" class="card">
+            <h2>Our Teachers</h2>
+            <p>Meet our dedicated teachers.</p>
+            <a href="#">View Teachers</a>
         </div>
-      </div>
+
+        <div id="our-principal" class="card">
+            <h2>Our Principal</h2>
+            <p>Get to know our school principal.</p>
+            <a href="/view-principal">View Principal</a>
+        </div>
+
+        <div id="take-admission" class="card">
+            <h2>Take Admission</h2>
+            <p>Apply now to join our school.</p>
+            <a href="/admission-req">Apply Now</a>
+        </div>
+
+        <div id="join-teacher" class="card">
+            <h2>Join as Teacher</h2>
+            <p>Explore career opportunities with us.</p>
+            <a href="/req-teacher">Join Now</a>
+        </div>
+
+        <div id="contact" class="card">
+            <h2>Contact us</h2>
+            <p>Contact us for any enquireis</p>
+            <a href="/contact-us">Contact</a>
+        </div>
+
     </div>
-  </section>
+</section>

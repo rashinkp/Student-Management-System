@@ -1,0 +1,95 @@
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1B262C;
+            color: #BBE1FA;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+        h1 {
+            font-size: 46px;
+            margin-top: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .card {
+            background-color: #0F4C75;
+            color: #BBE1FA;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 600px;
+            padding: 30px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-info {
+            text-align: left;
+            width: 100%;
+        }
+        .profile-info h2 {
+            margin-bottom: 10px;
+        }
+        .profile-info p {
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .card {
+                width: 90%;
+            }
+        }
+    </style>
+
+        
+
+ <section>
+       <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Principal Profile</h1>
+            </div>
+        </div>
+        <div class="card">
+            <div class="profile-picture">
+                <img src="https://cdn-icons-png.flaticon.com/512/2919/2919906.png" alt="Principal's Profile Picture">
+            </div>
+            <div class="profile-info">
+                <h2>Name: {{principal_data.name}}</h2>
+                <p>Title: Principal</p>
+                <p>Experience: 12 years</p>
+                <p>Educational Background: PhD in Education</p>
+                <p>Contact: principal@example.com</p>
+            </div>
+        </div>
+    </div>
+
+ </section>

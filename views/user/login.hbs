@@ -1,35 +1,150 @@
-<section class="login-options">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4 col-sm-6 d-flex align-items-stretch">
-        <div class="login-box animated fadeInUp">
-          <i class="fas fa-user-tie fa-4x"></i>
-          <h3>Principal Login</h3>
-          <a href="/principal/principal-login" class="btn btn-primary">Log In</a>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 d-flex align-items-stretch">
-        <div class="login-box animated fadeInUp">
-          <i class="fas fa-chalkboard-teacher fa-4x"></i>
-          <h3>Teacher Login</h3>
-          <a href="/teacher/login" class="btn btn-primary">Log In</a>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 d-flex align-items-stretch">
-        <div class="login-box animated fadeInUp">
-          <i class="fas fa-user-graduate fa-4x"></i>
-          <h3>Student Login</h3>
-          <a href="/student/login" class="btn btn-primary">Log In</a>
-        </div>
-      </div>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:#1B262C;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 40px;
+            font-size: 36px;
+            letter-spacing: 2px;
+        }
+        section {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            text-align: center;
+        }
+        .option {
+            background-color: #3282B8;
+            color: #BBE1FA;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .option:hover {
+            transform: translateY(-5px);
+        }
+        .option h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .option p {
+            font-size: 16px;
+        }
+        .signup {
+            margin-top: 20px;
+        }
+        .signup p {
+          color: #fff;
+        }
+        .signup a {
+            color: #BBE1FA;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #0F4C75;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+        .signup a:hover {
+            background-color: #3282B8;
+        }
+        .divider {
+            width: 100%;
+            height: 2px;
+            background-color: #BBE1FA;
+            margin: 40px 0;
+        }
+        .decorative-circle {
+            width: 100px;
+            height: 100px;
+            background-color: #0F4C75;
+            border-radius: 50%;
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            z-index: -1;
+        }
+        .decorative-triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid #3282B8;
+            position: absolute;
+            top: 60%;
+            right: 10%;
+            z-index: -1;
+        }
+    </style>
 
-      <div class="col-md-4 col-sm-6 d-flex align-items-stretch">
-        <div class="login-box animated fadeInUp">
-          <i class="fas fa-user-graduate fa-4x"></i>
-          <h3>User Login</h3>
-          <a href="/user-login" class="btn btn-primary">Log In</a>
-        </div>
-      </div>
+
+
+<section>
+    
+
+    <div class="container">
+
+        <section id="login-options">
+
+            <a href="/principal/principal-login" class="option">
+                <h2>Login as Principal</h2>
+                <p>Access principal's dashboard and manage the school.</p>
+            </a>
+
+            <a href="/teacher/login" class="option">
+                <h2>Login as Teacher</h2>
+                <p>Enter your credentials to access the teacher's portal.</p>
+            </a>
+
+            <a href="/student/login" class="option">
+                <h2>Login as Student</h2>
+                <p>Check your grades, assignments, and interact with teachers.</p>
+            </a>
+
+            <a href="/user-login" class="option">
+                <h2>Login as User</h2>
+                <p>Login to access personalized features as a general user.</p>
+            </a>
+
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="signup">
+            <p>Don't have an account yet?</p>
+            <a href="/req-teacher">Join as Teacher</a>
+            <a href="/admission-req">Take Admission</a>
+            <a href="#user-signup">User Signup</a>
+        </section>
+
+        <!-- Decorative elements -->
+        <div class="decorative-circle"></div>
+        <div class="decorative-triangle"></div>
+
     </div>
-  </div>
 </section>

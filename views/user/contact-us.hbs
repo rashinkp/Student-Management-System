@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us - Student Management System</title>
+<style>
+    /* Color Palette */
+    :root {
+        --primary-color: #1B262C;
+        --secondary-color: #0F4C75;
+        --accent-color: #3282B8;
+        --light-color: #BBE1FA;
+    }
+
+    /* Dark Theme */
+    body {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 0 20px;
+    }
+
+
+    
+
+    /* Contact Form */
+    .contact-form {
+        background-color: var(--accent-color);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .contact-form h1 {
+        margin: 0;
+        font-size: 2em;
+        margin-bottom: 20px;
+        color: #1B262C;
+    }
+
+    .contact-form input[type="text"],
+    .contact-form textarea {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        background-color: var(--light-color);
+        color: var(--primary-color);
+    }
+
+    .contact-form input[type="submit"] {
+        background-color: var(--secondary-color);
+        color: var(--light-color);
+        border: none;
+        padding: 15px 40px;
+        cursor: pointer;
+        border-radius: 5px;
+        width: 100%; /* Make the button full width */
+    }
+
+    .contact-form input[type="submit"]:hover {
+        background-color:#1B262C;
+        color: #fff;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+        color: var(--primary-color);
+        opacity: 0.7;
+    }
+
+</style>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="contact-form">
+            <h1>Contact Us</h1>
+            <form action="#" method="post">
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="email" placeholder="Email" required>
+                <textarea name="message" placeholder="Message" rows="4" required></textarea>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

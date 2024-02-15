@@ -1,26 +1,74 @@
+<style>
+  .nav-link {
+    color: #fff;
+  }
+
+  .header-font {
+    color: #fff;
+  }
+
+  .header-font:hover {
+    color: #3282B8;
+  }
+
+  .nav-link:hover {
+    color: #3282B8;
+  }
+
+  /* New animation styles */
+  .img-fluid {
+    transition: transform 0.3s ease;
+  }
+
+  .img-fluid:hover {
+    transform: scale(1.4);
+  }
+  .btn{
+    background-color: #1B262C;
+    border: solid 1px #3282B8;
+    color: #3282B8;
+  }
+  .btn:hover{
+    background-color: #ffffff;
+    border: solid 1px #1B262C;
+    color: #1B262C;
+  }
+</style>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
-    <a class="navbar-brand ms-2" href="/"><h3>iSchool</h3></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+
+  <nav class="navbar navbar-expand-lg p-3" style="background-color:#1B262C;">
+    <a class="navbar-brand ms-2" href="/">
+      <h3 class="header-font">iSchool</h3>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto"> <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="/admission-req">Take Admission</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Courses</a></li>
+        <li class="nav-item"><a class="nav-link" href="/req-teacher">Join as Teacher</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Announcements</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="/contact-us">Contact</a></li>
       </ul>
       {{#if user}}
-       <div class="rounded-circle overflow-hidden">
-            <a href="/profile">
-                <img src="/images/sample/profile.jpg" alt="Teacher Photo" class="img-fluid" style="width: 50px; height: 50px;">
-            </a>
-        </div>
+      <div class="rounded-circle overflow-hidden">
+        <a href="/profile">
+          <img src="/images/sample/profile.jpg" alt="Demo Photo" class="img-fluid"
+            style="width: 52px; height: 50px;">
+        </a>
+      </div>
+
       {{else}}
-      <a href="/login" class="btn btn-primary navbar-btn">Login Now</a>
+      <div class="button-section">
+        <a href="/login" class="btn">Login</a>
+      </div>
       {{/if}}
     </div>
   </nav>
 
 </header>
+
+

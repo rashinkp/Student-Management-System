@@ -1,70 +1,101 @@
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-        }
-
-        .profile img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-right: 20px;
-        }
-
-        .details {
-            flex-grow: 1;
-        }
-
-        .details p {
-            margin: 10px 0;
-        }
-
-        @media only screen and (max-width: 600px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .profile img {
-                margin-right: 0;
-                margin-bottom: 20px;
-            }
-        }
-        .controle-section{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1B262C;
+      color: #BBE1FA;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      background-color: #0F4C75;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    #profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      background-color: #3282B8;
+      /* Placeholder for profile picture */
+    }
+    form {
+      text-align: left; /* Align form content to the left */
+    }
+    label {
+      display: inline-block; /* Labels behave like blocks */
+      width: 120px; /* Width of labels */
+      text-align: right; /* Align label text to right */
+    }
+    input[type="text"],
+    input[type="number"] {
+      padding: 10px;
+      margin: 10px 0;
+      width: calc(100% - 130px); /* Adjust width for input */
+      border-radius: 5px;
+      border: 1px solid #BBE1FA;
+      background-color: #3282B8;
+      color: #FFFFFF;
+      box-sizing: border-box;
+    }
+    input[type="text"]::placeholder,
+    input[type="number"]::placeholder {
+      color: #FFFFFF;
+      opacity: 1;
+    }
+    input[type="text"],
+    input[type="number"] {
+      pointer-events: none;
+    }
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #BBE1FA;
+      color: #0F4C75;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #1B262C;
+      color: #BBE1FA;
+    }
+  </style>
   
 
-  <section>
-      <div class="container">
-        <div class="profile">
-            <img src="/images/teacher/{{staff._id}}.jpg" alt="Teacher photo not supproted">
-        </div>
-        <div class="details">
-            <p><strong>Name:</strong>{{staff.firstName}} {{staff.secondName}} </p>
-            <p><strong>Age:</strong> {{staff.age}}</p>
-            <p><strong>Sex</strong> {{staff.sex}}</p>
-            <p><strong>Qualification:</strong> {{staff.qualification}}</p>
-            <p><strong>Email:</strong> {{staff.email}}</p>
-            <!-- Add more details as needed -->
-        </div>
+
+<section>
+    <div class="container mt-5 mb-5">
+        <h1>My Profile</h1>
+            <img id="profile-pic" src="/images/teacher/{{staff._id}}.jpg" alt="student photo not supported">
+        <form id="profile-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="{{staff.firstName}} {{staff.secondName}}" disabled>
+            <label for="age">Age:</label>
+            <input type="number" id="age" placeholder="{{staff.age}}" disabled>
+            <label for="sex">Sex:</label>
+            <input type="text" id="sex" placeholder="{{staff.sex}}" disabled>
+            <label for="class">Class:</label>
+            <input type="text" id="class" placeholder="{{staff.class}}" disabled>
+            <label for="place">Place:</label>
+            <input type="text" id="place" placeholder="{{staff.place}}" disabled>
+            <label for="state">State:</label>
+            <input type="text" id="state" placeholder="{{staff.state}}" disabled>
+            <label for="mobile">Mobile:</label>
+            <input type="text" id="mobile" placeholder="{{staff.mobile}}" disabled>
+            <label for="email">Email:</label>
+            <input type="text" id="email" placeholder="{{staff.email}}" disabled>
+            <label for="qualification">Qualification:</label>
+            <input type="text" id="qualification" placeholder="{{staff.qualification}}" disabled>
+            <label for="class">Class:</label>
+            <input type="text" id="class" placeholder="{{staff.class}}" disabled>
+        </form>
+        <button class="btn mt-5 mb-5" onclick="editProfile()">Edit</button>
+        <a class="btn" href="/teacher/logout">Logout</a>
     </div>
-    <div class="controle-section">
-        <a href="/teacher/logout" class="btn btn-danger">Logout</a>
-    </div>
-  </section>
+</section>

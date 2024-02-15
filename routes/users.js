@@ -7,6 +7,7 @@ var announcementHelpers = require('../helpers/announcement-helpers');
 var reqHelpers = require('../helpers/req-helpers');
 var userHelpers = require('../helpers/user-helpers')
 var subjectHelpers = require("../helpers/subject-helpers")
+var principalHelpers = require('../helpers/principal-helpers')
 const fs = require('fs');
 const { ExplainVerbosity } = require('mongodb');
 const nodemailer = require('nodemailer');
@@ -134,6 +135,23 @@ router.get('/profile',verifyLoginUser,(req,res)=>{
 router.get('/logout',verifyLoginUser,(req,res)=>{
   req.session.user=null;
   res.redirect('/');
+})
+
+
+router.get('/view-principal', async (req, res) => {
+  try {
+    const principal_data = await principalHelpers.getPrincipal();
+    let user = req.session.user;
+  res.render('user/view-principal', {user,principal_data})
+  } catch (error) {
+    console.error("Error in view-principal route:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get('/contact-us',(req,res)=>{
+  let  user = req.session.user;
+  res.render('user/contact-us',{user})
 })
 
 
