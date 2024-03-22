@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="_wgTXCCWW30Mr1kDmFAN" name="Page-1">
-        <mxGraphModel dx="1173" dy="873" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="615" dy="611" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -62,11 +62,10 @@
                 <mxCell id="5" value="View Students" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="354" y="430" width="140" height="100" as="geometry"/>
                 </mxCell>
-                <mxCell id="18" style="edgeStyle=none;html=1;entryX=1.014;entryY=0.6;entryDx=0;entryDy=0;exitX=-0.002;exitY=0.66;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" parent="1" source="10" target="5" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="10" value="Student Collection" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="610" y="450" width="120" height="60" as="geometry"/>
+                <mxCell id="18" style="edgeStyle=none;html=1;entryX=1.014;entryY=0.6;entryDx=0;entryDy=0;exitX=-0.002;exitY=0.66;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" parent="1" target="5" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="609.76" y="489.5999999999999" as="sourcePoint"/>
+                    </mxGeometry>
                 </mxCell>
                 <mxCell id="16" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" edge="1">
                     <mxGeometry relative="1" as="geometry">
@@ -83,9 +82,6 @@
                         <mxPoint x="496" y="627" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="15" value="Principal Collection" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="610" y="590" width="120" height="60" as="geometry"/>
-                </mxCell>
                 <mxCell id="24" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="496" y="730" as="sourcePoint"/>
@@ -101,26 +97,19 @@
                         <mxPoint x="496" y="750" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="23" value="Announcement Collection" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="610" y="710" width="120" height="60" as="geometry"/>
-                </mxCell>
                 <mxCell id="28" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="26" target="3" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="30" style="edgeStyle=none;html=1;" parent="1" source="26" target="29" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="30" style="edgeStyle=none;html=1;" parent="1" source="26" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="600" y="200" as="targetPoint"/>
+                    </mxGeometry>
                 </mxCell>
                 <mxCell id="26" value="Signin" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="360" y="160" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="29" value="Student Collection" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="600" y="170" width="120" height="60" as="geometry"/>
-                </mxCell>
                 <mxCell id="31" value="View Teachers" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="360" y="820" width="150" height="80" as="geometry"/>
-                </mxCell>
-                <mxCell id="34" value="Teacher Collection" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="620" y="830" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="35" style="edgeStyle=none;html=1;" parent="1" edge="1">
                     <mxGeometry relative="1" as="geometry">
@@ -137,19 +126,35 @@
                 <mxCell id="37" value="View / Edit Profile, View Attendance, Mark&amp;nbsp;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="374" y="920" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="40" style="edgeStyle=none;html=1;exitX=0.993;exitY=0.37;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+                <mxCell id="40" style="edgeStyle=none;html=1;exitX=0.993;exitY=0.37;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="610" y="947" as="targetPoint"/>
                         <mxPoint x="493.02" y="947" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="41" style="edgeStyle=none;html=1;entryX=1.014;entryY=0.6;entryDx=0;entryDy=0;exitX=-0.002;exitY=0.66;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" edge="1" source="42" parent="1">
+                <mxCell id="41" style="edgeStyle=none;html=1;entryX=1.014;entryY=0.6;entryDx=0;entryDy=0;exitX=-0.002;exitY=0.66;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" parent="1" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="495.96000000000004" y="970" as="targetPoint"/>
+                        <mxPoint x="609.76" y="969.5999999999999" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="42" value="Student Collection" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="610" y="930" width="120" height="60" as="geometry"/>
+                <mxCell id="43" value="Student Collection" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+                    <mxGeometry x="600" y="150" width="70" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="Student Collection" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+                    <mxGeometry x="610" y="430" width="70" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="Principal Collection" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+                    <mxGeometry x="610" y="565" width="70" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="Announcement Collection" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+                    <mxGeometry x="610" y="686" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="Teacher Collection" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+                    <mxGeometry x="620" y="807" width="70" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="Student Collection" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+                    <mxGeometry x="609" y="923" width="70" height="100" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

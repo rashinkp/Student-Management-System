@@ -154,5 +154,11 @@ router.get('/contact-us',(req,res)=>{
   res.render('user/contact-us',{user})
 })
 
+router.post("/contact-us",(req,res)=>{
+  let user = req.session.user;
+  console.log("out: ",req.body);
+  res.redirect('/')
+})
+
 
 module.exports = router;
