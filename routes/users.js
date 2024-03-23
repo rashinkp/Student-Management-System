@@ -161,4 +161,17 @@ router.post("/contact-us",(req,res)=>{
 })
 
 
+router.get("/view-teacher",async(req,res)=>{
+  const teacherData = await teacherHelpers.getAllTeachers();
+  let user = req.session.user;
+  res.render("user/view-teacher",{user,teacherData});
+  
+})
+
+router.get("/about-school",(req,res)=>{
+  let user = req.session.user;
+  res.render("user/about",{user});
+})
+
+
 module.exports = router;
