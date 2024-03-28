@@ -170,7 +170,7 @@ router.get("/view-teacher",async(req,res)=>{
 
 router.get("/about-school",(req,res)=>{
   let user = req.session.user;
-  res.render("user/about",{user});
+  res.render("user/iSchool",{user});
 })
 
 
